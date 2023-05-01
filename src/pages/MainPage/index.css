@@ -16,6 +16,8 @@ header {
   height: 50px;
   border-bottom: 0.5px solid #B1B2FF;
   background-color: #EEF1FF;
+  position: fixed;
+  top: 0;
 }
 .header_logo{
   width: 80px;
@@ -90,4 +92,3 @@ p {
 a{
   text-decoration: none;
 }
-
