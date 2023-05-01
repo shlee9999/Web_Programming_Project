@@ -14,9 +14,10 @@ function App() {
         </header>
         <section>
           <div className="center_container">
-            <p className="introduce_text">
-              Welcome to Our Typing Practice Web Application
-            </p>
+            <img
+              src={process.env.PUBLIC_URL + "images/logo.png"}
+              className="logo"
+            ></img>
             <button
               className="start_button"
               onClick={() => {
