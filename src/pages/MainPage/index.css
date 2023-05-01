@@ -79,3 +79,15 @@ p {
   margin: 50px;
   width: 400px;
 }
+
+.nav{
+  margin-top: 3px;
+  display: flex;
+  font-size: 10.5pt;
+  justify-content: space-between;
+  width: 140px; 
+}
+a{
+  text-decoration: none;
+}
+
