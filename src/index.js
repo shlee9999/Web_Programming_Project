@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import MainPage from "./pages/MainPage/Main";
-import TypingPage from "./pages/TypingPage/Typing";
+import MainPage from "./pages/MainPage/index";
+import TypingPage from "./pages/TypingPage/index";
 
 const router = createBrowserRouter([
   {
