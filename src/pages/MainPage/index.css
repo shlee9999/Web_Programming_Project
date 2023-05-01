@@ -1,6 +1,9 @@
-
+*{
+  font-family: 'Montserrat', sans-serif;
+  color: #293677;
+}
 .container {
-  background-color: #EEF1FF;
+  border: 1px solid #B1B2FF;
   margin: 0 auto;
   width: 1080px;
 }
@@ -11,7 +14,11 @@ header {
   justify-content: space-between;
   width: 1040px;
   height: 50px;
-  border-bottom: 1px solid black;
+  border-bottom: 0.5px solid #B1B2FF;
+  background-color: #EEF1FF;
+}
+.header_logo{
+  width: 80px;
 }
 .center_container {
   display: flex;
@@ -24,9 +31,18 @@ header {
 }
 .start_button {
   margin: 20px;
+  width: 350px;
   height: 50px;
   border-radius: 10px;
   background-color: #B1B2FF;
+  border: none;
+  color: #293677;
+  font-size: 15pt;
+}
+
+.start_button:hover{
+  filter: brightness(0.9);
+  cursor: pointer;
 }
 
 .paragraph_container {
@@ -60,6 +76,6 @@ p {
 }
 
 .logo{
-  margin-top: 30px;
+  margin: 50px;
   width: 400px;
 }

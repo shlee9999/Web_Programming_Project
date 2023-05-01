@@ -9,7 +9,10 @@ function App() {
     <div className="App">
       <div className="container">
         <header>
-          <p className="logo">Logo</p>
+          <img
+            src={process.env.PUBLIC_URL + "images/header_logo.png"}
+            className="header_logo"
+          />
           <p className="nav">nav</p>
         </header>
         <section>
@@ -17,23 +20,23 @@ function App() {
             <img
               src={process.env.PUBLIC_URL + "images/logo.png"}
               className="logo"
-            ></img>
+            />
             <button
               className="start_button"
               onClick={() => {
                 navigate("/Typing/");
               }}
             >
-              Get Started!
+              Begin Your Typing Practice
             </button>
           </div>
           <div className="paragraph_container">
             <div className="paragraph_title">
-              <h1>Proposal</h1>
+              <p>About us</p>
             </div>
             <div className="paragraph_text"></div>
             <div className="paragraph_title">
-              <h1>About us</h1>
+              <p>Proposal</p>
             </div>
             <div className="paragraph_text"></div>
           </div>
