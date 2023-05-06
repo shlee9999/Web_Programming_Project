@@ -6,7 +6,9 @@
   border: 1px solid #B1B2FF;
   margin: 0 auto;
   width: 1080px;
+  height: 2000px;
 }
+
 header {
   padding: 0 20px;
   display: flex;
@@ -14,13 +16,20 @@ header {
   justify-content: space-between;
   width: 1040px;
   height: 50px;
-  border-bottom: 0.5px solid #B1B2FF;
+
+  border: 1px solid #B1B2FF;
   background-color: #EEF1FF;
   position: fixed;
   top: 0;
+  left: 50%;
+  transform: translate(-50%);
 }
+
+
 .header_logo{
   width: 80px;
+
+
 }
 .center_container {
   display: flex;
