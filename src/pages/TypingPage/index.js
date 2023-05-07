@@ -1,13 +1,17 @@
 import "./index.css";
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 function Typing() {
+  const inputRef = useRef(null);
   const [isTyping, setIsTyping] = useState(false);
   const [language, setLanguage] = useState("English");
   const [inputValue, setInputValue] = useState("");
   const [activeKeys, setActiveKeys] = useState([]);
   const [proposalIndex, setProposalIndex] = useState(0);
-  const startTyping = () => {
+  const handleClickStart = () => {
     setIsTyping(true);
+    setInputValue("");
+    inputRef.current.disabled = false;
+    inputRef.current.focus();
   };
 
   const handleKeyPress = (event) => {
@@ -18,7 +22,7 @@ function Typing() {
         setIsTyping(false);
         setProposalIndex(0);
         setInputValue("");
-        console.log("Finish");
+        inputRef.current.disabled = true;
         return;
       }
       setProposalIndex((prev) => prev + 1);
@@ -65,7 +69,7 @@ function Typing() {
         {isTyping ? (
           proposals[proposalIndex]
         ) : (
-          <button onClick={startTyping} id="start_typing_button">
+          <button onClick={handleClickStart} id="start_typing_button">
             StartTyping!
           </button>
         )}
@@ -75,6 +79,9 @@ function Typing() {
         value={inputValue}
         onKeyDown={handleKeyPress}
         onChange={handleKeyPress}
+        placeholder={!isTyping && " Please Press Start Typing Button."}
+        disabled
+        ref={inputRef}
         // onKeyUp={handleKeyUp}
       />
       <div className="keyboard_wrapper">
