@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-
+import "./index.css";
 const VirtualKeyboard = () => {
   const inputRef = useRef(null);
   const [isTyping, setIsTyping] = useState(false);
@@ -71,7 +71,7 @@ const VirtualKeyboard = () => {
           value={inputValue}
           onKeyDown={handleKeyPress}
           onChange={handleKeyPress}
-          placeholder={!isTyping && " Please Press Start Typing Button."}
+          placeholder={isTyping ? "" : " Please Press Start Typing Button."}
           disabled
           ref={inputRef}
           // onKeyUp={handleKeyUp}
