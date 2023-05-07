@@ -22,7 +22,7 @@ function App() {
           <div className="center_container">
             <img
               src={process.env.PUBLIC_URL + "images/logo.png"}
-              className="logo"
+              className="main_page_logo"
             />
             <button
               className="start_button"

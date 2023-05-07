@@ -1,87 +1,17 @@
-
 .typing_container {
-    overflow: hidden;
-    padding-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #B1B2FF;
-    border-top: none;
-    margin: 0 auto;
-    width: 1080px;
-    height: 90vh;
-  }
-
-.keyboard{
-    margin: 5px 2px;
-    text-align: center;
-    background-color: #EEF1FF;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;   
-    box-shadow: 2px 2px 3px 2px #B1B2FF;    
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #b1b2ff;
+  border-top: none;
+  margin: 0 auto;
+  width: 1080px;
+  height: 97vh;
 }
 
-
-.keyboard_wrapper{
-    width: 800px;
-    height: 200px;
-    border: 1px solid #B1B2FF;
-    border-radius: 10px;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    box-shadow: 5px 5px 5px 5px #B1B2FF;
-}
-
-
-input[type="text"]{
-    border: 1px solid #B1B2FF;
-    outline: none;
-    width: 500px;
-    height: 30px;
-    margin: 50px;
-}
-input[type="text"]:disabled{
-  filter: brightness(0.9);
-  cursor:text;
-}
-
-.keyboard.active {
-    animation-name: blink;
-    animation-duration: 0.3s;
-    animation-fill-mode: forwards;
-  }
-  
-  @keyframes blink {
-    from { background-color: #8468FA; }
-  }
-#start_typing_button{
-  margin: 20px;
-  width: 250px;
-  height: 50px;
-  border-radius: 10px;
-  background-color: #D0D0FF;
-  border: none;
-  color: #293677;
-  font-size: 15pt;
-  cursor: pointer;  
-}
-
-#start_typing_button:hover{
-  filter: brightness(0.9);
-}
-
-
-.proposal{
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 30px;
+.typing_page_logo {
+  margin-top: 50px;
+  margin-bottom: 30px;
+  width: 400px;
 }
