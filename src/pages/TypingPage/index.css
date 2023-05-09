@@ -1,17 +1,35 @@
 .typing_container {
+  width: 1080px;
+
+  border: 1px solid #b1b2ff;
+  border-top: none;
+  margin: 0 auto;
+}
+
+.body-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.left-container {
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #b1b2ff;
-  border-top: none;
-  margin: 0 auto;
-  width: 1080px;
-  height: 97vh;
+  width: 80%;
+  height: 100%;
+  border-right: 1px solid #b1b2ff;
+  text-align: center;
 }
 
 .typing_page_logo {
+  display: inline-block;
   margin-top: 50px;
   margin-bottom: 30px;
   width: 400px;
+}
+
+.right-container {
+  width: 20%;
+  height: 100%;
 }

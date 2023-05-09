@@ -16,12 +16,17 @@ function Typing() {
             alt="헤더"
           />
         </header>
-        <img
-          src={process.env.PUBLIC_URL + "../../images/logo.png"}
-          className="typing_page_logo"
-          alt="헤더로고"
-        />
-        <VirtualKeyboard />
+        <div className="body-wrapper">
+          <div className="left-container">
+            <img
+              src={process.env.PUBLIC_URL + "../../images/logo.png"}
+              className="typing_page_logo"
+              alt="헤더로고"
+            />
+            <VirtualKeyboard />
+          </div>
+          <div className="right-container"></div>
+        </div>
         {viewPopup && <UserInfoInput setViewPopup={setViewPopup} />}
       </div>
     </>
