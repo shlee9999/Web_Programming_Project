@@ -1,4 +1,4 @@
-.page-wrapper {
+.page_wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   padding: 0;
 }
 
-.modal-wrapper {
+.modal_wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,22 +24,22 @@
   background-color: #eef1ff;
 }
 
-.content-container {
+.content_container {
   text-align: center;
   margin-bottom: 10px;
 }
 
-.header-title {
+.header_title {
   margin-bottom: 15px;
 }
 
-.avatar-container {
+.avatar_container {
   margin: 0 auto;
   padding-top: 15px;
   text-align: center;
 }
 
-.avatar-imageBox {
+.avatar_imageBox {
   width: 100px;
   height: 100px;
   border: 1px solid black;
@@ -48,19 +48,19 @@
   margin: 0 auto;
 }
 
-.avatar-image {
+.avatar_image {
   width: 100%;
   height: 100%;
 }
 
-.avatar-label-wrapper {
+.avatar_label_wrapper {
   margin-top: 10px;
 }
 
-.avatar-label {
+.avatar_label {
   color: #293677;
 }
-.avatar-label:hover {
+.avatar_label:hover {
   cursor: pointer;
 }
 
@@ -68,11 +68,11 @@
   visibility: hidden;
 }
 
-.name-label {
+.name_label {
   color: #293677;
 }
 
-.name-input {
+.name_input {
   width: 200px;
   height: 30px;
   border: 1px solid #b1b2ff;
@@ -80,7 +80,7 @@
   text-align: center;
 }
 
-.submit-button {
+.submit_button {
   margin: 20px;
   width: 80px;
   height: 40px;
@@ -91,6 +91,6 @@
   font-size: 15pt;
 }
 
-.submit-button:hover {
+.submit_button:hover {
   cursor: pointer;
 }

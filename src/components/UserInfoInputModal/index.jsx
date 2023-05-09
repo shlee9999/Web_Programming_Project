@@ -27,17 +27,21 @@ const UserInfoInput = ({ setViewPopup }) => {
   };
 
   return (
-    <div className="page-wrapper">
-      <div className="modal-wrapper">
-        <div className="content-container">
-          <p className="header-title">Hello! Please choose you Character.</p>
-          <p className="header-title">And, write you nickname.</p>
-          <div className="avatar-container">
-            <div className="avatar-imageBox">
-              <img className="avatar-image" src={imageURL.toString()} />
+    <div className="page_wrapper">
+      <div className="modal_wrapper">
+        <div className="content_container">
+          <p className="header_title">Hello! Please choose you Character.</p>
+          <p className="header_title">And, write you nickname.</p>
+          <div className="avatar_container">
+            <div className="avatar_imageBox">
+              <img
+                className="avatar_image"
+                src={imageURL.toString()}
+                alt="avatar"
+              />
             </div>
-            <div className="avatar-label-wrapper">
-              <label htmlFor="file" className="avatar-label">
+            <div className="avatar_label_wrapper">
+              <label htmlFor="file" className="avatar_label">
                 이미지 등록
               </label>
             </div>
@@ -50,8 +54,8 @@ const UserInfoInput = ({ setViewPopup }) => {
             className="hidden"
           />
           <div>
-            <div className="name-label-wrapper">
-              <label htmlFor="name" className="name-label">
+            <div className="name_label_wrapper">
+              <label htmlFor="name" className="name_label">
                 닉네임
               </label>
             </div>
@@ -59,10 +63,10 @@ const UserInfoInput = ({ setViewPopup }) => {
               type="text"
               id="name"
               ref={nameInputRef}
-              className="name-input"
+              className="name_input"
             />
           </div>
-          <button onClick={handleOnClickButton} className="submit-button">
+          <button onClick={handleOnClickButton} className="submit_button">
             저장
           </button>
         </div>

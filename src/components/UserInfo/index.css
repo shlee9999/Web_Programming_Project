@@ -1,17 +1,17 @@
-.userInfo-wrapper {
+.userInfo_wrapper {
   width: 90%;
   height: 200px;
 
   margin: 100px auto;
 }
 
-.profile-container {
+.profile_container {
   width: 100%;
   height: 100%;
   margin: 0 auto;
 }
 
-.user-name-wrapper {
+.user_name_wrapper {
   margin: 10px auto;
   width: 90%;
   height: 30px;
@@ -22,6 +22,6 @@
   text-align: center;
 }
 
-.user-name {
+.user_name {
   margin: 3px auto;
 }
