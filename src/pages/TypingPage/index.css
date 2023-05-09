@@ -1,13 +1,16 @@
+.typingPage-wrapper {
+  width: 100%;
+  height: 100%;
+}
 .typing_container {
   width: 1080px;
-
   border: 1px solid #b1b2ff;
   border-top: none;
   margin: 0 auto;
 }
 
 .body-wrapper {
-  width: 100%;
+  width: 1080px;
   display: flex;
 }
 
