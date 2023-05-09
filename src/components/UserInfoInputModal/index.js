@@ -30,12 +30,14 @@ const UserInfoInput = ({ setViewPopup }) => {
     <div className="page-wrapper">
       <div className="modal-wrapper">
         <div className="content-container">
+          <p className="header-title">Hello! Please choose you Character.</p>
+          <p className="header-title">And, write you nickname.</p>
           <div className="avatar-container">
             <div className="avatar-imageBox">
               <img className="avatar-image" src={imageURL.toString()} />
             </div>
             <div className="avatar-label-wrapper">
-              <label htmlFor="file" className="profile-label">
+              <label htmlFor="file" className="avatar-label">
                 이미지 등록
               </label>
             </div>

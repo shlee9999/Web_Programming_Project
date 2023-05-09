@@ -29,8 +29,13 @@
   margin-bottom: 10px;
 }
 
+.header-title {
+  margin-bottom: 15px;
+}
+
 .avatar-container {
   margin: 0 auto;
+  padding-top: 15px;
   text-align: center;
 }
 

@@ -7,7 +7,7 @@ const UserInfo = () => {
     <div className="userInfo-wrapper">
       <div className="profile-container">
         <div className="avatar-imageBox">
-          <img alt="선택한 사진" />
+          <img alt="선택한 사진" src="" />
         </div>
         <div className="user-name-wrapper">
           <p className="user-name">{userName}</p>
