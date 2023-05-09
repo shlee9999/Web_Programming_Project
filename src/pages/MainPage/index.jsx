@@ -35,11 +35,11 @@ function App() {
           </div>
           <div className="paragraph_container">
             <div className="paragraph_title" id="paragraph_1">
-              <p>About us</p>
+              <p className="paragraph-nav">About us</p>
             </div>
             <div className="paragraph_text"></div>
             <div className="paragraph_title" id="paragraph_2">
-              <p>Proposal</p>
+              <p className="paragraph-items">Proposal</p>
             </div>
             <div className="paragraph_text"></div>
           </div>

@@ -1,0 +1,27 @@
+.userInfo_wrapper {
+  width: 90%;
+  height: 200px;
+
+  margin: 100px auto;
+}
+
+.profile_container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.user_name_wrapper {
+  margin: 10px auto;
+  width: 90%;
+  height: 30px;
+  border: 1px solid #b1b2ff;
+  border-radius: 10px;
+  background-color: #eef1ff;
+  box-shadow: 2px 1px 2px 1px #b1b2ff;
+  text-align: center;
+}
+
+.user_name {
+  margin: 3px auto;
+}
