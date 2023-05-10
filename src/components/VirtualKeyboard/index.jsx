@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Hangul from "hangul-js";
 import "./index.css";
 const VirtualKeyboard = () => {
   const inputRef = useRef(null);
   const [isTyping, setIsTyping] = useState(false);
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState(true); //true = Eng
   const [inputValue, setInputValue] = useState("");
   const [activeKeys, setActiveKeys] = useState([]);
   const [proposalIndex, setProposalIndex] = useState(0);
@@ -17,6 +18,9 @@ const VirtualKeyboard = () => {
   const handleKeyPress = (event) => {
     const key = event.nativeEvent.key;
     if (!key) return;
+    if (event.keyCode === 91 || key === "CapsLock") {
+      toggleLanguage();
+    }
     if (key === "Enter" && inputValue === proposals[proposalIndex]) {
       if (proposalIndex === proposals.length - 1) {
         setIsTyping(false);
@@ -33,7 +37,12 @@ const VirtualKeyboard = () => {
       return;
     }
     if (key.length === 1) {
-      setInputValue(inputValue + key);
+      if (language) setInputValue(inputValue + key);
+      else {
+        const disassembled = Hangul.disassemble(inputValue);
+        const temp = Hangul.assemble([...disassembled, key]);
+        setInputValue(temp);
+      }
       setActiveKeys((prev) => [...prev, key.toUpperCase()]);
       setTimeout(() => {
         setActiveKeys((prev) => {
@@ -43,22 +52,26 @@ const VirtualKeyboard = () => {
       }, 500);
     }
   };
+  const toggleLanguage = () => {
+    setLanguage(!language);
+    console.log(language);
+  };
 
   const keyRowsEnglish = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
   const keyRowsKorean = [
     "ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ",
-    "ㅁㄴㅇㄹ호ㅓㅏㅣ",
+    "ㅁㄴㅇㄹㅎㅗㅓㅏㅣ",
     "ㅋㅌㅊㅍㅠㅜㅡ",
   ];
 
-  const keyRows = language === "English" ? keyRowsEnglish : keyRowsKorean;
-  const proposals = ["Hello, this is SeongHoon.", "Nice to meet you"];
+  const keyRows = language === true ? keyRowsEnglish : keyRowsKorean;
+  const proposals = ["안녕하세요", "한글 입력 테스트"];
   return (
-    <div>
+    <div className="virtual_keyboard">
       <div className="keyboard_wrapper">
         <div className="proposal">
           {isTyping ? (
-            proposals[proposalIndex]
+            <p>{proposals[proposalIndex]}</p>
           ) : (
             <button onClick={handleClickStart} id="start_typing_button">
               StartTyping!
@@ -74,23 +87,24 @@ const VirtualKeyboard = () => {
           placeholder={isTyping ? "" : " Please Press Start Typing Button."}
           disabled
           ref={inputRef}
-          // onKeyUp={handleKeyUp}
         />
-        {keyRows.map((row, rowIndex) => (
-          <div key={rowIndex} className="row_keys_wrapper">
-            {row.split("").map((key, index) => (
-              <button
-                key={index}
-                className={`keyboard ${
-                  activeKeys.includes(key.toUpperCase()) ? "active" : ""
-                }`}
-                id={key}
-              >
-                {key}
-              </button>
-            ))}
-          </div>
-        ))}
+        <div className="keyboard_keys_container">
+          {keyRows.map((row, rowIndex) => (
+            <div key={rowIndex} className="row_keys_wrapper">
+              {row.split("").map((key, index) => (
+                <button
+                  key={index}
+                  className={`keyboard_keys ${
+                    activeKeys.includes(key.toUpperCase()) ? "active" : ""
+                  }`}
+                  id={key}
+                >
+                  {key}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
