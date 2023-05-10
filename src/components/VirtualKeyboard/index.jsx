@@ -60,18 +60,18 @@ const VirtualKeyboard = () => {
   const keyRowsEnglish = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
   const keyRowsKorean = [
     "ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ",
-    "ㅁㄴㅇㄹ호ㅓㅏㅣ",
+    "ㅁㄴㅇㄹㅎㅗㅓㅏㅣ",
     "ㅋㅌㅊㅍㅠㅜㅡ",
   ];
 
   const keyRows = language === true ? keyRowsEnglish : keyRowsKorean;
   const proposals = ["안녕하세요", "한글 입력 테스트"];
   return (
-    <div>
+    <div className="virtual_keyboard">
       <div className="keyboard_wrapper">
         <div className="proposal">
           {isTyping ? (
-            proposals[proposalIndex]
+            <p>{proposals[proposalIndex]}</p>
           ) : (
             <button onClick={handleClickStart} id="start_typing_button">
               StartTyping!
@@ -88,21 +88,23 @@ const VirtualKeyboard = () => {
           disabled
           ref={inputRef}
         />
-        {keyRows.map((row, rowIndex) => (
-          <div key={rowIndex} className="row_keys_wrapper">
-            {row.split("").map((key, index) => (
-              <button
-                key={index}
-                className={`keyboard ${
-                  activeKeys.includes(key.toUpperCase()) ? "active" : ""
-                }`}
-                id={key}
-              >
-                {key}
-              </button>
-            ))}
-          </div>
-        ))}
+        <div className="keyboard_keys_container">
+          {keyRows.map((row, rowIndex) => (
+            <div key={rowIndex} className="row_keys_wrapper">
+              {row.split("").map((key, index) => (
+                <button
+                  key={index}
+                  className={`keyboard_keys ${
+                    activeKeys.includes(key.toUpperCase()) ? "active" : ""
+                  }`}
+                  id={key}
+                >
+                  {key}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

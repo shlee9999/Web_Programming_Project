@@ -1,8 +1,6 @@
 .userInfo_wrapper {
   width: 90%;
-  height: 200px;
-
-  margin: 100px auto;
+  margin: 12vh auto;
 }
 
 .profile_container {
@@ -12,9 +10,12 @@
 }
 
 .user_name_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 10px auto;
   width: 90%;
-  height: 30px;
+  height: 3vh;
   border: 1px solid #b1b2ff;
   border-radius: 10px;
   background-color: #eef1ff;
@@ -23,5 +24,5 @@
 }
 
 .user_name {
-  margin: 3px auto;
+  font-size: 1rem;
 }

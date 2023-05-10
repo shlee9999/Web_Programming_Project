@@ -1,16 +1,16 @@
 .typingPage-wrapper {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 .typing_container {
-  width: 1080px;
+  width: 85vw;
   border: 1px solid #b1b2ff;
   border-top: none;
   margin: 0 auto;
 }
 
 .body-wrapper {
-  width: 1080px;
+  width: 85vw;
   display: flex;
 }
 
@@ -27,8 +27,9 @@
 
 .typing_page_logo {
   display: inline-block;
-  margin-top: 50px;
-  margin-bottom: 30px;
+  margin-top: 10vh;
+  width: 30vw;
+  margin-bottom: 5vh;
   width: 400px;
 }
 

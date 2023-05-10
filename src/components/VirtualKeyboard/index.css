@@ -1,17 +1,22 @@
-.keyboard {
+.virtual_keyboard {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.keyboard_keys {
   margin: 5px 2px;
   text-align: center;
   background-color: #eef1ff;
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 3vw;
+  height: 3vw;
   border-radius: 10px;
   box-shadow: 2px 2px 3px 2px #b1b2ff;
 }
 
 .keyboard_wrapper {
-  width: 800px;
-  height: 370px;
+  width: 90%;
+  margin-bottom: 5vh;
   border: 1px solid #b1b2ff;
   border-radius: 10px;
   display: flex;
@@ -25,38 +30,53 @@
   border: 1px solid #b1b2ff;
   outline: none;
   width: 500px;
-  height: 35px;
-  margin: 50px;
-  padding-left: 10px;
+  height: 5vh;
+  font-size: 1rem;
+  margin-bottom: 2vh;
+  padding-left: 0.5vw;
 }
 .keyboard_input:disabled {
   filter: brightness(0.9);
   cursor: text;
 }
 
-.keyboard.active {
+.keyboard_keys.active {
   animation-name: blink;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
 
 #start_typing_button {
-  margin-top: 7px;
-  width: 250px;
-  height: 50px;
+  margin: 4vh;
+  width: 25vw;
+  height: 6vh;
   border-radius: 10px;
-  background-color: #d0d0ff;
+  background-color: #b1b2ff;
   border: none;
   color: #293677;
-  font-size: 15pt;
-  cursor: pointer;
+  font-size: 1.5rem;
 }
 
 #start_typing_button:hover {
+  cursor: pointer;
   filter: brightness(0.9);
 }
 @keyframes blink {
   from {
     background-color: #8468fa;
   }
+}
+
+.keyboard_keys_container {
+  margin-bottom: 3vh;
+}
+.proposal {
+  /* border: 1px solid #293677; */
+  width: 50vw;
+  height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2vh;
+  font-size: 1.5rem;
 }
