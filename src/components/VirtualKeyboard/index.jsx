@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Hangul from 'hangul-js';
 import './index.css';
 
-const proposals = ['Hello, World!', 'This is SeongHoon'];
+// const proposals = ['Hello, World!', 'This is SeongHoon'];
+const proposals = ['안녕하세요', '이성훈입니다'];
 // const totalProposals = ''.concat(proposals.map((p) => p));
 const keyRowsEnglish = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 const keyRowsKorean = [
@@ -68,15 +69,22 @@ const VirtualKeyboard = () => {
     setProposalIndex((prev) => prev + 1);
   };
   const handlePressBackspace = () => {
+    const lastChar = inputValue.slice(-1);
+    const disassembledLastChar = Hangul.disassemble(lastChar);
     setInputValue(inputValue.slice(0, -1));
+
     if (cursor !== 0) {
-      setCursor((prev) => prev - 1);
-      setTotalCursor((prev) => prev - 1);
+      setCursor((prev) => prev - disassembledLastChar.length);
+      setTotalCursor((prev) => prev - disassembledLastChar.length);
     }
-    if (correctKeyStrokes > 0) setCorrectKeyStrokes((prev) => prev - 2);
-    if (totalCorrectKeyStrokes > 0)
-      setTotalCorrectKeyStrokes((prev) => prev - 2);
-    return;
+
+    if (correctKeyStrokes > 0) {
+      setCorrectKeyStrokes((prev) => prev - disassembledLastChar.length);
+    }
+
+    if (totalCorrectKeyStrokes > 0) {
+      setTotalCorrectKeyStrokes((prev) => prev - disassembledLastChar.length);
+    }
   };
   const handlePressEnglish = (e) => {
     const key = e.nativeEvent.key;
@@ -91,10 +99,26 @@ const VirtualKeyboard = () => {
 
   const handlePressKorean = (e) => {
     const key = e.nativeEvent.key;
-    const disassembled = Hangul.disassemble(inputValue);
-    const temp = Hangul.assemble([...disassembled, key]);
+    const disassembledInputValue = Hangul.disassemble(inputValue);
+    const disassembledProposal = Hangul.disassemble(proposals[proposalIndex]);
+    const temp = Hangul.assemble([...disassembledInputValue, key]);
+
+    setCursor((prev) => prev + Hangul.disassemble(key).length);
+    setTotalCursor((prev) => prev + Hangul.disassemble(key).length);
     setInputValue(temp);
+
+    if (
+      disassembledProposal
+        .slice(cursor, cursor + Hangul.disassemble(key).length)
+        .join('') === key
+    ) {
+      setCorrectKeyStrokes((prev) => prev + Hangul.disassemble(key).length);
+      setTotalCorrectKeyStrokes(
+        (prev) => prev + Hangul.disassemble(key).length
+      );
+    }
   };
+
   const handleKeyPress = (event) => {
     const key = event.nativeEvent.key;
     if (!key) return;
