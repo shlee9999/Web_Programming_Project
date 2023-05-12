@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Hangul from 'hangul-js';
 import './index.css';
 
-// const proposals = ['Hello, World!', 'This is SeongHoon'];
-const proposals = ['안녕하세요', '이성훈입니다'];
+const proposalsEnglish = ['Hello, World!', 'Welcome to our project'];
+const proposalsKorean = ['안녕하세요', '환영합니다'];
 // const totalProposals = ''.concat(proposals.map((p) => p));
 const keyRowsEnglish = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 const keyRowsKorean = [
@@ -11,8 +11,9 @@ const keyRowsKorean = [
   'ㅁㄴㅇㄹㅎㅗㅓㅏㅣ',
   'ㅋㅌㅊㅍㅠㅜㅡ',
 ];
-const VirtualKeyboard = () => {
+const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const inputRef = useRef(null);
+
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
   const [cursor, setCursor] = useState(0);
@@ -31,7 +32,7 @@ const VirtualKeyboard = () => {
   const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${
     seconds < 10 ? '0' : ''
   }${seconds}`;
-
+  const proposals = language ? proposalsEnglish : proposalsKorean;
   const handleClickStart = () => {
     setIsTyping(true);
     setInputValue('');
@@ -161,7 +162,13 @@ const VirtualKeyboard = () => {
     if (cursor === 0) return;
     setAccuracy((correctKeyStrokes / cursor) * 100);
     setTotalAccuracy((totalCorrectKeyStrokes / totalCursor) * 100);
+    onTypingAccuracyChange(accuracy.toFixed(0));
   }, [cursor]);
+
+  useEffect(() => {
+    onTypingSpeedChange(((totalCorrectKeyStrokes / time) * 60).toFixed(0));
+  }, [totalCorrectKeyStrokes, time]);
+
   const keyRows = language === true ? keyRowsEnglish : keyRowsKorean;
   return (
     <div className='virtual_keyboard'>
@@ -171,8 +178,7 @@ const VirtualKeyboard = () => {
           <br /> 타수 :
           {time === 0 ? 0 : ((totalCorrectKeyStrokes / time) * 60).toFixed(0)}
           <br /> 전체 정확도 :
-          {isTyping && totalAccuracy > 0 ? totalAccuracy.toFixed(0) : 0}
-          %
+          {isTyping && totalAccuracy > 0 ? totalAccuracy.toFixed(0) : 0}%
           <br /> 현재 정확도 :
           {isTyping && totalAccuracy > 0 ? accuracy.toFixed(0) : 0}%
         </div>
