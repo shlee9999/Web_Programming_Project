@@ -1,27 +1,16 @@
 import { useState, useRef } from "react";
 import "./index.css";
-import DefaultImg from "../../images/DefaultImg.png";
+import Dog from "../../images/avatar/Dog.png";
+import Female from "../../images/avatar/Female.png";
+import Male from "../../images/avatar/Male.png";
 
 const UserInfoInput = ({ setViewPopup }) => {
-  const [imageURL, setImageURL] = useState(DefaultImg);
-
-  const fileInputRef = useRef(null);
   const nameInputRef = useRef(null);
+  const [selected, setSelected] = useState();
 
-  const handleChangedFile = (e) => {
-    const reader = new FileReader();
-    if (e.target.files) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
-    reader.onloadend = () => {
-      const resultImage = reader.result;
-      setImageURL(resultImage);
-    };
-  };
-
-  const handleOnClickButton = () => {
+  const OnClickButton = () => {
     setViewPopup(false);
-    localStorage.setItem("user_image", fileInputRef.current.value);
+    localStorage.setItem("user_image", selected);
     localStorage.setItem("user_name", nameInputRef.current.value);
     console.log("성공");
   };
@@ -33,26 +22,41 @@ const UserInfoInput = ({ setViewPopup }) => {
           <p className="header_title">Hello! Please choose you Character.</p>
           <p className="header_title">And, write you nickname.</p>
           <div className="avatar_container">
-            <div className="avatar_imageBox">
+            <div
+              className={
+                selected === 1 ? "avatar_imageBox active" : "avatar_imageBox"
+              }
+              onClick={() => {
+                setSelected(1);
+              }}
+            >
+              <img className="avatar_image" src={Male} alt="male" />
+            </div>
+            <div
+              className={
+                selected === 2 ? "avatar_imageBox active" : "avatar_imageBox"
+              }
+              onClick={() => {
+                setSelected(2);
+              }}
+            >
+              <img className="avatar_image" src={Female} alt="female" />
+            </div>
+            <div
+              className={
+                selected === 3 ? "avatar_imageBox active" : "avatar_imageBox"
+              }
+            >
               <img
                 className="avatar_image"
-                src={imageURL.toString()}
-                alt="avatar"
+                src={Dog}
+                alt="dog"
+                onClick={() => {
+                  setSelected(3);
+                }}
               />
             </div>
-            <div className="avatar_label_wrapper">
-              <label htmlFor="file" className="avatar_label">
-                이미지 등록
-              </label>
-            </div>
           </div>
-          <input
-            type="file"
-            id="file"
-            onChange={handleChangedFile}
-            ref={fileInputRef}
-            className="hidden"
-          />
           <div>
             <div className="name_label_wrapper">
               <label htmlFor="name" className="name_label">
@@ -66,7 +70,7 @@ const UserInfoInput = ({ setViewPopup }) => {
               className="name_input"
             />
           </div>
-          <button onClick={handleOnClickButton} className="submit_button">
+          <button onClick={OnClickButton} className="submit_button">
             저장
           </button>
         </div>

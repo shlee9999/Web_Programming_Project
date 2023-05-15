@@ -15,7 +15,7 @@
   align-items: center;
   margin: 10px auto;
   width: 90%;
-  height: 3vh;
+  height: 4vh;
   border: 1px solid #b1b2ff;
   border-radius: 10px;
   background-color: #eef1ff;
@@ -25,4 +25,16 @@
 
 .user_name {
   font-size: 1rem;
+}
+
+.avatar_imageBox_selected {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #293677;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  &.active {
+    border: 2px solid #b1b2ff;
+  }
 }
