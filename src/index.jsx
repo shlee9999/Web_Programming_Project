@@ -1,22 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
-import MainPage from "./pages/MainPage/index";
-import TypingPage from "./pages/TypingPage/index";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MainPage from './pages/MainPage/index';
+import TypingPage from './pages/TypingPage/index';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <MainPage />,
   },
   {
-    path: "/Typing/",
+    path: '/Typing/',
     element: <TypingPage />,
   },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById("root")); //여기서 시작된다
+const root = ReactDOM.createRoot(document.getElementById('root')); //여기서 시작된다
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
