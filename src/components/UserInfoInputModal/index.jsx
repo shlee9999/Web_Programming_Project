@@ -68,6 +68,11 @@ const UserInfoInput = ({ setViewPopup }) => {
               id="name"
               ref={nameInputRef}
               className="name_input"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  OnClickButton();
+                }
+              }}
             />
           </div>
           <button onClick={OnClickButton} className="submit_button">
