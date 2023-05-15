@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: #293677;
 }
 
@@ -27,6 +27,7 @@ header {
 .header_logo {
   width: 6vw;
   margin-left: 1.5vw;
+  cursor: pointer;
 }
 
 .main_page_logo {
@@ -93,6 +94,10 @@ header {
   width: 10vw;
 }
 
-a {
-  text-decoration: none;
+.nav_items {
+  cursor: pointer;
+}
+
+.scroll_items {
+  padding-top: 10vh;
 }
