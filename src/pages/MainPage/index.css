@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: #293677;
 }
 
@@ -91,11 +91,13 @@ header {
   display: flex;
   font-size: 0.8rem;
   justify-content: space-between;
-  width: 10vw;
+  width: 100px;
 }
 
 .nav_items {
+  width: 50px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .scroll_items {

@@ -3,16 +3,17 @@ import './index.css';
 import React from 'react';
 import { Element, Link } from 'react-scroll';
 
-function App() {
+const MainPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='App'>
+    <div className='main_page_wrapper'>
       <div className='container'>
         <header>
           <img
             src={process.env.PUBLIC_URL + 'images/header_logo.png'}
             className='header_logo'
+            alt='header-logo'
           />
           <div className='nav'>
             <Link
@@ -38,6 +39,7 @@ function App() {
             <img
               src={process.env.PUBLIC_URL + 'images/logo.png'}
               className='main_page_logo'
+              alt='mainpage-logo'
             />
             <button
               className='start_button'
@@ -67,6 +69,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default MainPage;
