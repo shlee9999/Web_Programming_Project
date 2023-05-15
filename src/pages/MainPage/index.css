@@ -94,6 +94,10 @@ header {
   width: 10vw;
 }
 
-a {
-  text-decoration: none;
+.nav_items {
+  cursor: pointer;
+}
+
+.scroll_items {
+  padding-top: 10vh;
 }

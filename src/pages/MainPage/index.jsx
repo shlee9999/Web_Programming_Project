@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './index.css';
 import React from 'react';
+import { Element, Link } from 'react-scroll';
 
 function App() {
   const navigate = useNavigate();
@@ -14,8 +15,22 @@ function App() {
             className='header_logo'
           />
           <div className='nav'>
-            <a href='#paragraph_1'>About us</a>
-            <a href='#paragraph_2'>Proposal</a>
+            <Link
+              to='scrollToElement1'
+              smooth={true}
+              duration={500}
+              className='nav_items'
+            >
+              About us
+            </Link>
+            <Link
+              to='scrollToElement2'
+              smooth={true}
+              duration={500}
+              className='nav_items'
+            >
+              Proposal
+            </Link>
           </div>
         </header>
         <section>
@@ -34,12 +49,16 @@ function App() {
             </button>
           </div>
           <div className='paragraph_container'>
-            <div className='paragraph_title' id='paragraph_1'>
-              <p className='paragraph-nav'>About us</p>
+            <div className='paragraph_title'>
+              <Element name='scrollToElement1' className='scroll_items'>
+                <p className='paragraph-nav'>About us</p>
+              </Element>
             </div>
             <div className='paragraph_text'></div>
-            <div className='paragraph_title' id='paragraph_2'>
-              <p className='paragraph-items'>Proposal</p>
+            <div className='paragraph_title'>
+              <Element name='scrollToElement2'>
+                <p className='paragraph-items'>Proposal</p>
+              </Element>
             </div>
             <div className='paragraph_text'></div>
           </div>
