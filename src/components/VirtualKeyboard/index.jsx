@@ -259,9 +259,11 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
             </div>
           ))}
         </div>
-        <button className='pause_button' onClick={handleClickPauseButton}>
-          일시 정지
-        </button>
+        {isTyping && (
+          <button className='pause_button' onClick={handleClickPauseButton}>
+            일시 정지
+          </button>
+        )}
       </div>
       {isModalOpen && (
         <SelectSentenceCategoryModal
