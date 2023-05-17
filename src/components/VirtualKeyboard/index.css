@@ -15,6 +15,7 @@
 }
 
 .keyboard_wrapper {
+  position: relative;
   width: 90%;
   margin-bottom: 5vh;
   border: 1px solid #b1b2ff;
@@ -25,7 +26,21 @@
   align-items: center;
   box-shadow: 5px 5px 5px 5px #b1b2ff;
 }
-
+.pause_button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #8468fa;
+  border: none;
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #b1b2ff;
+  border: none;
+  color: #293677;
+  font-size: 1rem;
+  cursor: pointer;
+}
 .keyboard_input {
   border: 1px solid #b1b2ff;
   outline: none;

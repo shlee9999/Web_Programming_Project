@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hangul from 'hangul-js';
 import './index.css';
-import SelectSentenceCategoryModal from '../SelectCategoryModal/index';
+import SelectSentenceCategoryModal from '../SelectCategoryModal';
+import PauseModal from '../PauseModal';
 
 // const proposalsEnglish = ['Hello, World!', 'Welcome to our project'];
 // const proposalsKorean = ['안녕하세요', '환영합니다'];
@@ -14,6 +15,7 @@ const keyRowsKorean = [
 ];
 const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const inputRef = useRef(null);
+  const [isPauseModalOpen, setPauseModal] = useState(false);
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
   const [cursor, setCursor] = useState(0);
@@ -29,7 +31,6 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sentenceCategory, setSentenceCategory] = useState('');
   const [sentence, setSentence] = useState([]);
-
   const intervalRef = useRef(null);
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -40,7 +41,17 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const handleClickStart = () => {
     openModal();
   };
-
+  const openPauseModal = () => {
+    if (!isTyping) return;
+    //타이머 멈춰야함
+    setPauseModal(true);
+    stopTimer();
+  };
+  const closePauseModal = () => {
+    //타이머 시작돼야 함
+    setPauseModal(false);
+    intervalRef.current = startTimer();
+  };
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -77,6 +88,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     }
     setProposalIndex((prev) => prev + 1);
   };
+
   const handlePressBackspace = () => {
     const lastChar = inputValue.slice(-1);
     const disassembledLastChar = Hangul.disassemble(lastChar);
@@ -95,6 +107,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       setTotalCorrectKeyStrokes((prev) => prev - disassembledLastChar.length);
     }
   };
+  const handlePressESC = () => {
+    openPauseModal(); //일시정지 띄우기(stoptimer)
+    //일시정지 모달 띄우고, 모달 종료하면 다시 시작되게 하기
+  };
   const handlePressEnglish = (e) => {
     const key = e.nativeEvent.key;
     setCursor((prev) => prev + 1);
@@ -105,7 +121,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       setTotalCorrectKeyStrokes((prev) => prev + 1);
     }
   };
-
+  const handleClickPauseButton = () => {
+    openPauseModal();
+  };
   const handlePressKorean = (e) => {
     const key = e.nativeEvent.key;
     const disassembledInputValue = Hangul.disassemble(inputValue);
@@ -131,18 +149,21 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const handleKeyPress = (event) => {
     const key = event.nativeEvent.key;
     if (!key) return;
-    if (event.keyCode === 91 || key === 'CapsLock') {
-      toggleLanguage();
-      return;
+    switch (key) {
+      case 'Enter':
+        handlePressEnter();
+        return;
+      case 'Backspace':
+        handlePressBackspace();
+        return;
+      case 'CapsLock':
+        toggleLanguage();
+        return;
+      case 'Escape':
+        handlePressESC();
+        return;
     }
-    if (key === 'Enter') {
-      handlePressEnter();
-      return;
-    }
-    if (key === 'Backspace') {
-      handlePressBackspace();
-      return;
-    }
+
     if (key.length === 1) {
       if (language) {
         handlePressEnglish(event);
@@ -238,6 +259,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
             </div>
           ))}
         </div>
+        <button className='pause_button' onClick={handleClickPauseButton}>
+          일시 정지
+        </button>
       </div>
       {isModalOpen && (
         <SelectSentenceCategoryModal
@@ -252,6 +276,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           handleTotalCorrectKeyStrokes={handleTotalCorrectKeyStrokes}
         />
       )}
+      {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
     </div>
   );
 };
