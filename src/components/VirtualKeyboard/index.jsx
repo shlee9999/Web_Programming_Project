@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hangul from 'hangul-js';
 import './index.css';
+import SelectSentenceCategoryModal from '../SelectCategoryModal/index';
 
 const proposalsEnglish = ['Hello, World!', 'Welcome to our project'];
 const proposalsKorean = ['안녕하세요', '환영합니다'];
@@ -26,20 +27,25 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [proposalIndex, setProposalIndex] = useState(0);
   const [totalAccuracy, setTotalAccuracy] = useState(100);
   const [accuracy, setAccuracy] = useState(100);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sentenceCategory, setSentenceCategory] = useState('');
+  const [sentence, setSentence] = useState([]);
+
   const intervalRef = useRef(null);
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${
-    seconds < 10 ? '0' : ''
-  }${seconds}`;
-  const proposals = language ? proposalsEnglish : proposalsKorean;
+  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''
+    }${seconds}`;
+
   const handleClickStart = () => {
-    setIsTyping(true);
-    setInputValue('');
-    inputRef.current.disabled = false;
-    inputRef.current.focus();
-    intervalRef.current = startTimer();
-    setTotalCorrectKeyStrokes(0); // 초기화
+    openModal();
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const startTimer = () => {
@@ -54,7 +60,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setCursor(0);
     setCorrectKeyStrokes(0);
     setInputValue('');
-    if (proposalIndex === proposals.length - 1) {
+    if (proposalIndex === sentence.length - 1) {
       if (totalAccuracy < 60) {
         //통계에 기록되지 않습니다.
       }
@@ -92,7 +98,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setCursor((prev) => prev + 1);
     setTotalCursor((prev) => prev + 1);
     setInputValue(inputValue + key);
-    if (proposals[proposalIndex].charAt(cursor) === key) {
+    if (sentence[proposalIndex].charAt(cursor) === key) {
       setCorrectKeyStrokes((prev) => prev + 1);
       setTotalCorrectKeyStrokes((prev) => prev + 1);
     }
@@ -101,7 +107,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const handlePressKorean = (e) => {
     const key = e.nativeEvent.key;
     const disassembledInputValue = Hangul.disassemble(inputValue);
-    const disassembledProposal = Hangul.disassemble(proposals[proposalIndex]);
+    const disassembledProposal = Hangul.disassemble(sentence[proposalIndex]);
     const temp = Hangul.assemble([...disassembledInputValue, key]);
 
     setCursor((prev) => prev + Hangul.disassemble(key).length);
@@ -129,7 +135,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     }
     if (
       key === 'Enter' &&
-      inputValue.length >= proposals[proposalIndex].length
+      inputValue.length >= sentence[proposalIndex].length
     ) {
       handlePressEnter();
       return;
@@ -158,6 +164,20 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setLanguage(!language);
   };
 
+  const handleCategorySelect = (item) => () => {
+    setSentenceCategory(item.title);
+    setSentence(item.text);
+  };
+  const handleIsTyping = () => {
+    setIsTyping(true);
+  };
+  const handleInputValue = () => {
+    setInputValue('');
+  };
+  const handleTotalCorrectKeyStrokes = () => {
+    setTotalCorrectKeyStrokes(0); // 초기화
+  };
+
   useEffect(() => {
     if (cursor === 0) return;
     setAccuracy((correctKeyStrokes / cursor) * 100);
@@ -184,13 +204,14 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
         </div>
         <div className='proposal'>
           {isTyping ? (
-            <p>{proposals[proposalIndex]}</p>
+            <p>{sentence[proposalIndex]}</p>
           ) : (
             <button onClick={handleClickStart} id='start_typing_button'>
               StartTyping!
             </button>
           )}
         </div>
+
         <input
           className='keyboard_input'
           type='text'
@@ -207,9 +228,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
               {row.split('').map((key, index) => (
                 <button
                   key={index}
-                  className={`keyboard_keys ${
-                    activeKeys.includes(key.toUpperCase()) ? 'active' : ''
-                  }`}
+                  className={`keyboard_keys ${activeKeys.includes(key.toUpperCase()) ? 'active' : ''
+                    }`}
                   id={key}
                 >
                   {key}
@@ -219,6 +239,18 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           ))}
         </div>
       </div>
+      {isModalOpen && (
+        <SelectSentenceCategoryModal
+          closeModal={closeModal}
+          handleCategorySelect={handleCategorySelect}
+          handleIsTyping={handleIsTyping}
+          handleInputValue={handleInputValue}
+          inputRef={inputRef}
+          intervalRef={intervalRef}
+          startTimer={startTimer}
+          handleTotalCorrectKeyStrokes={handleTotalCorrectKeyStrokes}
+        />
+      )}
     </div>
   );
 };
