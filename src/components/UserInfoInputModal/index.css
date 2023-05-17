@@ -31,10 +31,14 @@
 
 .header_title {
   margin-bottom: 15px;
+  font-size: 20px;
 }
 
 .avatar_container {
-  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
   padding-top: 15px;
   text-align: center;
 }
@@ -42,30 +46,23 @@
 .avatar_imageBox {
   width: 100px;
   height: 100px;
-  border: 1px solid black;
+  border: 2px solid #293677;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto;
+  &.active {
+    border: 2px solid #b1b2ff;
+  }
+}
+
+.avatar_imageBox:hover {
+  cursor: pointer;
+  border: 2px solid #b1b2ff;
 }
 
 .avatar_image {
   width: 100%;
-  height: 100%;
-}
-
-.avatar_label_wrapper {
-  margin-top: 10px;
-}
-
-.avatar_label {
-  color: #293677;
-}
-.avatar_label:hover {
-  cursor: pointer;
-}
-
-.hidden {
-  visibility: hidden;
+  height: 110%;
 }
 
 .name_label {
@@ -81,7 +78,7 @@
 }
 
 .submit_button {
-  margin: 20px;
+  margin: 40px 0 0;
   width: 80px;
   height: 40px;
   border-radius: 10px;

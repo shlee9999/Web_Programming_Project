@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import HeaderLogo from '../../images/header_logo.png';
 import Logo from '../../images/logo.png';
 function Typing() {
-  const [viewPopup, setViewPopup] = useState(false);
+  const [viewPopup, setViewPopup] = useState(true);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
   const nav = useNavigate();
@@ -23,7 +23,7 @@ function Typing() {
   };
 
   return (
-    <div className='typingPage-wrapper'>
+    <div className='typingPage_wrapper'>
       <div className='typing_container'>
         <header>
           <img
@@ -48,8 +48,10 @@ function Typing() {
             />
           </div>
         </div>
+        {viewPopup && (
+          <UserInfoInput viewPopup={viewPopup} setViewPopup={setViewPopup} />
+        )}
       </div>
-      {viewPopup && <UserInfoInput setViewPopup={setViewPopup} />}
     </div>
   );
 }

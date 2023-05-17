@@ -4,13 +4,14 @@ import React from 'react';
 import { Element, Link } from 'react-scroll';
 import HeaderLogo from '../../images/header_logo.png';
 import Logo from '../../images/logo.png';
-function App() {
+
+const MainPage = () => {
   const navigate = useNavigate();
   return (
-    <div className='App'>
+    <div className='main_page_wrapper'>
       <div className='container'>
         <header>
-          <img src={HeaderLogo} className='header_logo' />
+          <img src={HeaderLogo} className='header_logo' alt='header_logo' />
           <div className='nav'>
             <Link
               to='scrollToElement1'
@@ -32,7 +33,7 @@ function App() {
         </header>
         <section>
           <div className='center_container'>
-            <img src={Logo} className='main_page_logo' />
+            <img src={Logo} className='main_page_logo' alt='logo' />
             <button
               className='start_button'
               onClick={() => {
@@ -54,13 +55,17 @@ function App() {
                 <p className='paragraph-items'>Proposal</p>
               </Element>
             </div>
-            <div className='paragraph_text'></div>
+            <div className='paragraph_text'>
+              <div>
+                <h1>프로젝트 기획서</h1>
+              </div>
+            </div>
           </div>
         </section>
         <footer></footer>
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default MainPage;
