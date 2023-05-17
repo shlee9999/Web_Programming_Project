@@ -62,7 +62,11 @@ const MainPage = () => {
                 <p className='paragraph-items'>Proposal</p>
               </Element>
             </div>
-            <div className='paragraph_text'></div>
+            <div className='paragraph_text'>
+              <div>
+                <h1>프로젝트 기획서</h1>
+              </div>
+            </div>
           </div>
         </section>
         <footer></footer>

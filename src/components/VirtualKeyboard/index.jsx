@@ -195,12 +195,12 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       <div className='keyboard_wrapper'>
         <div>
           <br /> 진행 시간 : {formattedTime}
-          {/* <br /> 타수 :
+          <br /> 타수 :
           {time === 0 ? 0 : ((totalCorrectKeyStrokes / time) * 60).toFixed(0)}
           <br /> 전체 정확도 :
           {isTyping && totalAccuracy > 0 ? totalAccuracy.toFixed(0) : 0}%
           <br /> 현재 정확도 :
-          {isTyping && totalAccuracy > 0 ? accuracy.toFixed(0) : 0}% */}
+          {isTyping && totalAccuracy > 0 ? accuracy.toFixed(0) : 0}%
         </div>
         <div className='proposal'>
           {isTyping ? (
