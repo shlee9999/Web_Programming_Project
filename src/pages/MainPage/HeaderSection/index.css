@@ -1,0 +1,7 @@
+.navigation_item {
+  display: flex;
+  margin-right: 20px;
+  font-size: 15px;
+  column-gap: 10px;
+  cursor: pointer;
+}

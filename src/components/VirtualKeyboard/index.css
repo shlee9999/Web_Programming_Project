@@ -30,15 +30,9 @@
   position: absolute;
   right: 10px;
   top: 10px;
-  background-color: #8468fa;
   border: none;
   width: 100px;
   height: 30px;
-  border-radius: 10px;
-  background-color: #b1b2ff;
-  border: none;
-  color: #293677;
-  font-size: 1rem;
   cursor: pointer;
 }
 .keyboard_input {
