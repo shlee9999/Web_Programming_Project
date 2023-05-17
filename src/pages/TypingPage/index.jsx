@@ -22,7 +22,7 @@ const Typing = () => {
   };
 
   return (
-    <div className='typingPage-wrapper'>
+    <div className='typingPage_wrapper'>
       <div className='typing_container'>
         <header>
           <img

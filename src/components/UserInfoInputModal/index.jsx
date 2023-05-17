@@ -8,16 +8,23 @@ const UserInfoInput = ({ setViewPopup }) => {
   const nameInputRef = useRef(null);
   const [selected, setSelected] = useState();
 
-  const OnClickButton = () => {
+  const onClickButton = () => {
     setViewPopup(false);
     localStorage.setItem('user_image', selected);
     localStorage.setItem('user_name', nameInputRef.current.value);
     console.log('성공');
   };
 
+  const closeModal = () => {
+    setViewPopup(false);
+  };
+  const onClickModal = (e) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className='page_wrapper'>
-      <div className='modal_wrapper'>
+    <div className='page_wrapper' onClick={closeModal}>
+      <div className='modal_wrapper' onClick={onClickModal}>
         <div className='content_container'>
           <p className='header_title'>Hello! Please choose you Character.</p>
           <p className='header_title'>And, write you nickname.</p>
@@ -70,12 +77,12 @@ const UserInfoInput = ({ setViewPopup }) => {
               className='name_input'
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  OnClickButton();
+                  onClickButton();
                 }
               }}
             />
           </div>
-          <button onClick={OnClickButton} className='submit_button'>
+          <button onClick={onClickButton} className='submit_button'>
             저장
           </button>
         </div>
