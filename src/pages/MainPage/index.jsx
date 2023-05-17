@@ -2,18 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import './index.css';
 import React from 'react';
 import { Element, Link } from 'react-scroll';
-
+import HeaderLogo from '../../images/header_logo.png';
+import Logo from '../../images/logo.png';
 function App() {
   const navigate = useNavigate();
-
   return (
     <div className='App'>
       <div className='container'>
         <header>
-          <img
-            src={process.env.PUBLIC_URL + 'images/header_logo.png'}
-            className='header_logo'
-          />
+          <img src={HeaderLogo} className='header_logo' />
           <div className='nav'>
             <Link
               to='scrollToElement1'
@@ -35,10 +32,7 @@ function App() {
         </header>
         <section>
           <div className='center_container'>
-            <img
-              src={process.env.PUBLIC_URL + 'images/logo.png'}
-              className='main_page_logo'
-            />
+            <img src={Logo} className='main_page_logo' />
             <button
               className='start_button'
               onClick={() => {

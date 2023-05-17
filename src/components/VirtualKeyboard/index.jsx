@@ -13,7 +13,6 @@ const keyRowsKorean = [
 ];
 const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const inputRef = useRef(null);
-
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
   const [cursor, setCursor] = useState(0);
@@ -34,10 +33,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   }${seconds}`;
   const proposals = language ? proposalsEnglish : proposalsKorean;
   const handleClickStart = () => {
-    setIsTyping(true);
     setInputValue('');
     inputRef.current.disabled = false;
     inputRef.current.focus();
+    setIsTyping(true);
     intervalRef.current = startTimer();
     setTotalCorrectKeyStrokes(0); // 초기화
   };
