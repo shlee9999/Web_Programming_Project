@@ -4,6 +4,7 @@ import './index.css';
 import SelectSentenceCategoryModal from '../SelectCategoryModal';
 import PauseModal from '../PauseModal';
 import sentence_korean from '../../assets/sentence_korean.json';
+import sentence_english from '../../assets/sentence_english.json';
 const keyRowsEnglish = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 const keyRowsKorean = [
   'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ',
@@ -187,6 +188,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
 
   const toggleLanguage = () => {
     setLanguage(!language);
+    if (language) {
+      setSentence(sentence_english.sentence[0].text);
+    } else setSentence(sentence_korean.sentence[0].text);
   };
 
   const selectCategory = (item) => () => {
