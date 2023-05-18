@@ -48,6 +48,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     if (!isPauseModalOpen) return;
     setIsPauseModalOpen(false);
     intervalRef.current = startTimer();
+    inputRef.current.focus();
   };
   const openSelectModal = () => {
     if (isSelectModalOpen) return;
