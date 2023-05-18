@@ -4,14 +4,16 @@ import '../../global.css';
 import sentence_english from '../../assets/sentence_english.json';
 import sentence_korean from '../../assets/sentence_korean.json';
 
-const Modal = ({ closeModal, selectCategory, isTyping, startGame }) => {
-  const [language, setLanguage] = useState(false); // false : korean
+const Modal = ({
+  closeModal,
+  selectCategory,
+  isTyping,
+  startGame,
+  language,
+  toggleLanguage,
+}) => {
   const [sentenceIndex, setSentenceIndex] = useState(-1);
 
-  const handleCategoryLanguage = (temp) => {
-    setLanguage(temp);
-    setSentenceIndex(-1);
-  };
   const handleClickStart = () => {
     startGame();
   };
@@ -25,6 +27,18 @@ const Modal = ({ closeModal, selectCategory, isTyping, startGame }) => {
     selectCategory(item)();
     setSentenceIndex(index);
   };
+
+  const toKorean = () => {
+    if (!language) return;
+    toggleLanguage();
+    setSentenceIndex(-1);
+  };
+  const toEnglish = () => {
+    if (language) return;
+    toggleLanguage();
+    setSentenceIndex(-1);
+  };
+
   useEffect(() => {
     if (isTyping) {
       startGame();
@@ -38,16 +52,10 @@ const Modal = ({ closeModal, selectCategory, isTyping, startGame }) => {
           Please choose a typing sentence category
         </div>
         <div className='select_language'>
-          <p
-            className='select_language_item'
-            onClick={() => handleCategoryLanguage(false)}
-          >
+          <p className='select_language_item' onClick={toKorean}>
             한글
           </p>
-          <p
-            className='select_language_item'
-            onClick={() => handleCategoryLanguage(true)}
-          >
+          <p className='select_language_item' onClick={toEnglish}>
             English
           </p>
         </div>

@@ -18,7 +18,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [totalCursor, setTotalCursor] = useState(0);
   const [time, setTime] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const [language, setLanguage] = useState(true); //true = Eng
+  const [language, setLanguage] = useState(false); //true = Eng
   const [inputValue, setInputValue] = useState('');
   const [activeKeys, setActiveKeys] = useState([]);
   const [proposalIndex, setProposalIndex] = useState(0);
@@ -154,9 +154,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       case 'Backspace':
         handlePressBackspace();
         return;
-      case 'CapsLock':
-        toggleLanguage();
-        return;
+      // case 'CapsLock':
+      //   toggleLanguage();
+      //   return;
       case 'Escape':
         handlePressESC();
         return;
@@ -225,6 +225,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     initialize();
   }, [isTyping]);
+
   const startGame = () => {
     closeSelectModal();
     startTyping();
@@ -291,6 +292,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           isTyping={isTyping}
           selectCategory={selectCategory}
           startGame={startGame}
+          language={language}
+          toggleLanguage={toggleLanguage}
         />
       )}
       {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
