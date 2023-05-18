@@ -40,9 +40,8 @@ const Modal = ({
   };
 
   useEffect(() => {
-    if (isTyping) {
-      startGame();
-    }
+    if (!isTyping) return;
+    startGame();
   }, [isTyping]);
 
   return (

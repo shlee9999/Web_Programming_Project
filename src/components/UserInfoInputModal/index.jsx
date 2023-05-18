@@ -7,7 +7,7 @@ import Dog from '../../images/avatar/Dog.png';
 const avatarList = [Male, Female, Dog];
 const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const nameInputRef = useRef(null);
-  const [selected, setSelected] = useState(-1);
+  const [selected, setSelected] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const onClickButton = () => {
     saveUserInfo();
@@ -16,7 +16,7 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
     setInputValue(e.target.value);
   };
   const saveUserInfo = () => {
-    if (selected === -1 || inputValue === '') return;
+    if (inputValue === '') return;
     setViewPopup(false);
     localStorage.setItem('user_image', selected);
     // localStorage.setItem('user_name', nameInputRef.current.value);
