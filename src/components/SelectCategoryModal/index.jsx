@@ -18,8 +18,16 @@ const Modal = ({
 
   const handleKeyDown = (e) => {
     const key = e.nativeEvent.key;
-    console.log(key);
-    if (key === 'Enter') startGame();
+    switch (key) {
+      case 'Enter':
+        startGame();
+        return;
+      case 'Escape':
+        closeModal();
+        return;
+      default:
+        break;
+    }
   };
   const handleClickStart = () => {
     startGame();
@@ -30,7 +38,6 @@ const Modal = ({
   const handleClickCategory = (item, index) => () => {
     selectCategory(item)();
     setSentenceIndex(index);
-    console.log(index);
   };
 
   const toKorean = () => {
@@ -52,7 +59,6 @@ const Modal = ({
   useEffect(() => {
     if (!buttonRef.current) return;
     buttonRef.current.focus();
-    console.log(language);
   }, [language]);
 
   return (
@@ -70,25 +76,23 @@ const Modal = ({
           </p>
         </div>
         <div className='category_wrapper'>
-          <ul className='category_list'>
-            {sentence_total.sentence.map((item, index) => {
-              return (
-                <button
-                  className={`category_list_item ${
-                    index === sentenceIndex && 'select_sentence'
-                  }`}
-                  key={`${language}_category_${index}`}
-                  onFocus={handleClickCategory(item, index)}
-                  onKeyDown={handleKeyDown}
-                  ref={index === 0 ? buttonRef : null}
-                >
-                  {item.title}
-                </button>
-              );
-            })}
-          </ul>
+          {sentence_total.sentence.map((item, index) => {
+            return (
+              <button
+                className={`category_item ${
+                  index === sentenceIndex && 'select_sentence'
+                }`}
+                key={`${language}_category_${index}`}
+                onFocus={handleClickCategory(item, index)}
+                onKeyDown={handleKeyDown}
+                ref={index === 0 ? buttonRef : null}
+              >
+                {item.title}
+              </button>
+            );
+          })}
         </div>
-        <button className='modal_close_button' onClick={handleClickStart}>
+        <button className='modal_start_button' onClick={handleClickStart}>
           Start!
         </button>
       </div>

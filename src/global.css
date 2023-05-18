@@ -24,6 +24,7 @@ button {
   color: #293677;
   font-size: 15px;
   cursor: pointer;
+  outline: none;
 }
 
 button:hover {
