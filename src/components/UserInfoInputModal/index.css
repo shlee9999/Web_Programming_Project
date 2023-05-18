@@ -69,8 +69,5 @@
   border: none;
   color: #293677;
   font-size: 1rem;
-}
-
-.submit_button:hover {
   cursor: pointer;
 }

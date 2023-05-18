@@ -20,9 +20,6 @@
   margin: 4vh;
   width: 25vw;
   height: 6vh;
-}
-
-.start_button:hover {
   cursor: pointer;
 }
 
