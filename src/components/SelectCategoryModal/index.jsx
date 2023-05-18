@@ -12,8 +12,12 @@ const Modal = ({
   language,
   toggleLanguage,
 }) => {
-  const [sentenceIndex, setSentenceIndex] = useState(-1);
-
+  const [sentenceIndex, setSentenceIndex] = useState(0);
+  const handleKeyDown = (e) => {
+    const key = e.nativeEvent.key;
+    console.log(key);
+    if (key === 'Enter') startGame();
+  };
   const handleClickStart = () => {
     startGame();
   };
@@ -31,21 +35,25 @@ const Modal = ({
   const toKorean = () => {
     if (!language) return;
     toggleLanguage();
-    setSentenceIndex(-1);
+    setSentenceIndex(0);
   };
   const toEnglish = () => {
     if (language) return;
     toggleLanguage();
-    setSentenceIndex(-1);
+    setSentenceIndex(0);
   };
 
   useEffect(() => {
     if (!isTyping) return;
     startGame();
-  }, [isTyping]);
+  }, [isTyping, startGame]);
 
   return (
-    <div className='modal_overlay' onClick={closeModal}>
+    <div
+      className='modal_overlay'
+      onClick={closeModal}
+      onKeyDown={handleKeyDown}
+    >
       <div className='modal' onClick={onClickModal}>
         <div className='header_title'>
           Please choose a typing sentence category

@@ -19,9 +19,7 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
     if (inputValue === '') return;
     setViewPopup(false);
     localStorage.setItem('user_image', selected);
-    // localStorage.setItem('user_name', nameInputRef.current.value);
     localStorage.setItem('user_name', inputValue);
-    // console.log('성공');
   };
 
   const onClickImage = (index) => () => {
@@ -33,7 +31,7 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   useEffect(() => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
-  }, viewPopup);
+  }, [viewPopup]);
 
   return (
     <div className='modal_overlay'>
@@ -46,11 +44,12 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
               <div
                 className={`avatar_imageBox ${selected === index && `active`}`}
                 onClick={onClickImage(index)}
+                key={`avatar_${index}`}
               >
                 <img
                   className='avatar_image'
                   src={avatar}
-                  alt={`avatar_${index + 1}`}
+                  alt={`avatar_${index}`}
                 />
               </div>
             );

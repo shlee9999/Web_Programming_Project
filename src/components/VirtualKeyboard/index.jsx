@@ -3,7 +3,7 @@ import Hangul from 'hangul-js';
 import './index.css';
 import SelectSentenceCategoryModal from '../SelectCategoryModal';
 import PauseModal from '../PauseModal';
-
+import sentence_korean from '../../assets/sentence_korean.json';
 const keyRowsEnglish = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 const keyRowsKorean = [
   'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ',
@@ -25,7 +25,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [totalAccuracy, setTotalAccuracy] = useState(100);
   const [accuracy, setAccuracy] = useState(100);
   // const [sentenceCategory, setSentenceCategory] = useState('');
-  const [sentence, setSentence] = useState([]);
+  const [sentence, setSentence] = useState(sentence_korean.sentence[0].text);
   const intervalRef = useRef(null);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
@@ -36,6 +36,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     seconds < 10 ? '0' : ''
   }${seconds}`;
 
+  const [isPlaceholderOn, setIsPlaceHolderOn] = useState(true);
   const handleClickStart = () => {
     openSelectModal();
   };
@@ -122,6 +123,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     openPauseModal();
   };
 
+  const hidePlaceholder = () => {
+    setIsPlaceHolderOn(false);
+  };
+
   const handlePressKorean = (e) => {
     const key = e.nativeEvent.key;
     const disassembledInputValue = Hangul.disassemble(inputValue);
@@ -160,6 +165,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       case 'Escape':
         handlePressESC();
         return;
+      default:
+        break;
     }
 
     if (key.length === 1) {
@@ -199,32 +206,44 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setTotalCorrectKeyStrokes(0); // 초기화
   };
 
-  const initialize = () => {
-    setProposalIndex(0);
-    inputRef.current.disabled = true;
-    stopTimer();
-    setTotalCorrectKeyStrokes(0);
-    setTime(0);
-    setTotalCursor(0);
-    onTypingAccuracyChange(100);
-  };
-
   useEffect(() => {
     if (cursor === 0) return;
     if (correctKeyStrokes >= 0) setAccuracy((correctKeyStrokes / cursor) * 100);
     setTotalAccuracy((totalCorrectKeyStrokes / totalCursor) * 100);
     onTypingAccuracyChange(accuracy.toFixed(0));
-  }, [cursor]);
+  }, [
+    cursor,
+    accuracy,
+    correctKeyStrokes,
+    onTypingAccuracyChange,
+    totalCorrectKeyStrokes,
+    totalCursor,
+  ]);
 
   useEffect(() => {
     if (totalCorrectKeyStrokes < 0 || time === 0) return;
     onTypingSpeedChange(((totalCorrectKeyStrokes / time) * 60).toFixed(0));
-  }, [totalCorrectKeyStrokes, time]);
+  }, [
+    totalCorrectKeyStrokes,
+    time,
+    onTypingAccuracyChange,
+    onTypingSpeedChange,
+  ]);
 
   useEffect(() => {
+    const initialize = () => {
+      setProposalIndex(0);
+      inputRef.current.disabled = true;
+      stopTimer();
+      setTotalCorrectKeyStrokes(0);
+      setTime(0);
+      setTotalCursor(0);
+      onTypingAccuracyChange(100);
+      setIsPlaceHolderOn(false);
+    };
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     initialize();
-  }, [isTyping]);
+  }, [isTyping, onTypingAccuracyChange]);
 
   const startGame = () => {
     closeSelectModal();
@@ -259,7 +278,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           value={inputValue}
           onKeyDown={handleKeyPress}
           onChange={handleKeyPress}
-          placeholder={isTyping ? '' : ' Please Press Start Typing Button.'}
+          placeholder={
+            isPlaceholderOn ? '' : ' Please Press Start Typing Button.'
+          }
           disabled
           ref={inputRef}
         />
@@ -294,6 +315,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           startGame={startGame}
           language={language}
           toggleLanguage={toggleLanguage}
+          hidePlaceholder={hidePlaceholder}
         />
       )}
       {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
