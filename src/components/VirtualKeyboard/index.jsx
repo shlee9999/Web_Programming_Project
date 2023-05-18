@@ -189,8 +189,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const toggleLanguage = () => {
     setLanguage(!language);
     if (language) {
+      //영어
       setSentence(sentence_english.sentence[0].text);
-    } else setSentence(sentence_korean.sentence[0].text);
+    } //한국어
+    else setSentence(sentence_korean.sentence[0].text);
   };
 
   const selectCategory = (item) => () => {

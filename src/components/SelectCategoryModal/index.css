@@ -44,6 +44,7 @@
 .category_list_item {
   padding: 10px;
   text-align: center;
+  background-color: inherit;
 }
 
 .category_list_item:hover {

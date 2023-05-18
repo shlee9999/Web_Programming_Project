@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
 import '../../global.css';
 import sentence_english from '../../assets/sentence_english.json';
@@ -13,6 +13,9 @@ const Modal = ({
   toggleLanguage,
 }) => {
   const [sentenceIndex, setSentenceIndex] = useState(0);
+  const buttonRef = useRef(null);
+  const sentence_total = language ? sentence_english : sentence_korean;
+
   const handleKeyDown = (e) => {
     const key = e.nativeEvent.key;
     console.log(key);
@@ -21,15 +24,13 @@ const Modal = ({
   const handleClickStart = () => {
     startGame();
   };
-
-  const sentence_total = language ? sentence_english : sentence_korean;
-
   const onClickModal = (e) => {
     e.stopPropagation();
   };
   const handleClickCategory = (item, index) => () => {
     selectCategory(item)();
     setSentenceIndex(index);
+    console.log(index);
   };
 
   const toKorean = () => {
@@ -48,12 +49,14 @@ const Modal = ({
     startGame();
   }, [isTyping, startGame]);
 
+  useEffect(() => {
+    if (!buttonRef.current) return;
+    buttonRef.current.focus();
+    console.log(language);
+  }, [language]);
+
   return (
-    <div
-      className='modal_overlay'
-      onClick={closeModal}
-      onKeyDown={handleKeyDown}
-    >
+    <div className='modal_overlay' onClick={closeModal}>
       <div className='modal' onClick={onClickModal}>
         <div className='header_title'>
           Please choose a typing sentence category
@@ -70,15 +73,17 @@ const Modal = ({
           <ul className='category_list'>
             {sentence_total.sentence.map((item, index) => {
               return (
-                <li
+                <button
                   className={`category_list_item ${
                     index === sentenceIndex && 'select_sentence'
                   }`}
-                  key={`category_${index}`}
-                  onClick={handleClickCategory(item, index)}
+                  key={`${language}_category_${index}`}
+                  onFocus={handleClickCategory(item, index)}
+                  onKeyDown={handleKeyDown}
+                  ref={index === 0 ? buttonRef : null}
                 >
                   {item.title}
-                </li>
+                </button>
               );
             })}
           </ul>
