@@ -23,8 +23,6 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   };
 
   const onClickImage = (index) => () => {
-    if (!nameInputRef) return;
-    nameInputRef.current.focus();
     setSelected(index);
   };
 
@@ -32,9 +30,13 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
   }, [viewPopup]);
+  const onClickAnywhere = () => {
+    if (!nameInputRef) return;
+    nameInputRef.current.focus();
+  };
 
   return (
-    <div className='modal_overlay'>
+    <div className='modal_overlay' onClick={onClickAnywhere}>
       <div className='modal header_title'>
         Hello! Please choose your Character.
         <br /> And, write your nickname.

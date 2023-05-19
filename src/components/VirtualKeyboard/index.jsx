@@ -124,10 +124,6 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     openPauseModal();
   };
 
-  const hidePlaceholder = () => {
-    setIsPlaceHolderOn(false);
-  };
-
   const handlePressKorean = (e) => {
     const key = e.nativeEvent.key;
     const disassembledInputValue = Hangul.disassemble(inputValue);
@@ -259,6 +255,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     inputRef.current.focus();
     intervalRef.current = startTimer();
     handleTotalCorrectKeyStrokes();
+    setIsPlaceHolderOn(false);
   };
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
@@ -321,7 +318,6 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           startGame={startGame}
           language={language}
           toggleLanguage={toggleLanguage}
-          hidePlaceholder={hidePlaceholder}
         />
       )}
       {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
