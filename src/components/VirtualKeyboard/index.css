@@ -30,10 +30,8 @@
   position: absolute;
   right: 10px;
   top: 10px;
-  border: none;
   width: 100px;
   height: 30px;
-  cursor: pointer;
 }
 .keyboard_input {
   border: 1px solid #b1b2ff;
@@ -60,16 +58,9 @@
   width: 25vw;
   height: 6vh;
   border-radius: 10px;
-  background-color: #b1b2ff;
-  border: none;
-  color: #293677;
   font-size: 1.5rem;
 }
 
-#start_typing_button:hover {
-  cursor: pointer;
-  filter: brightness(0.9);
-}
 @keyframes blink {
   from {
     background-color: #8468fa;
