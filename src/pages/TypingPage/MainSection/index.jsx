@@ -5,6 +5,7 @@ import './index.css';
 import { useState } from 'react';
 import UserInfo from '../../../components/UserInfo';
 import UserInfoInput from '../../../components/UserInfoInputModal';
+import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 
 export const MainSection = () => {
   const [viewPopup, setViewPopup] = useState(true);
@@ -28,10 +29,10 @@ export const MainSection = () => {
         />
       </div>
       <div className='right_container'>
-        <UserInfo
+        <UserInfo viewPopup={viewPopup} />
+        <TypingResultsContainer
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
-          viewPopup={viewPopup}
         />
       </div>
       {viewPopup && (

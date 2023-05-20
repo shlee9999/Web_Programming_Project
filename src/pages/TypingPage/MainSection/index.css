@@ -6,6 +6,7 @@
   border: 1px solid #b1b2ff;
   display: flex;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .left_container {

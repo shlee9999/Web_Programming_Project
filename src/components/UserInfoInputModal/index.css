@@ -46,6 +46,7 @@
 .avatar_image {
   width: 100%;
   height: 110%;
+  -webkit-user-drag: none;
 }
 
 .name_label {

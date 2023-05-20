@@ -4,6 +4,7 @@ import { avatarList } from '../../constants/avatarList';
 
 const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const nameInputRef = useRef(null);
+  const [actived, setActived] = useState(false);
 
   const [inputValue, setInputValue] = useState('');
   const onClickButton = () => {

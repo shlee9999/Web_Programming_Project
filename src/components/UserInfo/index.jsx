@@ -2,7 +2,7 @@ import './index.css';
 import { avatarList } from '../../constants/avatarList';
 import { useEffect, useState } from 'react';
 
-const UserInfo = ({ typingSpeed, typingAccuracy, viewPopup }) => {
+const UserInfo = ({ viewPopup }) => {
   const [userName, setUserName] = useState('');
   const [userImageIndex, setUserImageIndex] = useState(0);
 
@@ -24,10 +24,6 @@ const UserInfo = ({ typingSpeed, typingAccuracy, viewPopup }) => {
         </div>
         <div className='user_name_wrapper'>
           <p className='user_name'>{userName}</p>
-        </div>
-        <div>
-          <p>{typingSpeed}</p>
-          <p>{typingAccuracy}</p>
         </div>
       </div>
     </div>
