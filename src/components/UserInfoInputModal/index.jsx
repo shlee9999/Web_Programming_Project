@@ -1,13 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import './index.css';
-import Male from '../../images/avatar/Male.png';
-import Female from '../../images/avatar/Female.png';
-import Dog from '../../images/avatar/Dog.png';
+import { avatarList } from '../../constants/avatarList';
 
-const avatarList = [Male, Female, Dog];
 const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const nameInputRef = useRef(null);
-  const [selected, setSelected] = useState(0);
+
   const [inputValue, setInputValue] = useState('');
   const onClickButton = () => {
     saveUserInfo();
@@ -18,23 +15,31 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const saveUserInfo = () => {
     if (inputValue === '') return;
     setViewPopup(false);
-    localStorage.setItem('user_image', selected);
+    localStorage.setItem('user_image', focusedAvatarIndex);
     localStorage.setItem('user_name', inputValue);
   };
 
-  const onClickImage = (index) => () => {
-    if (!nameInputRef) return;
-    nameInputRef.current.focus();
-    setSelected(index);
+  const onFocusImage = () => {
+    if (!focusedAvatarRef.current) return;
+    focusedAvatarRef.current.focus();
   };
+  const focusedAvatarRef = useRef(null);
+  const [focusedAvatarIndex, setFocusedAvatarIndex] = useState(0);
 
   useEffect(() => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
   }, [viewPopup]);
 
+  const onClickAnywhere = () => {
+    if (!nameInputRef) return;
+    nameInputRef.current.focus();
+  };
+  const handleClickAvatar = (index) => () => {
+    setFocusedAvatarIndex(index);
+  };
   return (
-    <div className='modal_overlay'>
+    <div className='modal_overlay' onClick={onClickAnywhere}>
       <div className='modal header_title'>
         Hello! Please choose your Character.
         <br /> And, write your nickname.
@@ -42,14 +47,18 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
           {avatarList.map((avatar, index) => {
             return (
               <div
-                className={`avatar_imageBox ${selected === index && `active`}`}
-                onClick={onClickImage(index)}
+                className={`avatar_imageBox ${
+                  focusedAvatarIndex === index && `active`
+                }`}
                 key={`avatar_${index}`}
               >
                 <img
+                  onClick={handleClickAvatar(index)}
+                  onFocus={onFocusImage}
                   className='avatar_image'
                   src={avatar}
                   alt={`avatar_${index}`}
+                  ref={focusedAvatarRef}
                 />
               </div>
             );

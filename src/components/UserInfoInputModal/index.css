@@ -55,19 +55,15 @@
 .name_input {
   width: 200px;
   height: 30px;
-  border: 1px solid #b1b2ff;
+  border: 1.5px solid #293677;
   border-radius: 15px;
   text-align: center;
+  outline: none;
 }
 
 .submit_button {
   margin: 40px 0 0;
   width: 80px;
   height: 40px;
-  border-radius: 10px;
-  background-color: #b1b2ff;
-  border: none;
-  color: #293677;
   font-size: 1rem;
-  cursor: pointer;
 }

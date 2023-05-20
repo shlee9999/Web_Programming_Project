@@ -17,6 +17,9 @@
   border-radius: 10px;
   color: #b1b2ff;
   cursor: pointer;
+  &.active {
+    border: 2px solid #b1b2ff;
+  }
 }
 
 .category_wrapper {
@@ -36,6 +39,8 @@
   padding: 10px;
   text-align: center;
   background-color: inherit;
+  width: inherit;
+  text-align: left;
   cursor: pointer;
 }
 
@@ -47,12 +52,10 @@
   width: 80px;
   height: 40px;
   border: 3px solid #b1b2ff;
-  border-radius: 10px;
   background-color: white;
   color: #b1b2ff;
   font-size: 20px;
   margin: 20px;
   padding: 6px;
   text-align: center;
-  cursor: pointer;
 }

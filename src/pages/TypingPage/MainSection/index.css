@@ -13,7 +13,6 @@
   flex-direction: column;
   align-items: center;
   width: 80%;
-  height: 100%;
   border-right: 1px solid #b1b2ff;
   text-align: center;
 }
@@ -26,6 +25,5 @@
 
 .right_container {
   width: 20%;
-  height: 100%;
   padding-top: 10vh;
 }

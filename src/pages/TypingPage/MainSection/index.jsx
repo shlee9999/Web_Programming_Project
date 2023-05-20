@@ -28,7 +28,11 @@ export const MainSection = () => {
         />
       </div>
       <div className='right_container'>
-        <UserInfo typingSpeed={typingSpeed} typingAccuracy={typingAccuracy} />
+        <UserInfo
+          typingSpeed={typingSpeed}
+          typingAccuracy={typingAccuracy}
+          viewPopup={viewPopup}
+        />
       </div>
       {viewPopup && (
         <UserInfoInput viewPopup={viewPopup} setViewPopup={setViewPopup} />
