@@ -28,6 +28,12 @@ const Modal = ({
         if (focusedCategoryIndex >= sentence_total.length) return;
         setFocusedCategoryIndex((prev) => prev + 1);
         return;
+      case 'ArrowLeft':
+        if (language) toggleLanguage();
+        return;
+      case 'ArrowRight':
+        if (!language) toggleLanguage();
+        return;
       case 'Enter':
         startGame();
         return;
@@ -42,11 +48,14 @@ const Modal = ({
     startGame();
   };
   const onClickModal = (e) => {
+    if (!buttonRef.current) return;
     e.stopPropagation();
+    buttonRef.current.focus();
   };
-  const handleClickCategory = (item, index) => () => {
-    selectCategory(item)();
+  const handleFocusCategory = (item, index) => () => {
     setSentenceIndex(index);
+    selectCategory(item)();
+    setFocusedCategoryIndex(index);
   };
 
   const toKorean = () => {
@@ -73,6 +82,7 @@ const Modal = ({
     if (!buttonRef.current) return;
     buttonRef.current.focus();
   }, [focusedCategoryIndex]);
+
   return (
     <div className='modal_overlay' onClick={closeModal}>
       <div className='modal' onClick={onClickModal}>
@@ -80,10 +90,16 @@ const Modal = ({
           Please choose a typing sentence category
         </div>
         <div className='select_language'>
-          <p className='select_language_item' onClick={toKorean}>
+          <p
+            className={`select_language_item ${language && 'active'}`}
+            onClick={toKorean}
+          >
             한글
           </p>
-          <p className='select_language_item' onClick={toEnglish}>
+          <p
+            className={`select_language_item ${!language && 'active'}`}
+            onClick={toEnglish}
+          >
             English
           </p>
         </div>
@@ -95,7 +111,7 @@ const Modal = ({
                   index === sentenceIndex && 'select_sentence'
                 }`}
                 key={`${language}_category_${index}`}
-                onFocus={handleClickCategory(item, index)}
+                onFocus={handleFocusCategory(item, index)}
                 onKeyDown={handleKeyDown}
                 ref={index === focusedCategoryIndex ? buttonRef : null}
               >

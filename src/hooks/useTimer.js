@@ -34,6 +34,9 @@ export const useTimer = ({ defaultTime }) => {
       case 'START':
         startTimer();
         return;
+      default:
+        console.error('없는 status입니다.');
+        return;
     }
   }, [status]);
 

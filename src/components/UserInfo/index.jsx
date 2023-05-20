@@ -1,17 +1,25 @@
 import './index.css';
 import { avatarList } from '../../constants/avatarList';
-const UserInfo = ({ typingSpeed, typingAccuracy }) => {
-  const userName = localStorage.getItem('user_name');
-  const userImage = localStorage.getItem('user_image');
+import { useEffect, useState } from 'react';
 
+const UserInfo = ({ typingSpeed, typingAccuracy, viewPopup }) => {
+  const [userName, setUserName] = useState('');
+  const [userImageIndex, setUserImageIndex] = useState(0);
+
+  useEffect(() => {
+    //불러오기
+    if (viewPopup) return;
+    setUserName(localStorage.getItem('user_name'));
+    setUserImageIndex(localStorage.getItem('user_image'));
+  }, [viewPopup]);
   return (
     <div className='userInfo_wrapper'>
       <div className='profile_container'>
         <div className='avatar_imageBox_selected'>
           <img
             className='avatar_image'
-            alt='선택한 사진'
-            src={avatarList[userImage]}
+            alt='select_image'
+            src={avatarList[userImageIndex]}
           />
         </div>
         <div className='user_name_wrapper'>
