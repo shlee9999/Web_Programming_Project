@@ -5,6 +5,8 @@ import SelectSentenceCategoryModal from '../SelectCategoryModal';
 import PauseModal from '../PauseModal';
 import sentence_korean from '../../assets/sentence_korean.json';
 import sentence_english from '../../assets/sentence_english.json';
+import { useTimer } from '../../hooks/useTimer';
+
 const keyRowsEnglish = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 const keyRowsKorean = [
   'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ',
@@ -18,6 +20,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [cursor, setCursor] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
   const [time, setTime] = useState(0);
+  const { onStartTimer } = useTimer({ defaultTime: 0 });
   const [isTyping, setIsTyping] = useState(false);
   const [language, setLanguage] = useState(false); //true = Eng
   const [inputValue, setInputValue] = useState('');
@@ -241,7 +244,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       setTime(0);
       setTotalCursor(0);
       onTypingAccuracyChange(100);
-      setIsPlaceHolderOn(false);
+      setIsPlaceHolderOn(true);
     };
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     initialize();
@@ -282,7 +285,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           onKeyDown={handleKeyPress}
           onChange={handleKeyPress}
           placeholder={
-            isPlaceholderOn ? '' : ' Please Press Start Typing Button.'
+            isPlaceholderOn ? ' Please Press Start Typing Button.' : ''
           }
           disabled
           ref={inputRef}
