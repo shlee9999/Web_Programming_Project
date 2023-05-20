@@ -1,91 +1,83 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './index.css';
-import Dog from '../../images/avatar/Dog.png';
-import Female from '../../images/avatar/Female.png';
 import Male from '../../images/avatar/Male.png';
+import Female from '../../images/avatar/Female.png';
+import Dog from '../../images/avatar/Dog.png';
 
-const UserInfoInput = ({ setViewPopup }) => {
+const avatarList = [Male, Female, Dog];
+const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const nameInputRef = useRef(null);
-  const [selected, setSelected] = useState();
-
+  const [selected, setSelected] = useState(-1);
+  const [inputValue, setInputValue] = useState('');
   const onClickButton = () => {
+    saveUserInfo();
+  };
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+  const saveUserInfo = () => {
+    if (selected === -1 || inputValue === '') return;
     setViewPopup(false);
     localStorage.setItem('user_image', selected);
-    localStorage.setItem('user_name', nameInputRef.current.value);
-    console.log('성공');
+    // localStorage.setItem('user_name', nameInputRef.current.value);
+    localStorage.setItem('user_name', inputValue);
+    // console.log('성공');
   };
 
-  const closeModal = () => {
-    setViewPopup(false);
+  const onClickImage = (index) => () => {
+    if (!nameInputRef) return;
+    nameInputRef.current.focus();
+    setSelected(index);
   };
-  const onClickModal = (e) => {
-    e.stopPropagation();
-  };
+
+  useEffect(() => {
+    if (!nameInputRef) return;
+    nameInputRef.current.focus();
+  }, viewPopup);
 
   return (
-    <div className='page_wrapper' onClick={closeModal}>
-      <div className='modal_wrapper' onClick={onClickModal}>
-        <div className='content_container'>
-          <p className='header_title'>Hello! Please choose you Character.</p>
-          <p className='header_title'>And, write you nickname.</p>
-          <div className='avatar_container'>
-            <div
-              className={
-                selected === 1 ? 'avatar_imageBox active' : 'avatar_imageBox'
-              }
-              onClick={() => {
-                setSelected(1);
-              }}
-            >
-              <img className='avatar_image' src={Male} alt='male' />
-            </div>
-            <div
-              className={
-                selected === 2 ? 'avatar_imageBox active' : 'avatar_imageBox'
-              }
-              onClick={() => {
-                setSelected(2);
-              }}
-            >
-              <img className='avatar_image' src={Female} alt='female' />
-            </div>
-            <div
-              className={
-                selected === 3 ? 'avatar_imageBox active' : 'avatar_imageBox'
-              }
-            >
-              <img
-                className='avatar_image'
-                src={Dog}
-                alt='dog'
-                onClick={() => {
-                  setSelected(3);
-                }}
-              />
-            </div>
-          </div>
-          <div>
-            <div className='name_label_wrapper'>
-              <label htmlFor='name' className='name_label'>
-                닉네임
-              </label>
-            </div>
-            <input
-              type='text'
-              id='name'
-              ref={nameInputRef}
-              className='name_input'
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  onClickButton();
-                }
-              }}
-            />
-          </div>
-          <button onClick={onClickButton} className='submit_button'>
-            저장
-          </button>
+    <div className='modal_overlay'>
+      <div className='modal header_title'>
+        Hello! Please choose your Character.
+        <br /> And, write your nickname.
+        <div className='avatar_container'>
+          {avatarList.map((avatar, index) => {
+            return (
+              <div
+                className={`avatar_imageBox ${selected === index && `active`}`}
+                onClick={onClickImage(index)}
+              >
+                <img
+                  className='avatar_image'
+                  src={avatar}
+                  alt={`avatar_${index + 1}`}
+                />
+              </div>
+            );
+          })}
         </div>
+        <div>
+          <div className='name_label_wrapper'>
+            <label htmlFor='name' className='name_label'>
+              닉네임
+            </label>
+          </div>
+          <input
+            type='text'
+            id='name'
+            ref={nameInputRef}
+            onChange={handleInputChange}
+            className='name_input'
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                saveUserInfo();
+              }
+            }}
+          />
+        </div>
+        <button onClick={onClickButton} className='submit_button'>
+          저장
+        </button>
       </div>
     </div>
   );

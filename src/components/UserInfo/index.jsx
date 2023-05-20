@@ -3,6 +3,7 @@ import Dog from '../../images/avatar/Dog.png';
 import Female from '../../images/avatar/Female.png';
 import Male from '../../images/avatar/Male.png';
 
+const avatarList = [Male, Female, Dog];
 const UserInfo = ({ typingSpeed, typingAccuracy }) => {
   const userName = localStorage.getItem('user_name');
   const userImage = localStorage.getItem('user_image');
@@ -12,15 +13,11 @@ const UserInfo = ({ typingSpeed, typingAccuracy }) => {
     <div className='userInfo_wrapper'>
       <div className='profile_container'>
         <div className='avatar_imageBox_selected'>
-          {userImage === '1' && (
-            <img className='avatar_image' alt='선택한 사진' src={Male} />
-          )}
-          {userImage === '2' && (
-            <img className='avatar_image' alt='선택한 사진' src={Female} />
-          )}
-          {userImage === '3' && (
-            <img className='avatar_image' alt='선택한 사진' src={Dog} />
-          )}
+          <img
+            className='avatar_image'
+            alt='선택한 사진'
+            src={avatarList[userImage]}
+          />
         </div>
         <div className='user_name_wrapper'>
           <p className='user_name'>{userName}</p>

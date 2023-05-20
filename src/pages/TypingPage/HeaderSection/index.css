@@ -1,0 +1,27 @@
+.header_section {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 85vw;
+  height: 7vh;
+  border: 1px solid #b1b2ff;
+  background-color: #eef1ff;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  box-sizing: border-box;
+}
+.header_logo {
+  width: 6vw;
+  margin-left: 1.5vw;
+  cursor: pointer;
+}
+
+.navigation_item {
+  display: flex;
+  margin-right: 20px;
+  font-size: 15px;
+  column-gap: 10px;
+  cursor: pointer;
+}

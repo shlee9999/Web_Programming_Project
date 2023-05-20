@@ -1,0 +1,48 @@
+.main_page_main {
+  border: 1px solid #b1b2ff;
+  margin: 0 auto;
+  width: 85vw;
+}
+.main_page_logo {
+  margin: 10vh;
+  width: 30vw;
+}
+
+.upper_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.start_button {
+  margin: 4vh;
+  width: 25vw;
+  height: 6vh;
+}
+
+.start_button:hover {
+  cursor: pointer;
+}
+
+.lower_container {
+  margin: 2.5vh;
+  padding-left: 2.5vw;
+  padding-bottom: 2.5vh;
+}
+
+.title {
+  padding-top: 10vh;
+  padding-top: 1.5vh;
+  font-size: 2vw;
+}
+
+.text {
+  background-color: white;
+  height: 60vh;
+  padding: 0;
+  width: 75vw;
+  overflow-y: scroll;
+  padding-right: 1vw;
+}
