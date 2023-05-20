@@ -1,9 +1,5 @@
 import './index.css';
-import Dog from '../../images/avatar/Dog.png';
-import Female from '../../images/avatar/Female.png';
-import Male from '../../images/avatar/Male.png';
-
-const avatarList = [Male, Female, Dog];
+import { avatarList } from '../../constants/avatarList';
 const UserInfo = ({ typingSpeed, typingAccuracy }) => {
   const userName = localStorage.getItem('user_name');
   const userImage = localStorage.getItem('user_image');

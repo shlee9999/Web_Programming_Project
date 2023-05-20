@@ -3,16 +3,11 @@ import Hangul from 'hangul-js';
 import './index.css';
 import SelectSentenceCategoryModal from '../SelectCategoryModal';
 import PauseModal from '../PauseModal';
-import sentence_korean from '../../assets/sentence_korean.json';
-import sentence_english from '../../assets/sentence_english.json';
+import sentence_korean from '../../constants/sentence_korean.json';
+import sentence_english from '../../constants/sentence_english.json';
 import { useTimer } from '../../hooks/useTimer';
+import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 
-const keyRowsEnglish = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
-const keyRowsKorean = [
-  'ㅂㅈㄷㄱㅅㅛㅕㅑㅐㅔ',
-  'ㅁㄴㅇㄹㅎㅗㅓㅏㅣ',
-  'ㅋㅌㅊㅍㅠㅜㅡ',
-];
 const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const inputRef = useRef(null);
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
@@ -240,7 +235,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     };
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     initialize();
-  }, [isTyping, onTypingAccuracyChange]);
+  }, [isTyping, onTypingAccuracyChange, setStatus]);
 
   const startGame = () => {
     closeSelectModal();

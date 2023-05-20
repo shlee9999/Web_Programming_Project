@@ -1,10 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './index.css';
-import Male from '../../images/avatar/Male.png';
-import Female from '../../images/avatar/Female.png';
-import Dog from '../../images/avatar/Dog.png';
+import { avatarList } from '../../constants/avatarList';
 
-const avatarList = [Male, Female, Dog];
 const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const nameInputRef = useRef(null);
   const [selected, setSelected] = useState(0);

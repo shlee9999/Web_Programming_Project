@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
 import '../../global.css';
-import sentence_english from '../../assets/sentence_english.json';
-import sentence_korean from '../../assets/sentence_korean.json';
+import sentence_english from '../../constants/sentence_english.json';
+import sentence_korean from '../../constants/sentence_korean.json';
 
 const Modal = ({
   closeModal,
@@ -13,12 +13,21 @@ const Modal = ({
   toggleLanguage,
 }) => {
   const [sentenceIndex, setSentenceIndex] = useState(0);
+  const [focusedCategoryIndex, setFocusedCategoryIndex] = useState(0);
   const buttonRef = useRef(null);
   const sentence_total = language ? sentence_english : sentence_korean;
 
-  const handleKeyDown = (e) => {
-    const key = e.nativeEvent.key;
+  const handleKeyDown = ({ nativeEvent: { key } }) => {
+    console.log(key);
     switch (key) {
+      case 'ArrowUp':
+        if (focusedCategoryIndex <= 0) return;
+        setFocusedCategoryIndex((prev) => prev - 1);
+        return;
+      case 'ArrowDown':
+        if (focusedCategoryIndex >= sentence_total.length) return;
+        setFocusedCategoryIndex((prev) => prev + 1);
+        return;
       case 'Enter':
         startGame();
         return;
@@ -60,7 +69,10 @@ const Modal = ({
     if (!buttonRef.current) return;
     buttonRef.current.focus();
   }, [language]);
-
+  useEffect(() => {
+    if (!buttonRef.current) return;
+    buttonRef.current.focus();
+  }, [focusedCategoryIndex]);
   return (
     <div className='modal_overlay' onClick={closeModal}>
       <div className='modal' onClick={onClickModal}>
@@ -85,7 +97,7 @@ const Modal = ({
                 key={`${language}_category_${index}`}
                 onFocus={handleClickCategory(item, index)}
                 onKeyDown={handleKeyDown}
-                ref={index === 0 ? buttonRef : null}
+                ref={index === focusedCategoryIndex ? buttonRef : null}
               >
                 {item.title}
               </button>
