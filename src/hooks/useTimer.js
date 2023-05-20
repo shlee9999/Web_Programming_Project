@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // status : "INIT" | "STOP" | "START"
 
 export const useTimer = ({ defaultTime }) => {
-  const [status, setStatue] = useState('INIT');
+  const [status, setStatus] = useState('INIT');
   const [time, setTime] = useState(defaultTime);
   const intervalRef = useRef(null);
 
   const startTimer = () => {
     if (!intervalRef) return;
-    intervalRef = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setTime((prev) => prev + 1);
     }, 1000);
   };
@@ -39,6 +39,6 @@ export const useTimer = ({ defaultTime }) => {
 
   return {
     time,
-    setStatue,
+    setStatus,
   };
 };

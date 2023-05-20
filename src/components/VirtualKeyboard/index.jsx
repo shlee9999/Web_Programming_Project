@@ -19,8 +19,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
   const [cursor, setCursor] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
-  const [time, setTime] = useState(0);
-  const { onStartTimer } = useTimer({ defaultTime: 0 });
+  const { time, setStatus } = useTimer({ defaultTime: 0 });
   const [isTyping, setIsTyping] = useState(false);
   const [language, setLanguage] = useState(false); //true = Eng
   const [inputValue, setInputValue] = useState('');
@@ -30,7 +29,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [accuracy, setAccuracy] = useState(100);
   // const [sentenceCategory, setSentenceCategory] = useState('');
   const [sentence, setSentence] = useState(sentence_korean.sentence[0].text);
-  const intervalRef = useRef(null);
+
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
 
@@ -47,12 +46,12 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const openPauseModal = () => {
     if (!isTyping) return;
     setIsPauseModalOpen(true);
-    stopTimer();
+    setStatus('STOP');
   };
   const closePauseModal = () => {
     if (!isPauseModalOpen) return;
     setIsPauseModalOpen(false);
-    intervalRef.current = startTimer();
+    setStatus('START');
     inputRef.current.focus();
   };
   const openSelectModal = () => {
@@ -64,15 +63,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setIsSelectModalOpen(false);
   };
 
-  const startTimer = () => {
-    return setInterval(() => {
-      setTime((prev) => prev + 1);
-    }, 1000);
-  };
-  const stopTimer = () => {
-    clearInterval(intervalRef.current);
-  };
   const handlePressEnter = () => {
+    //다음 문장으로 넘어가는 기능
     if (inputValue.length < sentence[proposalIndex].length - 8) return; //8글자 덜 써도 넘어갈 수 있습니다.
     setCursor(0);
     setCorrectKeyStrokes(0);
@@ -239,9 +231,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     const initialize = () => {
       setProposalIndex(0);
       inputRef.current.disabled = true;
-      stopTimer();
+      setStatus('STOP');
       setTotalCorrectKeyStrokes(0);
-      setTime(0);
+      setStatus('INIT');
       setTotalCursor(0);
       onTypingAccuracyChange(100);
       setIsPlaceHolderOn(true);
@@ -256,7 +248,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     clearInputValue();
     inputRef.current.disabled = false;
     inputRef.current.focus();
-    intervalRef.current = startTimer();
+    setStatus('START');
     handleTotalCorrectKeyStrokes();
     setIsPlaceHolderOn(false);
   };
