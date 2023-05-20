@@ -28,11 +28,11 @@ const Modal = ({
         if (focusedCategoryIndex >= sentence_total.length) return;
         setFocusedCategoryIndex((prev) => prev + 1);
         return;
-      case 'ArrowLeft':
-        if (language) toggleLanguage();
+      case 'ArrowLeft': //한국어로 전환
+        toKorean();
         return;
       case 'ArrowRight':
-        if (!language) toggleLanguage();
+        toEnglish();
         return;
       case 'Enter':
         startGame();

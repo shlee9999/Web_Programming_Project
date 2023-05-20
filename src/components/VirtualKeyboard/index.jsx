@@ -146,9 +146,6 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       case 'Backspace':
         handlePressBackspace();
         return;
-      // case 'CapsLock':
-      //   toggleLanguage();
-      //   return;
       case 'Escape':
         handlePressESC();
         return;
