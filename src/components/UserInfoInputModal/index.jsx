@@ -7,7 +7,7 @@ import Dog from '../../images/avatar/Dog.png';
 const avatarList = [Male, Female, Dog];
 const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   const nameInputRef = useRef(null);
-  const [selected, setSelected] = useState(-1);
+  const [selected, setSelected] = useState(0);
   const [inputValue, setInputValue] = useState('');
   const onClickButton = () => {
     saveUserInfo();
@@ -16,12 +16,10 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
     setInputValue(e.target.value);
   };
   const saveUserInfo = () => {
-    if (selected === -1 || inputValue === '') return;
+    if (inputValue === '') return;
     setViewPopup(false);
     localStorage.setItem('user_image', selected);
-    // localStorage.setItem('user_name', nameInputRef.current.value);
     localStorage.setItem('user_name', inputValue);
-    // console.log('성공');
   };
 
   const onClickImage = (index) => () => {
@@ -33,7 +31,7 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   useEffect(() => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
-  }, viewPopup);
+  }, [viewPopup]);
 
   return (
     <div className='modal_overlay'>
@@ -46,11 +44,12 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
               <div
                 className={`avatar_imageBox ${selected === index && `active`}`}
                 onClick={onClickImage(index)}
+                key={`avatar_${index}`}
               >
                 <img
                   className='avatar_image'
                   src={avatar}
-                  alt={`avatar_${index + 1}`}
+                  alt={`avatar_${index}`}
                 />
               </div>
             );

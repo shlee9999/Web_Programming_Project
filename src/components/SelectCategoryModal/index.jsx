@@ -1,23 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
 import '../../global.css';
 import sentence_english from '../../assets/sentence_english.json';
 import sentence_korean from '../../assets/sentence_korean.json';
 
-const Modal = ({ closeModal, selectCategory, isTyping, startGame }) => {
-  const [language, setLanguage] = useState(false); // false : korean
-  const [sentenceIndex, setSentenceIndex] = useState(-1);
+const Modal = ({
+  closeModal,
+  selectCategory,
+  isTyping,
+  startGame,
+  language,
+  toggleLanguage,
+}) => {
+  const [sentenceIndex, setSentenceIndex] = useState(0);
+  const buttonRef = useRef(null);
+  const sentence_total = language ? sentence_english : sentence_korean;
 
-  const handleCategoryLanguage = (temp) => {
-    setLanguage(temp);
-    setSentenceIndex(-1);
+  const handleKeyDown = (e) => {
+    const key = e.nativeEvent.key;
+    switch (key) {
+      case 'Enter':
+        startGame();
+        return;
+      case 'Escape':
+        closeModal();
+        return;
+      default:
+        break;
+    }
   };
   const handleClickStart = () => {
     startGame();
   };
-
-  const sentence_total = language ? sentence_english : sentence_korean;
-
   const onClickModal = (e) => {
     e.stopPropagation();
   };
@@ -25,11 +39,27 @@ const Modal = ({ closeModal, selectCategory, isTyping, startGame }) => {
     selectCategory(item)();
     setSentenceIndex(index);
   };
+
+  const toKorean = () => {
+    if (!language) return;
+    toggleLanguage();
+    setSentenceIndex(0);
+  };
+  const toEnglish = () => {
+    if (language) return;
+    toggleLanguage();
+    setSentenceIndex(0);
+  };
+
   useEffect(() => {
-    if (isTyping) {
-      startGame();
-    }
-  }, [isTyping]);
+    if (!isTyping) return;
+    startGame();
+  }, [isTyping, startGame]);
+
+  useEffect(() => {
+    if (!buttonRef.current) return;
+    buttonRef.current.focus();
+  }, [language]);
 
   return (
     <div className='modal_overlay' onClick={closeModal}>
@@ -38,37 +68,31 @@ const Modal = ({ closeModal, selectCategory, isTyping, startGame }) => {
           Please choose a typing sentence category
         </div>
         <div className='select_language'>
-          <p
-            className='select_language_item'
-            onClick={() => handleCategoryLanguage(false)}
-          >
+          <p className='select_language_item' onClick={toKorean}>
             한글
           </p>
-          <p
-            className='select_language_item'
-            onClick={() => handleCategoryLanguage(true)}
-          >
+          <p className='select_language_item' onClick={toEnglish}>
             English
           </p>
         </div>
         <div className='category_wrapper'>
-          <ul className='category_list'>
-            {sentence_total.sentence.map((item, index) => {
-              return (
-                <li
-                  className={`category_list_item ${
-                    index === sentenceIndex && 'select_sentence'
-                  }`}
-                  key={`category_${index}`}
-                  onClick={handleClickCategory(item, index)}
-                >
-                  {item.title}
-                </li>
-              );
-            })}
-          </ul>
+          {sentence_total.sentence.map((item, index) => {
+            return (
+              <button
+                className={`category_item ${
+                  index === sentenceIndex && 'select_sentence'
+                }`}
+                key={`${language}_category_${index}`}
+                onFocus={handleClickCategory(item, index)}
+                onKeyDown={handleKeyDown}
+                ref={index === 0 ? buttonRef : null}
+              >
+                {item.title}
+              </button>
+            );
+          })}
         </div>
-        <button className='modal_close_button' onClick={handleClickStart}>
+        <button className='modal_start_button' onClick={handleClickStart}>
           Start!
         </button>
       </div>

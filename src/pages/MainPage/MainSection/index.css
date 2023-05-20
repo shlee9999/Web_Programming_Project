@@ -20,9 +20,6 @@
   margin: 4vh;
   width: 25vw;
   height: 6vh;
-}
-
-.start_button:hover {
   cursor: pointer;
 }
 
@@ -34,7 +31,7 @@
 
 .title {
   padding-top: 10vh;
-  padding-top: 1.5vh;
+
   font-size: 2vw;
 }
 

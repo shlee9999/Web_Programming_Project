@@ -8,7 +8,6 @@ const UserInfo = ({ typingSpeed, typingAccuracy }) => {
   const userName = localStorage.getItem('user_name');
   const userImage = localStorage.getItem('user_image');
 
-  //사용자가 선택한 사진
   return (
     <div className='userInfo_wrapper'>
       <div className='profile_container'>
