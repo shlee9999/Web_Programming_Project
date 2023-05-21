@@ -33,8 +33,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''
-    }${seconds}`;
+  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${
+    seconds < 10 ? '0' : ''
+  }${seconds}`;
 
   const [isGameReady, setIsGameReady] = useState(false);
   const handleClickStart = () => {
@@ -273,14 +274,14 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       .map((letter, index) => {
         let state = '';
         const disassembled = Hangul.disassemble(letter);
-
-        disassembled.map((syllable) => {
-          if (disassembled_cursor >= cursor) return syllable;
-          if (disassembled_inputValue[disassembled_cursor] !== syllable)
-            state = 'mistyped';
-          else state = 'correctly_typed';
+        disassembled.forEach((syllable) => {
+          if (disassembled_cursor < cursor)
+            if (state !== 'mistyped') {
+              if (disassembled_inputValue[disassembled_cursor] !== syllable)
+                state = 'mistyped';
+              else state = 'correctly_typed';
+            }
           disassembled_cursor += 1;
-          return syllable;
         });
 
         return (
@@ -324,8 +325,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
               {row.split('').map((key, index) => (
                 <button
                   key={index}
-                  className={`keyboard_keys ${activeKeys.includes(key.toUpperCase()) ? 'active' : ''
-                    }`}
+                  className={`keyboard_keys ${
+                    activeKeys.includes(key.toUpperCase()) ? 'active' : ''
+                  }`}
                   id={key}
                 >
                   {key}
