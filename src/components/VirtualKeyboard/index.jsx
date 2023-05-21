@@ -33,9 +33,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${
-    seconds < 10 ? '0' : ''
-  }${seconds}`;
+  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''
+    }${seconds}`;
 
   const [isGameReady, setIsGameReady] = useState(false);
   const handleClickStart = () => {
@@ -255,7 +254,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
             <p>{sentence[proposalIndex]}</p>
           ) : (
             <button onClick={handleClickStart} id='start_typing_button'>
-              StartTyping!
+              Start Typing!
             </button>
           )}
         </div>
@@ -276,9 +275,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
               {row.split('').map((key, index) => (
                 <button
                   key={index}
-                  className={`keyboard_keys ${
-                    activeKeys.includes(key.toUpperCase()) ? 'active' : ''
-                  }`}
+                  className={`keyboard_keys ${activeKeys.includes(key.toUpperCase()) ? 'active' : ''
+                    }`}
                   id={key}
                 >
                   {key}
