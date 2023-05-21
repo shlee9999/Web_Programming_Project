@@ -251,6 +251,48 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     onTypingSpeedChange,
   ]);
 
+  const checkedEnglish = () => {
+    return sentence[proposalIndex].split('').map((letter, index) => {
+      let state = '';
+      if (index < cursor) {
+        if (letter !== inputValue[index] && index < cursor) state = 'mistyped';
+        else state = 'correctly_typed';
+      }
+      return (
+        <span key={index} className={state}>
+          {letter}
+        </span>
+      );
+    });
+  };
+
+  const checkedKorean = () => {
+    const disassembled_inputValue = Hangul.disassemble(inputValue);
+    let disassembled_cursor = 0;
+    const checkedSentence = sentence[proposalIndex]
+      .split('')
+      .map((letter, index) => {
+        let state = '';
+        const disassembled = Hangul.disassemble(letter);
+
+        disassembled.map((syllable) => {
+          if (disassembled_cursor >= cursor) return syllable;
+          if (disassembled_inputValue[disassembled_cursor] !== syllable)
+            state = 'mistyped';
+          else state = 'correctly_typed';
+          disassembled_cursor += 1;
+          return syllable;
+        });
+
+        return (
+          <span key={index} className={`${state}`}>
+            {letter}
+          </span>
+        );
+      });
+    return checkedSentence;
+  };
+
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
@@ -259,19 +301,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
         </div>
         <div className='proposal'>
           {isGameReady ? (
-            <p>
-              {language
-                ? sentence[proposalIndex].split('').map((letter, index) => {
-                    if (letter !== inputValue[index] && index < cursor)
-                      return (
-                        <span key={index} className='mistyped'>
-                          {letter}
-                        </span>
-                      );
-                    return letter;
-                  })
-                : sentence[proposalIndex]}
-            </p>
+            <p>{language ? checkedEnglish() : checkedKorean()}</p>
           ) : (
             <button onClick={handleClickStart} id='start_typing_button'>
               StartTyping!

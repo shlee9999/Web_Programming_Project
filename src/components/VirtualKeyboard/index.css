@@ -81,6 +81,9 @@
   font-size: 1.5rem;
 }
 
+.correctly_typed {
+  color: gray;
+}
 .mistyped {
   color: red;
 }
