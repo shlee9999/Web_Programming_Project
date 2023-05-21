@@ -234,8 +234,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   ]);
 
   useEffect(() => {
-    if (totalCorrectKeyStrokes < 0 || time === 0) return;
-    onTypingSpeedChange(((totalCorrectKeyStrokes / time) * 60).toFixed(0));
+    if (totalCorrectKeyStrokes < 0) return;
+    onTypingSpeedChange(
+      ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
+    );
   }, [
     totalCorrectKeyStrokes,
     time,
