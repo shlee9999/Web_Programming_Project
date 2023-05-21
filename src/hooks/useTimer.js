@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 // status : "INIT" | "STOP" | "START"
 
 export const useTimer = ({ defaultTime }) => {
-  const [status, setStatus] = useState('INIT');
+  // const [status, setStatus] = useState('INIT');
   const [time, setTime] = useState(defaultTime);
   const intervalRef = useRef(null);
 
@@ -20,28 +20,13 @@ export const useTimer = ({ defaultTime }) => {
   };
 
   const initializeTimer = () => {
-    setTime(0);
+    setTime(defaultTime);
   };
-
-  useEffect(() => {
-    switch (status) {
-      case 'INIT':
-        initializeTimer();
-        return;
-      case 'STOP':
-        stopTimer();
-        return;
-      case 'START':
-        startTimer();
-        return;
-      default:
-        console.error('없는 status입니다.');
-        return;
-    }
-  }, [status]);
 
   return {
     time,
-    setStatus,
+    startTimer,
+    stopTimer,
+    initializeTimer,
   };
 };
