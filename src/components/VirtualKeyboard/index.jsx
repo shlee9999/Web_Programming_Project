@@ -74,7 +74,7 @@ const VirtualKeyboard = ({
     if (proposalIndex === sentence.length - 1) {
       //전체 문장을 다 쳤을 때 (게임 끝)
       setIsLastPress(true);
-      endGame();
+      // endGame();
       if (totalAccuracy < 60) {
         //통계에 기록되지 않습니다. 또는 기록할 것인지 물어보기 기능 추가?
       }
@@ -221,16 +221,16 @@ const VirtualKeyboard = ({
     inputRef.current.disabled = false;
     inputRef.current.focus();
   };
-  const endGame = () => {
-    setProposalIndex(0);
-    inputRef.current.disabled = true;
-    setTotalCorrectKeyStrokes(0);
-    stopTimer();
-    initializeTimer();
-    setTotalCursor(0);
-    onTypingAccuracyChange(100);
-    setIsGameReady(false);
-  };
+  // const endGame = () => {
+  //   setProposalIndex(0);
+  //   inputRef.current.disabled = true;
+  //   setTotalCorrectKeyStrokes(0);
+  //   stopTimer();
+  //   initializeTimer();
+  //   setTotalCursor(0);
+  //   onTypingAccuracyChange(100);
+  //   setIsGameReady(false);
+  // };
 
   useEffect(() => {
     if (cursor === 0) return;
@@ -258,25 +258,24 @@ const VirtualKeyboard = ({
     onTypingSpeedChange,
   ]);
 
-
   const initialize = () => {
     setProposalIndex(0);
     inputRef.current.disabled = true;
-    setStatus('STOP');
+    stopTimer();
     setTotalCorrectKeyStrokes(0);
-    setStatus('INIT');
+    initializeTimer();
     setTotalCursor(0);
     onTypingAccuracyChange(100);
-    setIsPlaceHolderOn(true);
+    // setIsPlaceHolderOn(true);
   };
   useEffect(() => {
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     if (isLastPress) {
-      setStatus('STOP');
+      stopTimer();
       return;
     }
     initialize();
-  }, [isTyping, onTypingAccuracyChange, setStatus]);
+  }, [isTyping, onTypingAccuracyChange, time]);
 
   const checkedEnglish = () => {
     return sentence[proposalIndex].split('').map((letter, index) => {
