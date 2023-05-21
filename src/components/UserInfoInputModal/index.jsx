@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import './index.css';
 import { avatarList } from '../../constants/avatarList';
 
-const UserInfoInput = ({ viewPopup, setViewPopup }) => {
+const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
   const nameInputRef = useRef(null);
   const [actived, setActived] = useState(false);
 
@@ -15,7 +15,7 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   };
   const saveUserInfo = () => {
     if (inputValue === '') return;
-    setViewPopup(false);
+    closeUserInfoInputPopup();
     localStorage.setItem('user_image', focusedAvatarIndex);
     localStorage.setItem('user_name', inputValue);
   };
@@ -30,7 +30,7 @@ const UserInfoInput = ({ viewPopup, setViewPopup }) => {
   useEffect(() => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
-  }, [viewPopup]);
+  }, [viewUserInfoInputPopup]);
 
   const onClickAnywhere = () => {
     if (!nameInputRef) return;

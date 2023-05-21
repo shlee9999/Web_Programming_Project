@@ -8,7 +8,11 @@ import sentence_english from '../../constants/sentence_english.json';
 import { useTimer } from '../../hooks/useTimer';
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 
-const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
+const VirtualKeyboard = ({
+  onTypingSpeedChange,
+  onTypingAccuracyChange,
+  showTypingResultPopup,
+}) => {
   const inputRef = useRef(null);
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
@@ -27,6 +31,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
 
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
+
+  const [isLastPress, setIsLastPress] = useState(false);
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -65,10 +71,13 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setCorrectKeyStrokes(0);
     setInputValue('');
     if (proposalIndex === sentence.length - 1) {
+      setIsLastPress(true);
+
       //전체 문장을 다 쳤을 때 (게임 끝)
       if (totalAccuracy < 60) {
         //통계에 기록되지 않습니다. 또는 기록할 것인지 물어보기 기능 추가?
       }
+      showTypingResultPopup();
       setIsTyping(false);
       return;
     }
@@ -219,18 +228,22 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     onTypingSpeedChange,
   ]);
 
+  const initialize = () => {
+    setProposalIndex(0);
+    inputRef.current.disabled = true;
+    setStatus('STOP');
+    setTotalCorrectKeyStrokes(0);
+    setStatus('INIT');
+    setTotalCursor(0);
+    onTypingAccuracyChange(100);
+    setIsPlaceHolderOn(true);
+  };
   useEffect(() => {
-    const initialize = () => {
-      setProposalIndex(0);
-      inputRef.current.disabled = true;
-      setStatus('STOP');
-      setTotalCorrectKeyStrokes(0);
-      setStatus('INIT');
-      setTotalCursor(0);
-      onTypingAccuracyChange(100);
-      setIsPlaceHolderOn(true);
-    };
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
+    if (isLastPress) {
+      setStatus('STOP');
+      return;
+    }
     initialize();
   }, [isTyping, onTypingAccuracyChange, setStatus]);
 
