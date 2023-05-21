@@ -12,21 +12,32 @@
 
 .select_language_item {
   padding: 8px;
-  background-color: white;
-  border: 3px solid #b1b2ff;
+  background-color: #b1b2ff;
+  border: 2px solid #b1b2ff;
   border-radius: 10px;
-  color: #b1b2ff;
+  color: white;
   cursor: pointer;
-  &.active {
-    border: 2px solid #b1b2ff;
+  &.item_active {
+    background-color: white;
+    color: #b1b2ff;
   }
+}
+
+.select_language_item:hover {
+  background-color: #b1b2ff;
+  color: white;
+}
+
+.select_language_item:active {
+  background-color: #8468fa;
+  border: 2px solid #8468fa;
 }
 
 .category_wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 5px;
   width: 350px;
   height: 220px;
@@ -50,11 +61,23 @@
 .modal_start_button {
   width: 80px;
   height: 40px;
-  border: 3px solid #b1b2ff;
+  border: 2px solid #b1b2ff;
   background-color: white;
   color: #b1b2ff;
   font-size: 1.2rem;
   margin: 20px;
   padding: 6px;
   text-align: center;
+}
+
+.modal_start_button:hover {
+  background-color: #b1b2ff;
+  color: white;
+  filter: brightness(1);
+}
+
+.modal_start_button:active {
+  background-color: #8468fa;
+  border: 3px solid #8468fa;
+  color: white;
 }
