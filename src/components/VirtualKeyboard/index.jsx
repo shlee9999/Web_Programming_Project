@@ -23,7 +23,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [activeKeys, setActiveKeys] = useState([]);
   const [proposalIndex, setProposalIndex] = useState(0);
   const [totalAccuracy, setTotalAccuracy] = useState(100);
-  const [accuracy, setAccuracy] = useState(100);
+  const [accuracy, setAccuracy] = useState(100); //현재 문장에서의 정확도인데, 쓸지 말지 고민중입니다.
   // const [sentenceCategory, setSentenceCategory] = useState('');
   const [sentence, setSentence] = useState(sentence_korean.sentence[0].text);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
@@ -223,10 +223,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     if (cursor === 0) return;
     if (correctKeyStrokes >= 0) setAccuracy((correctKeyStrokes / cursor) * 100);
     setTotalAccuracy((totalCorrectKeyStrokes / totalCursor) * 100);
-    onTypingAccuracyChange(accuracy.toFixed(0));
+    onTypingAccuracyChange(totalAccuracy.toFixed(0));
   }, [
     cursor,
-    accuracy,
+    totalAccuracy,
     correctKeyStrokes,
     onTypingAccuracyChange,
     totalCorrectKeyStrokes,
