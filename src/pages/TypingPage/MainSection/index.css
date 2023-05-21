@@ -3,16 +3,9 @@
   height: 100vh;
   border-top: none;
   margin: 0 auto;
-  border: 1px solid #b1b2ff;
+  border: 2px solid #b1b2ff;
   display: flex;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
   min-width: 800px;
->>>>>>> Stashed changes
-=======
-  min-width: 800px;
->>>>>>> Stashed changes
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -22,14 +15,8 @@
   flex-direction: column;
   align-items: center;
   width: 80%;
-  border-right: 1px solid #b1b2ff;
+  border-right: 2px solid #b1b2ff;
   text-align: center;
-}
-
-.typing_page_logo {
-  margin-top: 10vh;
-  width: 30vw;
-  margin-bottom: 5vh;
 }
 
 .right_container {

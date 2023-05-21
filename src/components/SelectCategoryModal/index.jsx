@@ -18,7 +18,6 @@ const Modal = ({
   const sentence_total = language ? sentence_english : sentence_korean;
 
   const handleKeyDown = ({ nativeEvent: { key } }) => {
-    console.log(key);
     switch (key) {
       case 'ArrowUp':
         if (focusedCategoryIndex <= 0) return;
@@ -91,13 +90,13 @@ const Modal = ({
         </div>
         <div className='select_language'>
           <p
-            className={`select_language_item ${language && 'active'}`}
+            className={`select_language_item ${language && 'item_active'}`}
             onClick={toKorean}
           >
             한글
           </p>
           <p
-            className={`select_language_item ${!language && 'active'}`}
+            className={`select_language_item ${!language && 'item_active'}`}
             onClick={toEnglish}
           >
             English
@@ -107,9 +106,8 @@ const Modal = ({
           {sentence_total.sentence.map((item, index) => {
             return (
               <button
-                className={`category_item ${
-                  index === sentenceIndex && 'select_sentence'
-                }`}
+                className={`category_item ${index === sentenceIndex && 'select_sentence'
+                  }`}
                 key={`${language}_category_${index}`}
                 onFocus={handleFocusCategory(item, index)}
                 onKeyDown={handleKeyDown}
