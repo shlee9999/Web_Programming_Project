@@ -106,7 +106,6 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setCursor((prev) => prev + 1);
     setTotalCursor((prev) => prev + 1);
     setInputValue(inputValue + key);
-    console.log(inputValue);
     if (sentence[proposalIndex].charAt(cursor) === key) {
       setCorrectKeyStrokes((prev) => prev + 1);
       setTotalCorrectKeyStrokes((prev) => prev + 1);
@@ -140,7 +139,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
 
   const handleKeyPress = ({ nativeEvent: { key } }) => {
     if (!key) return;
-    if (!isTyping) {
+    if (!isTyping && key.length === 1) {
       startTyping();
       startTimer();
     }
