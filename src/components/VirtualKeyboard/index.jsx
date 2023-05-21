@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hangul from 'hangul-js';
 import './index.css';
-import SelectSentenceCategoryModal from '../SelectCategoryModal';
+import SelectCategoryModal from '../SelectCategoryModal';
 import PauseModal from '../PauseModal';
 import sentence_korean from '../../constants/sentence_korean.json';
 import sentence_english from '../../constants/sentence_english.json';
@@ -292,7 +292,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
         )}
       </div>
       {isSelectModalOpen && (
-        <SelectSentenceCategoryModal
+        <SelectCategoryModal
           closeModal={closeSelectModal}
           isTyping={isTyping}
           selectCategory={selectCategory}
