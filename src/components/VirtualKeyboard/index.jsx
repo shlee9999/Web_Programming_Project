@@ -101,6 +101,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     //일시정지 모달 띄우고, 모달 종료하면 다시 시작되게 하기
   };
 
+  const handleClickPauseButton = () => {
+    openPauseModal();
+  };
+
   const handlePressEnglish = (key) => {
     setCursor((prev) => prev + 1);
     setTotalCursor((prev) => prev + 1);
@@ -109,10 +113,12 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       setCorrectKeyStrokes((prev) => prev + 1);
       setTotalCorrectKeyStrokes((prev) => prev + 1);
     }
-  };
-
-  const handleClickPauseButton = () => {
-    openPauseModal();
+    // else {
+    //   //오타 시 빨간글씨로
+    //   setSentence((prev) => {
+    //     sentence[proposalIndex].split('').map((word, index) => {});
+    //   });
+    // }
   };
 
   const handlePressKorean = (key) => {
@@ -136,7 +142,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     }
   };
 
-  const handleKeyPress = ({ nativeEvent: { key } }) => {
+  const handleKeyDown = ({ nativeEvent: { key } }) => {
     if (!key) return;
     if (!isTyping && key.length === 1) {
       startTyping();
@@ -243,6 +249,49 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     onTypingAccuracyChange,
     onTypingSpeedChange,
   ]);
+
+  const checkedEnglish = () => {
+    return sentence[proposalIndex].split('').map((letter, index) => {
+      let state = '';
+      if (index < cursor) {
+        if (letter !== inputValue[index] && index < cursor) state = 'mistyped';
+        else state = 'correctly_typed';
+      }
+      return (
+        <span key={index} className={state}>
+          {letter}
+        </span>
+      );
+    });
+  };
+
+  const checkedKorean = () => {
+    const disassembled_inputValue = Hangul.disassemble(inputValue);
+    let disassembled_cursor = 0;
+    const checkedSentence = sentence[proposalIndex]
+      .split('')
+      .map((letter, index) => {
+        let state = '';
+        const disassembled = Hangul.disassemble(letter);
+
+        disassembled.map((syllable) => {
+          if (disassembled_cursor >= cursor) return syllable;
+          if (disassembled_inputValue[disassembled_cursor] !== syllable)
+            state = 'mistyped';
+          else state = 'correctly_typed';
+          disassembled_cursor += 1;
+          return syllable;
+        });
+
+        return (
+          <span key={index} className={`${state}`}>
+            {letter}
+          </span>
+        );
+      });
+    return checkedSentence;
+  };
+
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
@@ -251,7 +300,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
         </div>
         <div className='proposal'>
           {isGameReady ? (
-            <p>{sentence[proposalIndex]}</p>
+            <p>{language ? checkedEnglish() : checkedKorean()}</p>
           ) : (
             <button onClick={handleClickStart} id='start_typing_button'>
               Start Typing!
@@ -263,8 +312,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           className='keyboard_input'
           type='text'
           value={inputValue}
-          onKeyDown={handleKeyPress}
-          onChange={handleKeyPress} //타이머 설정 후 지워보자
+          onKeyDown={handleKeyDown}
+          // onChange={handleKeyPress} //타이머 설정 후 지워보자
           placeholder={isGameReady ? '' : ' Please Press Start Typing Button.'}
           disabled
           ref={inputRef}

@@ -89,3 +89,10 @@
   font-size: 1.5rem;
   min-width: 500px;
 }
+
+.correctly_typed {
+  color: gray;
+}
+.mistyped {
+  color: red;
+}
