@@ -5,8 +5,9 @@
   margin: 0 auto;
   border: 2px solid #b1b2ff;
   display: flex;
-  /* box-sizing: border-box; */
   min-width: 800px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .left_container {
