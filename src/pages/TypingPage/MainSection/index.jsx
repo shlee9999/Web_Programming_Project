@@ -18,6 +18,7 @@ export const MainSection = () => {
   const handleTypingAccuracyChange = (accuracy) => {
     setTypingAccuracy(accuracy);
   };
+
   return (
     <div className='typing_page_main'>
       <div className='left_container'>
@@ -25,6 +26,7 @@ export const MainSection = () => {
         <VirtualKeyboard
           onTypingSpeedChange={handleTypingSpeedChange}
           onTypingAccuracyChange={handleTypingAccuracyChange}
+          viewPopup={viewPopup}
         />
       </div>
       <div className='right_container'>

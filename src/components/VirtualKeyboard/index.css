@@ -80,3 +80,7 @@
   margin: 2vh;
   font-size: 1.5rem;
 }
+
+.mistyped {
+  color: red;
+}
