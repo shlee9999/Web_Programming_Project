@@ -11,7 +11,7 @@ export const MainSection = () => {
   return (
     <div className='main_page_main'>
       <div className='upper_container'>
-        <img src={Logo} className='main_page_logo' alt='logo' />
+        <img src={Logo} className='page_logo' alt='logo' />
         <button className='start_button' onClick={navigateToTypingPage}>
           Begin Your Typing Practice
         </button>

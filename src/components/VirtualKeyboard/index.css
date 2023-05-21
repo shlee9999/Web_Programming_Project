@@ -12,6 +12,8 @@
   height: 3vw;
   border-radius: 10px;
   box-shadow: 2px 2px 3px 2px #b1b2ff;
+  min-width: 30px;
+  min-height: 30px;
 }
 
 .keyboard_wrapper {
@@ -25,6 +27,7 @@
   justify-content: center;
   align-items: center;
   box-shadow: 5px 5px 5px 5px #b1b2ff;
+  min-width: 600px;
 }
 .pause_button {
   position: absolute;
@@ -32,15 +35,19 @@
   top: 10px;
   width: 100px;
   height: 30px;
+  color: white;
 }
 .keyboard_input {
   border: 1px solid #b1b2ff;
+  border-radius: 10px;
   outline: none;
   width: 30vw;
   height: 5vh;
   font-size: 1rem;
   margin-bottom: 2vh;
   padding-left: 0.5vw;
+  min-width: 400px;
+  min-height: 30px;
 }
 .keyboard_input:disabled {
   filter: brightness(0.9);
@@ -58,7 +65,9 @@
   width: 25vw;
   height: 6vh;
   border-radius: 10px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  min-width: 200px;
+  color: white;
 }
 
 @keyframes blink {
@@ -71,7 +80,6 @@
   margin-bottom: 3vh;
 }
 .proposal {
-  /* border: 1px solid #293677; */
   width: 50vw;
   height: 8vh;
   display: flex;
@@ -79,4 +87,5 @@
   align-items: center;
   margin: 2vh;
   font-size: 1.5rem;
+  min-width: 500px;
 }
