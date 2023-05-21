@@ -99,8 +99,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     //일시정지 모달 띄우고, 모달 종료하면 다시 시작되게 하기
   };
 
-  const handlePressEnglish = (e) => {
-    const key = e.nativeEvent.key;
+  const handlePressEnglish = ({ nativeEvent: { key } }) => {
     setCursor((prev) => prev + 1);
     setTotalCursor((prev) => prev + 1);
     setInputValue(inputValue + key);
@@ -114,8 +113,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     openPauseModal();
   };
 
-  const handlePressKorean = (e) => {
-    const key = e.nativeEvent.key;
+  const handlePressKorean = ({ nativeEvent: { key } }) => {
     const disassembledInputValue = Hangul.disassemble(inputValue);
     const disassembledProposal = Hangul.disassemble(sentence[proposalIndex]);
     const temp = Hangul.assemble([...disassembledInputValue, key]);
@@ -136,8 +134,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     }
   };
 
-  const handleKeyPress = (event) => {
-    const key = event.nativeEvent.key;
+  const handleKeyPress = ({ nativeEvent: { key } }) => {
     if (!key) return;
     switch (key) {
       case 'Enter':
@@ -155,9 +152,9 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
 
     if (key.length === 1) {
       if (language) {
-        handlePressEnglish(event);
+        handlePressEnglish();
       } else {
-        handlePressKorean(event);
+        handlePressKorean();
       }
       setActiveKeys((prev) => [...prev, key.toUpperCase()]);
       setTimeout(() => {
@@ -194,6 +191,16 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const handleTotalCorrectKeyStrokes = () => {
     setTotalCorrectKeyStrokes(0); // 초기화
   };
+  const startGame = () => {
+    closeSelectModal();
+    startTyping();
+    clearInputValue();
+    handleTotalCorrectKeyStrokes();
+    // setStatus('START');
+    setIsPlaceHolderOn(false);
+    inputRef.current.disabled = false;
+    inputRef.current.focus();
+  };
 
   useEffect(() => {
     if (cursor === 0) return;
@@ -220,6 +227,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   ]);
 
   useEffect(() => {
+    if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     const initialize = () => {
       setProposalIndex(0);
       inputRef.current.disabled = true;
@@ -230,20 +238,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       onTypingAccuracyChange(100);
       setIsPlaceHolderOn(true);
     };
-    if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     initialize();
   }, [isTyping, onTypingAccuracyChange, setStatus]);
-
-  const startGame = () => {
-    closeSelectModal();
-    startTyping();
-    clearInputValue();
-    inputRef.current.disabled = false;
-    inputRef.current.focus();
-    setStatus('START');
-    handleTotalCorrectKeyStrokes();
-    setIsPlaceHolderOn(false);
-  };
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
   return (
