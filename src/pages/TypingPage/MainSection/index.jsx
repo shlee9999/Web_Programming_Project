@@ -6,7 +6,13 @@ import { useState } from 'react';
 import UserInfo from '../../../components/UserInfo';
 import UserInfoInput from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
 export const MainSection = () => {
   const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);
@@ -48,7 +54,15 @@ export const MainSection = () => {
         />
       </div>
       <div className='right_container'>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <UserInfo viewUserInfoInputPopup={viewUserInfoInputPopup} />
+=======
+        <UserInfo viewPopup={viewPopup} />
+>>>>>>> Stashed changes
+=======
+        <UserInfo viewPopup={viewPopup} />
+>>>>>>> Stashed changes
         <TypingResultsContainer
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}

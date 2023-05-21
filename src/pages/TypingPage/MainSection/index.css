@@ -5,6 +5,14 @@
   margin: 0 auto;
   border: 1px solid #b1b2ff;
   display: flex;
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+  min-width: 800px;
+>>>>>>> Stashed changes
+=======
+  min-width: 800px;
+>>>>>>> Stashed changes
   box-sizing: border-box;
   overflow: hidden;
 }

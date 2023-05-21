@@ -26,3 +26,32 @@
   padding: 7px;
   border-top: 1px solid #b1b2ff;
 }
+.typingResult_Wrapper {
+  margin: 0 auto;
+  width: 90%;
+  height: 40%;
+  text-align: center;
+  padding: 2px;
+}
+
+.result_container {
+  border: 1px solid #b1b2ff;
+  border-radius: 10px;
+  margin: 20px 0;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.result_title {
+  margin: 0;
+  padding: 3px;
+  background-color: #eef1ff;
+}
+
+.result_value {
+  overflow: hidden;
+  margin: 0;
+  padding: 3px;
+
+  border-top: 1px solid #b1b2ff;
+}
