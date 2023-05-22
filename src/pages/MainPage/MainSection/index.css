@@ -1,11 +1,9 @@
 .main_page_main {
-  border: 1px solid #b1b2ff;
+  border: 2px solid #b1b2ff;
   margin: 0 auto;
   width: 85vw;
-}
-.main_page_logo {
-  margin: 10vh;
-  width: 30vw;
+  min-width: 800px;
+  box-sizing: border-box;
 }
 
 .upper_container {
@@ -20,6 +18,9 @@
   margin: 4vh;
   width: 25vw;
   height: 6vh;
+  min-width: 300px;
+  color: white;
+  font-size: 1.3rem;
 }
 
 .lower_container {
@@ -30,7 +31,6 @@
 
 .title {
   padding-top: 10vh;
-
   font-size: 2vw;
 }
 

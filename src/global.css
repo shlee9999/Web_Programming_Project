@@ -5,18 +5,27 @@
   justify-content: space-between;
   width: 85vw;
   height: 7vh;
-  border: 1px solid #b1b2ff;
+  border: 2px solid #b1b2ff;
   background-color: #eef1ff;
   top: 0;
   left: 50%;
   transform: translate(-50%);
   box-sizing: border-box;
+  min-width: 800px;
+  min-height: 40px;
 }
 .header_logo {
   width: 6vw;
   margin-left: 1.5vw;
   cursor: pointer;
 }
+
+.page_logo {
+  margin: 10vh 0 5vh;
+  width: 30vw;
+  min-width: 300px;
+}
+
 button {
   border-radius: 10px;
   background-color: #b1b2ff;
@@ -24,11 +33,18 @@ button {
   color: #293677;
   font-size: 15px;
   outline: none;
+  min-width: 100px;
+  min-height: 35px;
 }
 
 button:hover {
   cursor: pointer;
   filter: brightness(0.9);
+}
+
+button:active {
+  background-color: #8468fa;
+  color: white;
 }
 
 .modal {

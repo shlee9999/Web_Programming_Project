@@ -8,7 +8,11 @@ import sentence_english from '../../constants/sentence_english.json';
 import { useTimer } from '../../hooks/useTimer';
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 
-const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
+const VirtualKeyboard = ({
+  onTypingSpeedChange,
+  onTypingAccuracyChange,
+  showTypingResultPopup,
+}) => {
   const inputRef = useRef(null);
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
@@ -28,7 +32,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
   const [sentence, setSentence] = useState(sentence_korean.sentence[0].text);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
   const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
-
+  const [isLastPress, setIsLastPress] = useState(false);
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
 
   const minutes = Math.floor(time / 60);
@@ -68,10 +72,13 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     setCorrectKeyStrokes(0);
     setInputValue('');
     if (proposalIndex === sentence.length - 1) {
-      endGame(); //전체 문장을 다 쳤을 때 (게임 끝)
+      //전체 문장을 다 쳤을 때 (게임 끝)
+      setIsLastPress(true);
+      // endGame();
       if (totalAccuracy < 60) {
         //통계에 기록되지 않습니다. 또는 기록할 것인지 물어보기 기능 추가?
       }
+      showTypingResultPopup();
       setIsTyping(false);
       return;
     }
@@ -102,6 +109,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     //일시정지 모달 띄우고, 모달 종료하면 다시 시작되게 하기
   };
 
+  const handleClickPauseButton = () => {
+    openPauseModal();
+  };
+
   const handlePressEnglish = (key) => {
     setCursor((prev) => prev + 1);
     setTotalCursor((prev) => prev + 1);
@@ -110,10 +121,12 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
       setCorrectKeyStrokes((prev) => prev + 1);
       setTotalCorrectKeyStrokes((prev) => prev + 1);
     }
-  };
-
-  const handleClickPauseButton = () => {
-    openPauseModal();
+    // else {
+    //   //오타 시 빨간글씨로
+    //   setSentence((prev) => {
+    //     sentence[proposalIndex].split('').map((word, index) => {});
+    //   });
+    // }
   };
 
   const handlePressKorean = (key) => {
@@ -137,7 +150,7 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     }
   };
 
-  const handleKeyPress = ({ nativeEvent: { key } }) => {
+  const handleKeyDown = ({ nativeEvent: { key } }) => {
     if (!key) return;
     if (!isTyping && key.length === 1) {
       startTyping();
@@ -208,16 +221,16 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     inputRef.current.disabled = false;
     inputRef.current.focus();
   };
-  const endGame = () => {
-    setProposalIndex(0);
-    inputRef.current.disabled = true;
-    setTotalCorrectKeyStrokes(0);
-    stopTimer();
-    initializeTimer();
-    setTotalCursor(0);
-    onTypingAccuracyChange(100);
-    setIsGameReady(false);
-  };
+  // const endGame = () => {
+  //   setProposalIndex(0);
+  //   inputRef.current.disabled = true;
+  //   setTotalCorrectKeyStrokes(0);
+  //   stopTimer();
+  //   initializeTimer();
+  //   setTotalCursor(0);
+  //   onTypingAccuracyChange(100);
+  //   setIsGameReady(false);
+  // };
 
   useEffect(() => {
     if (cursor === 0) return;
@@ -244,6 +257,68 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
     onTypingAccuracyChange,
     onTypingSpeedChange,
   ]);
+
+  const initialize = () => {
+    setProposalIndex(0);
+    inputRef.current.disabled = true;
+    stopTimer();
+    setTotalCorrectKeyStrokes(0);
+    initializeTimer();
+    setTotalCursor(0);
+    onTypingAccuracyChange(100);
+    // setIsPlaceHolderOn(true);
+  };
+  useEffect(() => {
+    if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
+    if (isLastPress) {
+      stopTimer();
+      return;
+    }
+    initialize();
+  }, [isTyping, onTypingAccuracyChange, time]);
+
+  const checkedEnglish = () => {
+    return sentence[proposalIndex].split('').map((letter, index) => {
+      let state = '';
+      if (index < cursor) {
+        if (letter !== inputValue[index] && index < cursor) state = 'mistyped';
+        else state = 'correctly_typed';
+      }
+      return (
+        <span key={index} className={state}>
+          {letter}
+        </span>
+      );
+    });
+  };
+
+  const checkedKorean = () => {
+    const disassembled_inputValue = Hangul.disassemble(inputValue);
+    let disassembled_cursor = 0;
+    const checkedSentence = sentence[proposalIndex]
+      .split('')
+      .map((letter, index) => {
+        let state = '';
+        const disassembled = Hangul.disassemble(letter);
+        disassembled.forEach((syllable) => {
+          if (disassembled_cursor < cursor)
+            if (state !== 'mistyped') {
+              if (disassembled_inputValue[disassembled_cursor] !== syllable)
+                state = 'mistyped';
+              else state = 'correctly_typed';
+            }
+          disassembled_cursor += 1;
+        });
+
+        return (
+          <span key={index} className={`${state}`}>
+            {letter}
+          </span>
+        );
+      });
+    return checkedSentence;
+  };
+
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
@@ -252,10 +327,10 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
         </div>
         <div className='proposal'>
           {isGameReady ? (
-            <p>{sentence[proposalIndex]}</p>
+            <p>{language ? checkedEnglish() : checkedKorean()}</p>
           ) : (
             <button onClick={handleClickStart} id='start_typing_button'>
-              StartTyping!
+              Start Typing!
             </button>
           )}
         </div>
@@ -264,8 +339,8 @@ const VirtualKeyboard = ({ onTypingSpeedChange, onTypingAccuracyChange }) => {
           className='keyboard_input'
           type='text'
           value={inputValue}
-          onKeyDown={handleKeyPress}
-          onChange={handleKeyPress} //타이머 설정 후 지워보자
+          onKeyDown={handleKeyDown}
+          // onChange={handleKeyPress} //타이머 설정 후 지워보자
           placeholder={isGameReady ? '' : ' Please Press Start Typing Button.'}
           disabled
           ref={inputRef}
