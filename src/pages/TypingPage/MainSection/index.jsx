@@ -62,6 +62,7 @@ export const MainSection = () => {
   };
   const closeModal = () => {
     setIsPauseModalOpen(false);
+    startTimer();
   };
 
   return (
@@ -90,10 +91,8 @@ export const MainSection = () => {
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
         />
-        {!isPauseModalOpen ? (
+        {!isPauseModalOpen && (
           <button onClick={handleClickPauseButton}>일시 정지</button>
-        ) : (
-          <button onClick={handleClickResumeButton}>다시 시작</button>
         )}
       </div>
       {viewUserInfoInputPopup && (
