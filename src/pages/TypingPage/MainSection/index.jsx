@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../images/logo.png';
 import './index.css';
@@ -13,6 +12,16 @@ export const MainSection = () => {
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
+  const [userName, setUserName] = useState('');
+  const [userImageIndex, setUserImageIndex] = useState(0);
+
+  const handleUserName = (name) => {
+    setUserName(name);
+  };
+
+  const handleUserImageIndex = (imageIndex) => {
+    setUserImageIndex(imageIndex);
+  };
 
   const closeUserInfoInputPopup = () => {
     setViewUserInfoInputPopup(false);
@@ -48,7 +57,11 @@ export const MainSection = () => {
         />
       </div>
       <div className='right_container'>
-        <UserInfo viewUserInfoInputPopup={viewUserInfoInputPopup} />
+        <UserInfo
+          userName={userName}
+          userImageIndex={userImageIndex}
+          viewUserInfoInputPopup={viewUserInfoInputPopup}
+        />
         <TypingResultsContainer
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
@@ -58,6 +71,8 @@ export const MainSection = () => {
         <UserInfoInput
           viewUserInfoInputPopup={viewUserInfoInputPopup}
           closeUserInfoInputPopup={closeUserInfoInputPopup}
+          handleUserName={handleUserName}
+          handleUserImageIndex={handleUserImageIndex}
         />
       )}
       {viewTypingResultPopup && (
