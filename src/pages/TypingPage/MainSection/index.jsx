@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../images/logo.png';
 import './index.css';
@@ -7,13 +7,18 @@ import UserInfo from '../../../components/UserInfo';
 import UserInfoInput from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
-
-
+import { useTimer } from '../../../hooks/useTimer';
+import PauseModal from '../../../components/PauseModal';
 export const MainSection = () => {
+  const [isTyping, setIsTyping] = useState(false);
+  const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
   const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
+  const { time, startTimer, stopTimer, initializeTimer } = useTimer({
+    defaultTime: 0,
+  });
 
   const closeUserInfoInputPopup = () => {
     setViewUserInfoInputPopup(false);
@@ -25,6 +30,7 @@ export const MainSection = () => {
 
   const closeTypingResultPopup = () => {
     setViewTypingResultPopup(false);
+    initializeStats();
   };
 
   const handleTypingSpeedChange = (speed) => {
@@ -33,6 +39,29 @@ export const MainSection = () => {
 
   const handleTypingAccuracyChange = (accuracy) => {
     setTypingAccuracy(accuracy);
+  };
+
+  const initializeStats = () => {
+    handleTypingAccuracyChange(100);
+    handleTypingSpeedChange(0);
+    initializeTimer();
+  };
+  const startTyping = () => {
+    setIsTyping(true);
+  };
+  const stopTyping = () => {
+    setIsTyping(false);
+  };
+  const handleClickPauseButton = () => {
+    setIsPauseModalOpen(true);
+    stopTimer();
+  };
+  const handleClickResumeButton = () => {
+    setIsPauseModalOpen(false);
+    startTimer();
+  };
+  const closeModal = () => {
+    setIsPauseModalOpen(false);
   };
 
   return (
@@ -46,6 +75,13 @@ export const MainSection = () => {
           showTypingResultPopup={showTypingResultPopup}
           setTypingSpeed={setTypingSpeed}
           setTypingAccuracy={setTypingAccuracy}
+          time={time}
+          startTimer={startTimer}
+          stopTimer={stopTimer}
+          initializeTimer={initializeTimer}
+          isTyping={isTyping}
+          startTyping={startTyping}
+          stopTyping={stopTyping}
         />
       </div>
       <div className='right_container'>
@@ -54,6 +90,11 @@ export const MainSection = () => {
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
         />
+        {!isPauseModalOpen ? (
+          <button onClick={handleClickPauseButton}>일시 정지</button>
+        ) : (
+          <button onClick={handleClickResumeButton}>다시 시작</button>
+        )}
       </div>
       {viewUserInfoInputPopup && (
         <UserInfoInput
@@ -66,8 +107,10 @@ export const MainSection = () => {
           closeTypingResultPopup={closeTypingResultPopup}
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
+          initializeStats={initializeStats}
         />
       )}
+      {isPauseModalOpen && <PauseModal closeModal={closeModal} />}
     </div>
   );
 };
