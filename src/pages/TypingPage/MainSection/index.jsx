@@ -8,7 +8,6 @@ import UserInfoInput from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
 
-
 export const MainSection = () => {
   const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
