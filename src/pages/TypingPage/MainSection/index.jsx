@@ -16,6 +16,8 @@ export const MainSection = () => {
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
+  const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
+
   const { time, startTimer, stopTimer, initializeTimer } = useTimer({
     defaultTime: 0,
   });
@@ -43,6 +45,7 @@ export const MainSection = () => {
 
   const initializeStats = () => {
     handleTypingAccuracyChange(100);
+    setTotalCorrectKeyStrokes(0);
     handleTypingSpeedChange(0);
     initializeTimer();
   };
@@ -56,10 +59,7 @@ export const MainSection = () => {
     setIsPauseModalOpen(true);
     stopTimer();
   };
-  const handleClickResumeButton = () => {
-    setIsPauseModalOpen(false);
-    startTimer();
-  };
+
   const closeModal = () => {
     setIsPauseModalOpen(false);
     startTimer();
@@ -83,6 +83,8 @@ export const MainSection = () => {
           isTyping={isTyping}
           startTyping={startTyping}
           stopTyping={stopTyping}
+          totalCorrectKeyStrokes={totalCorrectKeyStrokes}
+          handleTotalCorrectKeyStrokes={setTotalCorrectKeyStrokes}
         />
       </div>
       <div className='right_container'>
@@ -106,7 +108,6 @@ export const MainSection = () => {
           closeTypingResultPopup={closeTypingResultPopup}
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
-          initializeStats={initializeStats}
         />
       )}
       {isPauseModalOpen && <PauseModal closeModal={closeModal} />}

@@ -15,13 +15,13 @@ const VirtualKeyboard = ({
   time,
   stopTimer,
   startTimer,
-  initializeTimer,
   isTyping,
   startTyping,
   stopTyping,
+  totalCorrectKeyStrokes,
+  handleTotalCorrectKeyStrokes,
 }) => {
   const inputRef = useRef(null);
-  const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
   const [cursor, setCursor] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
@@ -91,7 +91,9 @@ const VirtualKeyboard = ({
     }
 
     if (totalCorrectKeyStrokes > 0) {
-      setTotalCorrectKeyStrokes((prev) => prev - disassembledLastChar.length);
+      handleTotalCorrectKeyStrokes(
+        (prev) => prev - disassembledLastChar.length
+      );
     }
   };
 
@@ -101,7 +103,7 @@ const VirtualKeyboard = ({
     setInputValue(inputValue + key);
     if (sentence[proposalIndex].charAt(cursor) === key) {
       setCorrectKeyStrokes((prev) => prev + 1);
-      setTotalCorrectKeyStrokes((prev) => prev + 1);
+      handleTotalCorrectKeyStrokes((prev) => prev + 1);
     }
   };
   const handlePressESC = () => {
@@ -122,7 +124,7 @@ const VirtualKeyboard = ({
         .join('') === key
     ) {
       setCorrectKeyStrokes((prev) => prev + Hangul.disassemble(key).length);
-      setTotalCorrectKeyStrokes(
+      handleTotalCorrectKeyStrokes(
         (prev) => prev + Hangul.disassemble(key).length
       );
     }
@@ -185,7 +187,7 @@ const VirtualKeyboard = ({
   const startGame = () => {
     closeSelectModal();
     clearInputValue();
-    setTotalCorrectKeyStrokes(0);
+    handleTotalCorrectKeyStrokes(0);
     setIsGameReady(true);
     inputRef.current.disabled = false;
     inputRef.current.focus();
@@ -198,7 +200,6 @@ const VirtualKeyboard = ({
     stopTimer();
     setIsGameReady(false);
     showTypingResultPopup();
-    initializeTimer();
   };
 
   useEffect(() => {
