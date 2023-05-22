@@ -56,6 +56,7 @@ export const MainSection = () => {
     setIsTyping(false);
   };
   const handleClickPauseButton = () => {
+    if (!isTyping) return;
     setIsPauseModalOpen(true);
     stopTimer();
   };

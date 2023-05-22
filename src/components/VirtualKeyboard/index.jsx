@@ -233,7 +233,7 @@ const VirtualKeyboard = ({
     if (isTyping) return; //일시정지 상태일 경우 return되어 초기화 되지 않도록 함.
     if (time === 0) return;
     endGame();
-  }, [isTyping, onTypingAccuracyChange, time]);
+  }, [isTyping, time]);
 
   const checkedEnglish = () => {
     return sentence[proposalIndex].split('').map((letter, index) => {
