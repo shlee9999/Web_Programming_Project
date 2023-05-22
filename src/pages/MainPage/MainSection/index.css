@@ -3,6 +3,7 @@
   margin: 0 auto;
   width: 85vw;
   min-width: 800px;
+  box-sizing: border-box;
 }
 
 .upper_container {

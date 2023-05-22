@@ -5,8 +5,7 @@
   justify-content: space-between;
   width: 85vw;
   height: 7vh;
-  border-top: 2px solid #b1b2ff;
-  border-bottom: 2px solid #b1b2ff;
+  border: 2px solid #b1b2ff;
   background-color: #eef1ff;
   top: 0;
   left: 50%;
