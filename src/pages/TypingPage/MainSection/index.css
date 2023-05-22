@@ -3,7 +3,7 @@
   height: 100vh;
   border-top: none;
   margin: 0 auto;
-  border: 0.12vw solid #b1b2ff;
+  border: 2px solid #b1b2ff;
   display: flex;
   min-width: 800px;
   box-sizing: border-box;
