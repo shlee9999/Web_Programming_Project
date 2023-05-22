@@ -9,6 +9,7 @@ import { TypingResultsContainer } from '../../../components/TypingResultsContain
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { useTimer } from '../../../hooks/useTimer';
 import PauseModal from '../../../components/PauseModal';
+
 export const MainSection = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
