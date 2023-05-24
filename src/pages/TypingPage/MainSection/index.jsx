@@ -2,7 +2,7 @@ import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../images/logo.png';
 import './index.css';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import UserInfo from '../../../components/UserInfo';
 import UserInfoInput from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
@@ -18,6 +18,7 @@ export const MainSection = () => {
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
+  const inputRef = useRef(null);
 
   const { time, startTimer, stopTimer, initializeTimer } = useTimer({
     defaultTime: 0,
@@ -62,9 +63,10 @@ export const MainSection = () => {
     stopTimer();
   };
 
-  const closeModal = () => {
+  const closePauseModal = () => {
     setIsPauseModalOpen(false);
     startTimer();
+    inputRef?.current.focus();
   };
 
   return (
@@ -87,6 +89,7 @@ export const MainSection = () => {
           stopTyping={stopTyping}
           totalCorrectKeyStrokes={totalCorrectKeyStrokes}
           handleTotalCorrectKeyStrokes={setTotalCorrectKeyStrokes}
+          inputRef={inputRef}
         />
       </div>
       <div className='right_container'>
@@ -112,7 +115,7 @@ export const MainSection = () => {
           typingAccuracy={typingAccuracy}
         />
       )}
-      {isPauseModalOpen && <PauseModal closeModal={closeModal} />}
+      {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
     </div>
   );
 };

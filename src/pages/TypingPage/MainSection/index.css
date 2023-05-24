@@ -22,4 +22,7 @@
 .right_container {
   width: 20%;
   padding-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import './index.css';
 
 const PauseModal = ({ closeModal }) => {

@@ -8,6 +8,7 @@ import sentence_english from '../../constants/sentence_english.json';
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 
 const VirtualKeyboard = ({
+  inputRef,
   onTypingSpeedChange,
   onTypingAccuracyChange,
   showTypingResultPopup,
@@ -21,7 +22,6 @@ const VirtualKeyboard = ({
   totalCorrectKeyStrokes,
   handleTotalCorrectKeyStrokes,
 }) => {
-  const inputRef = useRef(null);
   const [correctKeyStrokes, setCorrectKeyStrokes] = useState(0);
   const [cursor, setCursor] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
