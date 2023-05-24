@@ -40,7 +40,7 @@
 
 .avatar_imageBox:hover {
   cursor: pointer;
-  border: 2px solid #b1b2ff;
+  filter: brightness(1.1);
 }
 
 .avatar_image {
@@ -48,7 +48,9 @@
   height: 110%;
   -webkit-user-drag: none;
 }
-
+.avatar_imageBox:active {
+  filter: brightness(1);
+}
 .name_label {
   color: #293677;
 }

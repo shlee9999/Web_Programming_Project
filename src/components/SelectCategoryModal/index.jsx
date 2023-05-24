@@ -106,8 +106,9 @@ const Modal = ({
           {sentence_total.sentence.map((item, index) => {
             return (
               <button
-                className={`category_item ${index === sentenceIndex && 'select_sentence'
-                  }`}
+                className={`category_item ${
+                  index === sentenceIndex && 'select_sentence'
+                }`}
                 key={`${language}_category_${index}`}
                 onFocus={handleFocusCategory(item, index)}
                 onKeyDown={handleKeyDown}
