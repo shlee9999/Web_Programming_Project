@@ -88,10 +88,11 @@
   margin: 2vh;
   font-size: 1.5rem;
   min-width: 500px;
+  color: gray;
 }
 
 .correctly_typed {
-  color: gray;
+  color: #293677;
 }
 .mistyped {
   color: red;

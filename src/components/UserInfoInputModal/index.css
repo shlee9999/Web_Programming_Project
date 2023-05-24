@@ -34,7 +34,6 @@
   overflow: hidden;
   margin: 0 auto;
   &.active {
-    border: 2px solid #b1b2ff;
     background-color: #b1b2ff;
   }
 }
