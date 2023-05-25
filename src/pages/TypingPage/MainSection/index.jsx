@@ -1,7 +1,6 @@
 import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../images/logo.png';
-import './index.css';
 import { useState, useRef } from 'react';
 import UserInfo from '../../../components/UserInfo';
 import UserInfoInput from '../../../components/UserInfoInputModal';
@@ -9,6 +8,7 @@ import { TypingResultsContainer } from '../../../components/TypingResultsContain
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { useTimer } from '../../../hooks/useTimer';
 import PauseModal from '../../../components/PauseModal';
+import './index.css';
 
 export const MainSection = () => {
   const [isTyping, setIsTyping] = useState(false);
