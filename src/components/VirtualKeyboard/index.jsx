@@ -6,8 +6,8 @@ import sentence_korean from '../../constants/sentence_korean.json';
 import sentence_english from '../../constants/sentence_english.json';
 
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
-// const isWindow = navigator.platform.toUpperCase().indexOf('WIN') !== -1;
-const isWindow = true;
+const isWindow = navigator.platform.toUpperCase().indexOf('WIN') !== -1;
+// const isWindow = true;
 const VirtualKeyboard = ({
   inputRef,
   onTypingSpeedChange,
