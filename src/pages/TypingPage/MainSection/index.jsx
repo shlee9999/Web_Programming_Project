@@ -37,7 +37,7 @@ export const MainSection = () => {
   return (
     <div className='typing_page_main'>
       <div className='left_container'>
-        <img src={Logo} className='page_logo' alt='logo' />
+        <img src={Logo} className='typing_page_logo' alt='logo' />
         <VirtualKeyboard
           onTypingSpeedChange={handleTypingSpeedChange}
           onTypingAccuracyChange={handleTypingAccuracyChange}

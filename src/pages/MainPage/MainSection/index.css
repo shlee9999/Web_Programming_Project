@@ -12,6 +12,13 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin-bottom: 8vh;
+}
+
+.main_page_logo {
+  margin: 14vh 0 5vh;
+  width: 32vw;
+  min-width: 300px;
 }
 
 .start_button {
