@@ -88,12 +88,16 @@
   margin: 2vh;
   font-size: 1.5rem;
   min-width: 500px;
+}
+.current_sentence {
   color: gray;
 }
-
 .correctly_typed {
   color: #293677;
 }
 .mistyped {
   color: red;
+}
+.now_typing {
+  color: blue;
 }

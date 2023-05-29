@@ -9,6 +9,7 @@ import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { useTimer } from '../../../hooks/useTimer';
 import PauseModal from '../../../components/PauseModal';
 import './index.css';
+import Timer from '../../../components/Timer';
 
 export const MainSection = () => {
   const [isTyping, setIsTyping] = useState(false);
@@ -73,24 +74,8 @@ export const MainSection = () => {
     <div className='typing_page_main'>
       <div className='left_container'>
         <img src={Logo} className='page_logo' alt='logo' />
-        <VirtualKeyboard
-          onTypingSpeedChange={handleTypingSpeedChange}
-          onTypingAccuracyChange={handleTypingAccuracyChange}
-          viewTypingResultPopup={viewTypingResultPopup}
-          showTypingResultPopup={showTypingResultPopup}
-          setTypingSpeed={setTypingSpeed}
-          setTypingAccuracy={setTypingAccuracy}
-          time={time}
-          startTimer={startTimer}
-          stopTimer={stopTimer}
-          initializeTimer={initializeTimer}
-          isTyping={isTyping}
-          startTyping={startTyping}
-          stopTyping={stopTyping}
-          totalCorrectKeyStrokes={totalCorrectKeyStrokes}
-          handleTotalCorrectKeyStrokes={setTotalCorrectKeyStrokes}
-          inputRef={inputRef}
-        />
+        <Timer />
+        <VirtualKeyboard time={time} startTimer={startTimer} />
       </div>
       <div className='right_container'>
         <UserInfo viewUserInfoInputPopup={viewUserInfoInputPopup} />

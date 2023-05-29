@@ -51,9 +51,9 @@ const Modal = ({
     e.stopPropagation();
     buttonRef.current.focus();
   };
-  const handleFocusCategory = (item, index) => () => {
+  const handleFocusCategory = (index) => () => {
     setSentenceIndex(index);
-    selectCategory(item)();
+    selectCategory(index);
     setFocusedCategoryIndex(index);
   };
 
@@ -110,7 +110,7 @@ const Modal = ({
                   index === sentenceIndex && 'select_sentence'
                 }`}
                 key={`${language}_category_${index}`}
-                onFocus={handleFocusCategory(item, index)}
+                onFocus={handleFocusCategory(index)}
                 onKeyDown={handleKeyDown}
                 ref={index === focusedCategoryIndex ? buttonRef : null}
               >
