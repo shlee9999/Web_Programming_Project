@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import useVirtualKeyboard from '../../hooks/useVirtualKeyboard';
+import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
-import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
+import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
 const VirtualKeyboard = ({
   time,
   startTyping,

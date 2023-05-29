@@ -1,5 +1,5 @@
 import './index.css';
-import { avatarList } from '../../constants/avatarList';
+import { avatarList } from 'constants/avatarList';
 import { useEffect, useState } from 'react';
 
 const UserInfo = ({ viewUserInfoInputPopup }) => {

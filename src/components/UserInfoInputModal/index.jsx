@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import './index.css';
-import { avatarList } from '../../constants/avatarList';
+import { avatarList } from 'constants/avatarList';
 
 const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
   const nameInputRef = useRef(null);

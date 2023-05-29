@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
-import '../../global.css';
-import sentence_english from '../../constants/sentence_english.json';
-import sentence_korean from '../../constants/sentence_korean.json';
+import sentence_english from 'constants/sentence_english.json';
+import sentence_korean from 'constants/sentence_korean.json';
 
 const Modal = ({
   closeModal,

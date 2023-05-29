@@ -1,6 +1,6 @@
 import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
-import Logo from '../../../images/logo.png';
+import Logo from '../../../assets/logo.png';
 import { useState, useRef } from 'react';
 import UserInfo from '../../../components/UserInfo';
 import UserInfoInput from '../../../components/UserInfoInputModal';
