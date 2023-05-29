@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
