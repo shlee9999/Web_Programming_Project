@@ -9,7 +9,6 @@ import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { useTimer } from '../../../hooks/useTimer';
 import PauseModal from '../../../components/PauseModal';
 import './index.css';
-import Timer from '../../../components/Timer';
 
 export const MainSection = () => {
   const [isTyping, setIsTyping] = useState(false);
@@ -18,7 +17,7 @@ export const MainSection = () => {
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
-  const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
+
   const inputRef = useRef(null);
 
   const { time, startTimer, stopTimer, initializeTimer } = useTimer({
@@ -38,25 +37,18 @@ export const MainSection = () => {
     initializeStats();
   };
 
-  const handleTypingSpeedChange = (speed) => {
+  const handleTypingSpeed = (speed) => {
     setTypingSpeed(speed);
   };
 
-  const handleTypingAccuracyChange = (accuracy) => {
+  const handleTotalAccuracy = (accuracy) => {
     setTypingAccuracy(accuracy);
   };
 
   const initializeStats = () => {
-    handleTypingAccuracyChange(100);
-    setTotalCorrectKeyStrokes(0);
-    handleTypingSpeedChange(0);
+    handleTotalAccuracy(100);
+    handleTypingSpeed(0);
     initializeTimer();
-  };
-  const startTyping = () => {
-    setIsTyping(true);
-  };
-  const stopTyping = () => {
-    setIsTyping(false);
   };
   const handleClickPauseButton = () => {
     if (!isTyping) return;
@@ -74,8 +66,14 @@ export const MainSection = () => {
     <div className='typing_page_main'>
       <div className='left_container'>
         <img src={Logo} className='page_logo' alt='logo' />
-        <Timer />
-        <VirtualKeyboard time={time} startTimer={startTimer} />
+        <VirtualKeyboard
+          time={time}
+          startTimer={startTimer}
+          stopTimer={stopTimer}
+          showTypingResultPopup={showTypingResultPopup}
+          handleTypingSpeed={handleTypingSpeed}
+          handleTotalAccuracy={handleTotalAccuracy}
+        />
       </div>
       <div className='right_container'>
         <UserInfo viewUserInfoInputPopup={viewUserInfoInputPopup} />

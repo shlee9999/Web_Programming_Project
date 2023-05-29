@@ -1,8 +1,8 @@
 import hangul from 'hangul-js';
-import { useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import sentence_korean from '../constants/sentence_korean.json';
 import sentence_english from '../constants/sentence_english.json';
-const useVirtualKeyboard = ({ time, proposalIndex }) => {
+const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
   const sentence_total = language ? sentence_english : sentence_korean;
   const [currentIndex, setCurrentIndex] = useState(0); //현재 문장이 몇 번째 문장인가?
@@ -61,27 +61,30 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
     if (inputValue.length < currentSentence.length - 5) return;
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length - 1) {
       setPrevLength((prev) => prev + currentSentence.length);
-      setTotalCursor(prevLength);
-      setCurrentIndex((prev) => prev + 1);
+      setCurrentIndex((prev) => prev + 1); //왜 2번씩..호출되지..
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
-      setInputValue('');
     } //다음 문장으로 넘어간다.
-    console.log(currentIndex);
+
     if (
       currentIndex ===
       sentence_total.sentence[proposalIndex].text.length - 1
     ) {
       //마지막 문장에서 엔터를 쳤을 때
-      console.log('마지막-게임끝!');
+      endGame();
     }
+    // if (!language) setInputValue(inputValue + ' ');
+    setInputValue('');
   };
-  useEffect(() => {
-    setCurrentSentence(
-      sentence_total.sentence[proposalIndex].text[currentIndex]
-    );
-  }, [currentIndex, proposalIndex, sentence_total.sentence]);
+  const handleBackspace = () => {
+    if (inputValue.length < 1) return;
+    if (totalCorrectKeyStrokes > 0)
+      setTotalCorrectKeyStrokes((prev) => prev - 1);
+  };
+  const toggleLanguage = () => {
+    setLanguage(!language);
+  };
 
-  const checkCurrentSentence = () => {
+  const checkCurrentSentence = useCallback(() => {
     const splitInput = inputValue.split('');
     let correctKeys = 0;
     setCurrentSentence(
@@ -137,30 +140,45 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
         })
     );
     setTotalCorrectKeyStrokes(prevTotalCorrectKeys + correctKeys);
-  };
-
-  const handleBackspace = () => {
-    if (inputValue.length < 1) return;
-    if (totalCorrectKeyStrokes > 0)
-      setTotalCorrectKeyStrokes((prev) => prev - 1);
-  };
-  const toggleLanguage = () => {
-    setLanguage(!language);
-  };
+  }, [
+    currentIndex,
+    inputValue,
+    language,
+    prevTotalCorrectKeys,
+    proposalIndex,
+    sentence_total.sentence,
+  ]);
 
   useEffect(() => {
-    if (inputValue.length === 0) return;
+    setTotalCursor(prevLength);
+  }, [prevLength]);
+
+  useEffect(() => {
     if (inputValue.length === 0) return;
     setTotalCursor(prevLength + inputValue.length - 1);
     setTotalAccuracy(
       ((totalCorrectKeyStrokes / (totalCursor + 1)) * 100).toFixed(0)
     );
-    console.log(totalCorrectKeyStrokes + ' ' + totalCursor);
+    // console.log(totalCorrectKeyStrokes + ' ' + totalCursor);
     checkCurrentSentence(); //Input 검사 로직
-  }, [inputValue]); //한글 영어 모두 적용됨.
+  }, [
+    inputValue,
+    checkCurrentSentence,
+    prevLength,
+    totalCorrectKeyStrokes,
+    totalCursor,
+  ]); //한글 영어 모두 적용됨.
+
   useEffect(() => {
     setTypingSpeed(((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0));
   }, [time, totalCorrectKeyStrokes]);
+
+  useEffect(() => {
+    setCurrentSentence(
+      sentence_total.sentence[proposalIndex].text[currentIndex]
+    );
+  }, [currentIndex, proposalIndex, sentence_total.sentence]);
+
   return {
     inputValue,
     onChange,
