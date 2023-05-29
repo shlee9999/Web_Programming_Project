@@ -7,6 +7,7 @@ const VirtualKeyboard = ({ time, startTimer }) => {
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
   const [isGameReady, setIsGameReady] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
+
   const inputRef = useRef(null);
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -27,6 +28,7 @@ const VirtualKeyboard = ({ time, startTimer }) => {
     initializeKeyboard,
     language,
     toggleLanguage,
+    activeKeys,
   } = useVirtualKeyboard({ time, proposalIndex });
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
   const onClickStart = () => {
@@ -75,7 +77,7 @@ const VirtualKeyboard = ({ time, startTimer }) => {
         />
 
         <div className='keyboard_keys_container'>
-          {/* {keyRows.map((row, rowIndex) => ( 
+          {keyRows.map((row, rowIndex) => (
             <div key={rowIndex} className='row_keys_wrapper'>
               {row.split('').map((key, index) => (
                 <button
@@ -89,8 +91,7 @@ const VirtualKeyboard = ({ time, startTimer }) => {
                 </button>
               ))}
             </div>
-          ))} */}
-          키보드
+          ))}
         </div>
       </div>
       {isSelectModalOpen && (

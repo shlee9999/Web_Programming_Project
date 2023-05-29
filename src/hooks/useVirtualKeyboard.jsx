@@ -10,6 +10,7 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
     //현재 문장
     sentence_total.sentence[proposalIndex].text[currentIndex]
   );
+  const [activeKeys, setActiveKeys] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
@@ -33,6 +34,15 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
         return;
       default:
         break;
+    }
+    if (key.length === 1) {
+      setActiveKeys((prev) => [...prev, key.toUpperCase()]);
+      setTimeout(() => {
+        setActiveKeys((prev) => {
+          prev.pop();
+          return prev;
+        });
+      }, 500);
     }
   };
 
@@ -162,6 +172,7 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
     initializeKeyboard,
     language,
     toggleLanguage,
+    activeKeys,
   };
 };
 
