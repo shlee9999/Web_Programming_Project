@@ -4,9 +4,11 @@ import sentence_korean from 'constants/sentence_korean.json';
 import sentence_english from 'constants/sentence_english.json';
 import enter_sound from 'assets/sounds/Enter.mp3';
 import end_sound from 'assets/sounds/Yeah.wav';
+
 const EnterSound = new Audio(enter_sound);
 const EndSound = new Audio(end_sound);
-const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
+
+const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
   const sentence_total = language ? sentence_english : sentence_korean;
   const [currentIndex, setCurrentIndex] = useState(0); //현재 문장이 몇 번째 문장인가?
@@ -21,7 +23,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
   const [prevLength, setPrevLength] = useState(0);
   const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
   const [totalAccuracy, setTotalAccuracy] = useState(100);
-
   const onChange = ({ target: { value } }) => {
     setInputValue(value);
   };
@@ -77,14 +78,23 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
       EndSound.play();
       endGame();
     }
-    //한글 clear 처리 실패(macOS).
+
+    if (!language) {
+      inputRef.current.disabled = true;
+      setTimeout(() => {
+        inputRef.current.disabled = false;
+        inputRef.current.focus();
+      }, 0); //macOS 한국어 input초기화 시 버그가 있어서 넣은 코드입니다.
+    }
     setInputValue('');
   };
+
   const handleBackspace = () => {
     if (inputValue.length < 1) return;
     if (totalCorrectKeyStrokes > 0)
       setTotalCorrectKeyStrokes((prev) => prev - 1);
   };
+
   const toggleLanguage = () => {
     setLanguage(!language);
   };

@@ -64,7 +64,7 @@ const VirtualKeyboard = ({
     language,
     toggleLanguage,
     activeKeys,
-  } = useVirtualKeyboard({ time, proposalIndex, endGame });
+  } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
 
