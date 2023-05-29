@@ -3,8 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import sentence_korean from 'constants/sentence_korean.json';
 import sentence_english from 'constants/sentence_english.json';
 import enter_sound from 'assets/sounds/Enter.mp3';
-
-const audio = new Audio(enter_sound);
+import end_sound from 'assets/sounds/Yeah.wav';
+const EnterSound = new Audio(enter_sound);
+const EndSound = new Audio(end_sound);
 const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
   const sentence_total = language ? sentence_english : sentence_korean;
@@ -65,7 +66,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
       setPrevLength((prev) => prev + currentSentence.length);
       setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
-      audio.play();
+      EnterSound.play();
     } //다음 문장으로 넘어간다.
 
     if (
@@ -73,6 +74,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
       sentence_total.sentence[proposalIndex].text.length - 1
     ) {
       //마지막 문장에서 엔터를 쳤을 때
+      EndSound.play();
       endGame();
     }
     //한글 clear 처리 실패(macOS).
