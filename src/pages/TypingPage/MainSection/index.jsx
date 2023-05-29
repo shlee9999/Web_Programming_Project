@@ -38,19 +38,20 @@ export const MainSection = () => {
   };
 
   const handleTypingSpeed = (speed) => {
+    //VirtualKeyboard에서 받아옴
     setTypingSpeed(speed);
   };
 
   const handleTotalAccuracy = (accuracy) => {
+    //VirtualKeyboard에서 받아옴
     setTypingAccuracy(accuracy);
   };
 
   const initializeStats = () => {
-    handleTotalAccuracy(100);
-    handleTypingSpeed(0);
-    initializeTimer();
+    initializeTimer(); //totalAccuracy, typingSpeed는 time=0으로 초기화 시 초기화되도록 useVirtualKeyboard에 useEffect로 구현
   };
-  const handleClickPauseButton = () => {
+
+  const handleClickPause = () => {
     if (!isTyping) return;
     setIsPauseModalOpen(true);
     stopTimer();
@@ -62,17 +63,27 @@ export const MainSection = () => {
     inputRef?.current.focus();
   };
 
+  const startTyping = () => {
+    setIsTyping(true);
+    startTimer();
+  };
+  const stopTyping = () => {
+    setIsTyping(false);
+    stopTimer();
+  };
+
   return (
     <div className='typing_page_main'>
       <div className='left_container'>
         <img src={Logo} className='page_logo' alt='logo' />
         <VirtualKeyboard
           time={time}
-          startTimer={startTimer}
-          stopTimer={stopTimer}
+          startTyping={startTyping}
+          stopTyping={stopTyping}
           showTypingResultPopup={showTypingResultPopup}
           handleTypingSpeed={handleTypingSpeed}
           handleTotalAccuracy={handleTotalAccuracy}
+          inputRef={inputRef}
         />
       </div>
       <div className='right_container'>
@@ -82,7 +93,7 @@ export const MainSection = () => {
           typingAccuracy={typingAccuracy}
         />
         {!isPauseModalOpen && (
-          <button onClick={handleClickPauseButton}>일시 정지</button>
+          <button onClick={handleClickPause}>일시 정지</button>
         )}
       </div>
       {viewUserInfoInputPopup && (

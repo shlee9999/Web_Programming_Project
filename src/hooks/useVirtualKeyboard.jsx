@@ -7,8 +7,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
   const sentence_total = language ? sentence_english : sentence_korean;
   const [currentIndex, setCurrentIndex] = useState(0); //현재 문장이 몇 번째 문장인가?
   const [currentSentence, setCurrentSentence] = useState(
-    //현재 문장
-    sentence_total.sentence[proposalIndex].text[currentIndex]
+    sentence_total.sentence[proposalIndex].text[currentIndex] //현재 문장
   );
   const [activeKeys, setActiveKeys] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -61,7 +60,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
     if (inputValue.length < currentSentence.length - 5) return;
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length - 1) {
       setPrevLength((prev) => prev + currentSentence.length);
-      setCurrentIndex((prev) => prev + 1); //왜 2번씩..호출되지..
+      setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
     } //다음 문장으로 넘어간다.
 
@@ -72,7 +71,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
       //마지막 문장에서 엔터를 쳤을 때
       endGame();
     }
-    // if (!language) setInputValue(inputValue + ' ');
+    //한글 clear 처리 실패(macOS).
     setInputValue('');
   };
   const handleBackspace = () => {
@@ -179,6 +178,9 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame }) => {
     );
   }, [currentIndex, proposalIndex, sentence_total.sentence]);
 
+  useEffect(() => {
+    if (time === 0) initializeKeyboard(); //time=0으로 초기화(게임 초기화)시 키보드 초기화되도록 함
+  }, [time]);
   return {
     inputValue,
     onChange,

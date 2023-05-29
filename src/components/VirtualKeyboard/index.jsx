@@ -5,46 +5,54 @@ import SelectCategoryModal from '../SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 const VirtualKeyboard = ({
   time,
-  startTimer,
-  stopTimer,
+  startTyping,
+  stopTyping,
   showTypingResultPopup,
   handleTypingSpeed,
   handleTotalAccuracy,
+  inputRef,
 }) => {
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
   const [isGameReady, setIsGameReady] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
-  const inputRef = useRef(null);
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
+
   const selectCategory = (index) => {
     setProposalIndex(index);
   };
-  const formattedTime = `${minutes < 10 ? '0' : ''}${minutes}:${
-    seconds < 10 ? '0' : ''
-  }${seconds}`;
+
+  const getFormattedTime = () => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes < 10 ? '0' : ''}${minutes}:${
+      seconds < 10 ? '0' : ''
+    }${seconds}`;
+  };
 
   const onClickStart = () => {
     setIsSelectModalOpen(true);
   };
+
   const closeSelectModal = () => {
     if (!isSelectModalOpen) return;
     setIsSelectModalOpen(false);
   };
+
   const startGame = () => {
     closeSelectModal();
     initializeKeyboard();
     setIsGameReady(true);
     inputRef.current.disabled = false;
     inputRef.current.focus();
-    startTimer();
+    startTyping();
   };
+
   const endGame = () => {
     inputRef.current.disabled = true;
-    stopTimer();
+    stopTyping();
     setIsGameReady(false);
     showTypingResultPopup();
   };
+
   const {
     inputValue,
     onChange,
@@ -57,11 +65,13 @@ const VirtualKeyboard = ({
     toggleLanguage,
     activeKeys,
   } = useVirtualKeyboard({ time, proposalIndex, endGame });
+
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
 
   useEffect(() => {
     handleTypingSpeed(typingSpeed);
   }, [typingSpeed, handleTypingSpeed]);
+
   useEffect(() => {
     handleTotalAccuracy(totalAccuracy);
   }, [totalAccuracy, handleTotalAccuracy]);
@@ -70,10 +80,9 @@ const VirtualKeyboard = ({
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
         <div>
-          <br /> 진행 시간 : {formattedTime}
+          <br /> 진행 시간 : {getFormattedTime()}
         </div>
-        {/* <div>타수 : {typingSpeed}</div>
-        <div>정확도 : {totalAccuracy}</div> */}
+
         <div className='proposal'>
           {isGameReady ? (
             <p className='current_sentence'>{currentSentence}</p>

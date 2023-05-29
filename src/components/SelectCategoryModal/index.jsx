@@ -7,7 +7,6 @@ import sentence_korean from '../../constants/sentence_korean.json';
 const Modal = ({
   closeModal,
   selectCategory,
-  isTyping,
   startGame,
   language,
   toggleLanguage,
@@ -69,14 +68,10 @@ const Modal = ({
   };
 
   useEffect(() => {
-    if (!isTyping) return;
-    startGame();
-  }, [isTyping, startGame]);
-
-  useEffect(() => {
     if (!buttonRef.current) return;
     buttonRef.current.focus();
   }, [language]);
+
   useEffect(() => {
     if (!buttonRef.current) return;
     buttonRef.current.focus();
