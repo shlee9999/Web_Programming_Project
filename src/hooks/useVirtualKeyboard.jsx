@@ -89,7 +89,7 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
         .split('')
         .map((letter, index) => {
           if (index > inputValue.length - 1) return letter;
-          if (index === inputValue.length - 1 && letter !== ' ') {
+          if (index === inputValue.length - 1) {
             if (!language) {
               const disassembledLetter = hangul.disassemble(letter);
               const disassembledLastChar = hangul.disassemble(
@@ -104,12 +104,14 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
                 if (disassembledLetter[i] !== disassembledLastChar[i])
                   isSame = false;
               }
-              if (isSame)
+              if (isSame) {
+                correctKeys++;
                 return (
                   <span key={index} className='correctly_typed'>
                     {letter}
                   </span>
                 );
+              }
               if (!isSame)
                 return (
                   <span key={index} className='mistyped'>
@@ -117,11 +119,7 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
                   </span>
                 );
             }
-            return (
-              <span key={index} className='correctly_typed'>
-                {letter}
-              </span>
-            );
+            //영어
           }
           if (letter === splitInput[index]) {
             correctKeys++;
@@ -152,13 +150,14 @@ const useVirtualKeyboard = ({ time, proposalIndex }) => {
 
   useEffect(() => {
     if (inputValue.length === 0) return;
+    if (inputValue.length === 0) return;
     setTotalCursor(prevLength + inputValue.length - 1);
     setTotalAccuracy(
       ((totalCorrectKeyStrokes / (totalCursor + 1)) * 100).toFixed(0)
     );
+    console.log(totalCorrectKeyStrokes + ' ' + totalCursor);
     checkCurrentSentence(); //Input 검사 로직
   }, [inputValue]); //한글 영어 모두 적용됨.
-
   useEffect(() => {
     setTypingSpeed(((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0));
   }, [time, totalCorrectKeyStrokes]);
