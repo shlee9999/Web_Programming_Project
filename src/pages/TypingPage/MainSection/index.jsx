@@ -1,9 +1,9 @@
 import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../assets/logo.png';
-import { useState } from 'react';
-import UserInfo from '../../../components/UserInfo';
-import UserInfoInput from '../../../components/UserInfoInputModal';
+import { useState, useRef } from 'react';
+import { UserInfo } from '../../../components/UserInfo';
+import { UserInfoInputModal } from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { TypingStatisticsModal } from '../../../components/TypingStatisticsModal';
@@ -21,7 +21,6 @@ export const MainSection = () => {
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
 
-  const [typingTime, setTypingTime] = useState('');
   const [userName, setUserName] = useState('');
   const [userImageIndex, setUserImageIndex] = useState(0);
 
@@ -66,15 +65,15 @@ export const MainSection = () => {
 
   const showTypingResultPopup = () => {
     setViewTypingResultPopup(true);
-    const localStorageDateList = [
+    const localStorageDataList = [
       userName,
       typingSpeed,
       typingAccuracy,
-      typingTime,
+      time,
       currentDate,
     ];
 
-    addToLocalStorage(localStorageDateList);
+    addToLocalStorage(localStorageDataList);
   };
 
   const closeTypingResultPopup = () => {
@@ -161,7 +160,7 @@ export const MainSection = () => {
         )}
       </div>
       {viewUserInfoInputPopup && (
-        <UserInfoInput
+        <UserInfoInputModal
           viewUserInfoInputPopup={viewUserInfoInputPopup}
           closeUserInfoInputPopup={closeUserInfoInputPopup}
           handleUserName={handleUserName}

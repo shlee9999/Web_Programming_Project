@@ -4,15 +4,10 @@ import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
 const VirtualKeyboard = ({
-  handleTypingSpeedChange,
-  handleTypingAccuracyChange,
-  handleTypingTimeChange,
   showTypingResultPopup,
-  viewTypingResultPopup,
   time,
   startTyping,
   stopTyping,
-  showTypingResultPopup,
   handleTypingSpeed,
   handleTotalAccuracy,
   inputRef,

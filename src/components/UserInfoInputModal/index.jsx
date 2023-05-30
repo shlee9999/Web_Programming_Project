@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import './index.css';
 import { avatarList } from 'constants/avatarList';
 
-export const UserInfoInput = ({
+export const UserInfoInputModal = ({
   viewUserInfoInputPopup,
   closeUserInfoInputPopup,
   handleUserName,
