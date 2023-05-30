@@ -23,6 +23,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [prevLength, setPrevLength] = useState(0);
   const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
   const [totalAccuracy, setTotalAccuracy] = useState(100);
+  const [title, setTitle] = useState('');
 
   const onChange = ({ target: { value } }) => {
     if (!value) {
@@ -220,6 +221,9 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   useEffect(() => {
     if (time === 0) initializeKeyboard(); //time=0으로 초기화(게임 초기화)시 키보드 초기화되도록 함
   }, [time]);
+  useEffect(() => {
+    setTitle(sentence_total.sentence[proposalIndex].title);
+  }, [proposalIndex, language]);
   return {
     inputValue,
     onChange,
@@ -231,6 +235,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     language,
     toggleLanguage,
     activeKeys,
+    title,
   };
 };
 

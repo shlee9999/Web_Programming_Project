@@ -1,11 +1,16 @@
+.modal_overlay.statistics .modal {
+  width: 800px;
+}
+
 .statistics_wrapper {
+  margin: 0 auto;
   width: 100%;
   height: 500px;
   overflow: scroll;
 }
 
 .statistics_table {
-  margin: 0 auto;
+  margin: 10px auto;
   font-size: 10pt;
   border-collapse: collapse;
   border-spacing: 10px;
@@ -13,14 +18,19 @@
 
 .statistics_table th,
 .statistics_table td {
-  width: 20%;
+  width: 18%;
   padding: 12px;
   text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
 .statistics_table th {
+  width: 18%;
   background-color: #eef1ff;
   font-weight: bold;
   color: #333;
 }
+
+/* tbody tr:nth-child(3) {
+  width: 100px;
+} */
