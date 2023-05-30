@@ -9,8 +9,9 @@ import { useTimer } from '../../hooks/useTimer';
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 
 const VirtualKeyboard = ({
-  onTypingSpeedChange,
-  onTypingAccuracyChange,
+  handleTypingSpeedChange,
+  handleTypingAccuracyChange,
+  handleTypingTimeChange,
   showTypingResultPopup,
 }) => {
   const inputRef = useRef(null);
@@ -73,6 +74,7 @@ const VirtualKeyboard = ({
     setInputValue('');
     if (proposalIndex === sentence.length - 1) {
       //전체 문장을 다 쳤을 때 (게임 끝)
+
       setIsLastPress(true);
       // endGame();
       if (totalAccuracy < 60) {
@@ -236,26 +238,26 @@ const VirtualKeyboard = ({
     if (cursor === 0) return;
     if (correctKeyStrokes >= 0) setAccuracy((correctKeyStrokes / cursor) * 100);
     setTotalAccuracy((totalCorrectKeyStrokes / totalCursor) * 100);
-    onTypingAccuracyChange(totalAccuracy.toFixed(0));
+    handleTypingAccuracyChange(totalAccuracy.toFixed(0));
   }, [
     cursor,
     totalAccuracy,
     correctKeyStrokes,
-    onTypingAccuracyChange,
+    handleTypingAccuracyChange,
     totalCorrectKeyStrokes,
     totalCursor,
   ]);
 
   useEffect(() => {
     if (totalCorrectKeyStrokes < 0) return;
-    onTypingSpeedChange(
+    handleTypingSpeedChange(
       ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
     );
   }, [
     totalCorrectKeyStrokes,
     time,
-    onTypingAccuracyChange,
-    onTypingSpeedChange,
+    handleTypingAccuracyChange,
+    handleTypingSpeedChange,
   ]);
 
   const initialize = () => {
@@ -265,7 +267,7 @@ const VirtualKeyboard = ({
     setTotalCorrectKeyStrokes(0);
     initializeTimer();
     setTotalCursor(0);
-    onTypingAccuracyChange(100);
+    handleTypingAccuracyChange(100);
     // setIsPlaceHolderOn(true);
   };
   useEffect(() => {
@@ -275,7 +277,7 @@ const VirtualKeyboard = ({
       return;
     }
     initialize();
-  }, [isTyping, onTypingAccuracyChange, time]);
+  }, [isTyping, handleTypingAccuracyChange, time]);
 
   const checkedEnglish = () => {
     return sentence[proposalIndex].split('').map((letter, index) => {
