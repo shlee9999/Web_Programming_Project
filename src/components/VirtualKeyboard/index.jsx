@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
@@ -9,8 +9,7 @@ const VirtualKeyboard = ({
   time,
   startTyping,
   stopTyping,
-  handleTypingSpeed,
-  handleTotalAccuracy,
+
   inputRef,
 }) => {
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
@@ -100,14 +99,6 @@ const VirtualKeyboard = ({
   } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
-
-  useEffect(() => {
-    handleTypingSpeed(typingSpeed);
-  }, [typingSpeed, handleTypingSpeed]);
-
-  useEffect(() => {
-    handleTotalAccuracy(totalAccuracy);
-  }, [totalAccuracy, handleTotalAccuracy]);
 
   return (
     <div className='virtual_keyboard'>

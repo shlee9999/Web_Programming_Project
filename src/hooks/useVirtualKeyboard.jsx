@@ -1,9 +1,10 @@
 import hangul from 'hangul-js';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import sentence_korean from 'constants/sentence_korean.json';
 import sentence_english from 'constants/sentence_english.json';
 import enter_sound from 'assets/sounds/Enter.mp3';
 import end_sound from 'assets/sounds/Yeah.wav';
+import { MyContext } from 'pages/TypingPage/MainSection';
 
 const EnterSound = new Audio(enter_sound);
 const EndSound = new Audio(end_sound);
@@ -19,12 +20,12 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [inputValue, setInputValue] = useState('');
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(0);
   const [prevLength, setPrevLength] = useState(0);
   const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
-  const [totalAccuracy, setTotalAccuracy] = useState(100);
-  const [title, setTitle] = useState('');
 
+  const [title, setTitle] = useState('');
+  const { typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy } =
+    useContext(MyContext);
   const onChange = ({ target: { value } }) => {
     if (!value) {
       setInputValue('');
@@ -104,7 +105,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     }, 300);
   };
 
-  const initializeKeyboard = () => {
+  const initializeKeyboard = useCallback(() => {
     setInputValue('');
     setCurrentIndex(0);
     setTotalCorrectKeyStrokes(0);
@@ -113,7 +114,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setPrevLength(0);
     setPrevTotalCorrectKeys(0);
     setTotalAccuracy(100);
-  };
+  }, [setTotalAccuracy, setTypingSpeed]);
 
   const toggleLanguage = () => {
     setLanguage(!language);
@@ -203,6 +204,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     prevLength,
     totalCorrectKeyStrokes,
     totalCursor,
+    setTotalAccuracy,
   ]); //한글 영어 모두 적용됨.
 
   useEffect(() => {
@@ -210,7 +212,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       ? ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
       : ((totalCorrectKeyStrokes / (time + 1)) * 60 * 1.5).toFixed(0);
     setTypingSpeed(newTypingSpeed);
-  }, [time, totalCorrectKeyStrokes, language]);
+  }, [time, totalCorrectKeyStrokes, language, setTypingSpeed]);
 
   useEffect(() => {
     setCurrentSentence(
@@ -220,7 +222,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
 
   useEffect(() => {
     if (time === 0) initializeKeyboard(); //time=0으로 초기화(게임 초기화)시 키보드 초기화되도록 함
-  }, [time]);
+  }, [time, initializeKeyboard]);
   useEffect(() => {
     setTitle(sentence_total.sentence[proposalIndex].title);
   }, [proposalIndex, language, sentence_total.sentence]);

@@ -1,10 +1,9 @@
+import { useContext } from 'react';
+import { MyContext } from 'pages/TypingPage/MainSection';
 import './index.css';
 
-export const TypingResultsModal = ({
-  closeTypingResultPopup,
-  typingSpeed,
-  totalAccuracy,
-}) => {
+export const TypingResultsModal = ({ closeTypingResultPopup }) => {
+  const { typingSpeed, totalAccuracy } = useContext(MyContext);
   const handleClickModal = (e) => {
     e.stopPropagation();
   };
