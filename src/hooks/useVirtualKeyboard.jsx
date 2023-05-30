@@ -25,19 +25,22 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [totalAccuracy, setTotalAccuracy] = useState(100);
 
   const onChange = ({ target: { value } }) => {
-    setInputValue(value);
+    if (!value) {
+      setInputValue('');
+      setCurrentSentence(
+        sentence_total.sentence[proposalIndex].text[currentIndex]
+      );
+      return;
+    }
     const lastChar = value[value.length - 1];
     const key = language ? lastChar : hangul.disassemble(lastChar);
-    setActiveKeys((prev) => [
-      ...prev,
-      language ? key.toUpperCase() : key[key.length - 1],
-    ]);
-    setTimeout(() => {
-      setActiveKeys((prev) => {
-        prev.pop();
-        return prev;
-      });
-    }, 500);
+    if (
+      !language &&
+      hangul.disassemble(inputValue).length < hangul.disassemble(value).length
+    ) {
+      colorKeyboard(key);
+    } else if (language && inputValue.length < value.length) colorKeyboard(key);
+    setInputValue(value);
   };
 
   const onKeyDown = ({ key }) => {
@@ -50,8 +53,19 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
         handleBackspace();
         return;
       default:
-        break;
+        return;
     }
+  };
+
+  const colorKeyboard = (key) => {
+    if (language) setActiveKeys((prev) => [...prev, key.toUpperCase()]);
+    else setActiveKeys((prev) => [...prev, key[key.length - 1]]);
+    setTimeout(() => {
+      setActiveKeys((prev) => {
+        prev.pop();
+        return prev;
+      });
+    }, 500);
   };
 
   const initializeKeyboard = () => {
@@ -113,6 +127,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
           if (index > inputValue.length - 1) return letter;
           if (index === inputValue.length - 1) {
             if (!language) {
+              //한글 로직
               const disassembledLetter = hangul.disassemble(letter);
               const disassembledLastChar = hangul.disassemble(
                 inputValue[inputValue.length - 1]
@@ -140,7 +155,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
                     {letter}
                   </span>
                 );
-            }
+            } //한글 로직 끝
             //영어
           }
           if (letter === splitInput[index]) {
