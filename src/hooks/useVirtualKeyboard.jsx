@@ -223,7 +223,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   }, [time]);
   useEffect(() => {
     setTitle(sentence_total.sentence[proposalIndex].title);
-  }, [proposalIndex, language]);
+  }, [proposalIndex, language, sentence_total.sentence]);
   return {
     inputValue,
     onChange,

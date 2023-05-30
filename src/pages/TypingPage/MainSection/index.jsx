@@ -1,15 +1,17 @@
-import React from 'react';
-import VirtualKeyboard from '../../../components/VirtualKeyboard';
-import Logo from '../../../assets/logo.png';
+import React, { createContext } from 'react';
+import VirtualKeyboard from 'components/VirtualKeyboard';
+import Logo from 'assets/logo.png';
 import { useState, useRef } from 'react';
-import { UserInfo } from '../../../components/UserInfo';
-import { UserInfoInputModal } from '../../../components/UserInfoInputModal';
-import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
-import { TypingResultsModal } from '../../../components/TypingResultsModal';
-import { TypingStatisticsModal } from '../../../components/TypingStatisticsModal';
-import { useTimer } from '../../../hooks/useTimer';
-import PauseModal from '../../../components/PauseModal';
+import { UserInfo } from 'components/UserInfo';
+import { UserInfoInputModal } from 'components/UserInfoInputModal';
+import { TypingResultsContainer } from 'components/TypingResultsContainer';
+import { TypingResultsModal } from 'components/TypingResultsModal';
+import { TypingStatisticsModal } from 'components/TypingStatisticsModal';
+import { useTimer } from 'hooks/useTimer';
+import PauseModal from 'components/PauseModal';
 import './index.css';
+
+const MyContext = createContext();
 
 export const MainSection = () => {
   const [isTyping, setIsTyping] = useState(false);
@@ -19,7 +21,7 @@ export const MainSection = () => {
   const [viewTypingStatisticsPopup, setViewTypingStatisticsPopup] =
     useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
-  const [typingAccuracy, setTypingAccuracy] = useState(100);
+  const [totalAccuracy, setTotalAccuracy] = useState(100);
 
   const [userName, setUserName] = useState('');
   const [userImageIndex, setUserImageIndex] = useState(0);
@@ -65,7 +67,7 @@ export const MainSection = () => {
 
   const handleTotalAccuracy = (accuracy) => {
     //VirtualKeyboard에서 받아옴
-    setTypingAccuracy(accuracy);
+    setTotalAccuracy(accuracy);
   };
 
   const initializeStats = () => {
@@ -94,65 +96,69 @@ export const MainSection = () => {
   };
 
   return (
-    <div className='typing_page_main'>
-      <div className='left_container'>
-        <img src={Logo} className='page_logo' alt='logo' />
-        <VirtualKeyboard
-          userName={userName}
-          time={time}
-          startTyping={startTyping}
-          stopTyping={stopTyping}
-          showTypingResultPopup={showTypingResultPopup}
-          handleTypingSpeed={handleTypingSpeed}
-          handleTotalAccuracy={handleTotalAccuracy}
-          inputRef={inputRef}
-        />
-      </div>
-      <div className='right_container'>
-        <UserInfo
-          userName={userName}
-          userImageIndex={userImageIndex}
-          viewUserInfoInputPopup={viewUserInfoInputPopup}
-        />
-        <TypingResultsContainer
-          typingSpeed={typingSpeed}
-          typingAccuracy={typingAccuracy}
-        />
+    <MyContext.Provider
+      value={{ typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy }}
+    >
+      <div className='typing_page_main'>
+        <div className='left_container'>
+          <img src={Logo} className='page_logo' alt='logo' />
+          <VirtualKeyboard
+            userName={userName}
+            time={time}
+            startTyping={startTyping}
+            stopTyping={stopTyping}
+            showTypingResultPopup={showTypingResultPopup}
+            handleTypingSpeed={handleTypingSpeed}
+            handleTotalAccuracy={handleTotalAccuracy}
+            inputRef={inputRef}
+          />
+        </div>
+        <div className='right_container'>
+          <UserInfo
+            userName={userName}
+            userImageIndex={userImageIndex}
+            viewUserInfoInputPopup={viewUserInfoInputPopup}
+          />
+          <TypingResultsContainer
+            typingSpeed={typingSpeed}
+            totalAccuracy={totalAccuracy}
+          />
 
-        <button
-          className='statistics_button'
-          onClick={showTypingStatisticsPopup}
-        >
-          나의 타이핑 기록
-        </button>
+          <button
+            className='statistics_button'
+            onClick={showTypingStatisticsPopup}
+          >
+            나의 타이핑 기록
+          </button>
 
-        {!isPauseModalOpen && (
-          <button onClick={handleClickPause}>일시 정지</button>
+          {!isPauseModalOpen && (
+            <button onClick={handleClickPause}>일시 정지</button>
+          )}
+        </div>
+        {viewUserInfoInputPopup && (
+          <UserInfoInputModal
+            viewUserInfoInputPopup={viewUserInfoInputPopup}
+            closeUserInfoInputPopup={closeUserInfoInputPopup}
+            handleUserName={handleUserName}
+            handleUserImageIndex={handleUserImageIndex}
+          />
         )}
+        {viewTypingResultPopup && (
+          <TypingResultsModal
+            closeTypingResultPopup={closeTypingResultPopup}
+            typingSpeed={typingSpeed}
+            totalAccuracy={totalAccuracy}
+          />
+        )}
+
+        {viewTypingStatisticsPopup && (
+          <TypingStatisticsModal
+            closeTypingStatisticsPopup={closeTypingStatisticsPopup}
+          />
+        )}
+
+        {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
       </div>
-      {viewUserInfoInputPopup && (
-        <UserInfoInputModal
-          viewUserInfoInputPopup={viewUserInfoInputPopup}
-          closeUserInfoInputPopup={closeUserInfoInputPopup}
-          handleUserName={handleUserName}
-          handleUserImageIndex={handleUserImageIndex}
-        />
-      )}
-      {viewTypingResultPopup && (
-        <TypingResultsModal
-          closeTypingResultPopup={closeTypingResultPopup}
-          typingSpeed={typingSpeed}
-          typingAccuracy={typingAccuracy}
-        />
-      )}
-
-      {viewTypingStatisticsPopup && (
-        <TypingStatisticsModal
-          closeTypingStatisticsPopup={closeTypingStatisticsPopup}
-        />
-      )}
-
-      {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
-    </div>
+    </MyContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
 import './index.css';
 
-export const TypingResultsContainer = ({ typingSpeed, typingAccuracy }) => {
+export const TypingResultsContainer = ({ typingSpeed, totalAccuracy }) => {
   return (
     <div className='typingResult_Wrapper'>
       <div className='result_container'>
@@ -9,7 +9,7 @@ export const TypingResultsContainer = ({ typingSpeed, typingAccuracy }) => {
       </div>
       <div className='result_container'>
         <p className='result_title'>Typing Accuracy</p>
-        <p className='result_value'>{typingAccuracy}%</p>
+        <p className='result_value'>{totalAccuracy}%</p>
       </div>
     </div>
   );
