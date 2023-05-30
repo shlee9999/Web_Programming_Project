@@ -23,8 +23,21 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [prevLength, setPrevLength] = useState(0);
   const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
   const [totalAccuracy, setTotalAccuracy] = useState(100);
+
   const onChange = ({ target: { value } }) => {
     setInputValue(value);
+    const lastChar = value[value.length - 1];
+    const key = language ? lastChar : hangul.disassemble(lastChar);
+    setActiveKeys((prev) => [
+      ...prev,
+      language ? key.toUpperCase() : key[key.length - 1],
+    ]);
+    setTimeout(() => {
+      setActiveKeys((prev) => {
+        prev.pop();
+        return prev;
+      });
+    }, 500);
   };
 
   const onKeyDown = ({ key }) => {
@@ -38,15 +51,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
         return;
       default:
         break;
-    }
-    if (key.length === 1) {
-      setActiveKeys((prev) => [...prev, key.toUpperCase()]);
-      setTimeout(() => {
-        setActiveKeys((prev) => {
-          prev.pop();
-          return prev;
-        });
-      }, 500);
     }
   };
 
