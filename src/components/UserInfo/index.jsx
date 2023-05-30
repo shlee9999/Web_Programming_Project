@@ -1,17 +1,7 @@
 import './index.css';
-import { avatarList } from '../../constants/avatarList';
-import { useEffect, useState } from 'react';
+import { avatarList } from 'constants/avatarList';
 
-const UserInfo = ({ viewUserInfoInputPopup }) => {
-  const [userName, setUserName] = useState('');
-  const [userImageIndex, setUserImageIndex] = useState(0);
-
-  useEffect(() => {
-    //불러오기
-    if (viewUserInfoInputPopup) return;
-    setUserName(localStorage.getItem('user_name'));
-    setUserImageIndex(localStorage.getItem('user_image'));
-  }, [viewUserInfoInputPopup]);
+export const UserInfo = ({ userName, userImageIndex }) => {
   return (
     <div className='userInfo_wrapper'>
       <div className='profile_container'>
@@ -29,5 +19,3 @@ const UserInfo = ({ viewUserInfoInputPopup }) => {
     </div>
   );
 };
-
-export default UserInfo;

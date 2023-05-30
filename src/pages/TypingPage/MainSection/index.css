@@ -20,6 +20,17 @@
 }
 
 .right_container {
+  text-align: center;
   width: 20%;
   padding-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statistics_button {
+  margin-top: 20px;
+  color: white;
+  width: 90%;
+  height: 35px;
 }

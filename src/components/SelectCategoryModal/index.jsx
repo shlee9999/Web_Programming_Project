@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
-import '../../global.css';
-import sentence_english from '../../constants/sentence_english.json';
-import sentence_korean from '../../constants/sentence_korean.json';
+import sentence_english from 'constants/sentence_english.json';
+import sentence_korean from 'constants/sentence_korean.json';
 
 const Modal = ({
   closeModal,
   selectCategory,
-  isTyping,
   startGame,
   language,
   toggleLanguage,
@@ -51,9 +49,9 @@ const Modal = ({
     e.stopPropagation();
     buttonRef.current.focus();
   };
-  const handleFocusCategory = (item, index) => () => {
+  const handleFocusCategory = (index) => () => {
     setSentenceIndex(index);
-    selectCategory(item)();
+    selectCategory(index);
     setFocusedCategoryIndex(index);
   };
 
@@ -69,14 +67,10 @@ const Modal = ({
   };
 
   useEffect(() => {
-    if (!isTyping) return;
-    startGame();
-  }, [isTyping, startGame]);
-
-  useEffect(() => {
     if (!buttonRef.current) return;
     buttonRef.current.focus();
   }, [language]);
+
   useEffect(() => {
     if (!buttonRef.current) return;
     buttonRef.current.focus();
@@ -106,10 +100,11 @@ const Modal = ({
           {sentence_total.sentence.map((item, index) => {
             return (
               <button
-                className={`category_item ${index === sentenceIndex && 'select_sentence'
-                  }`}
+                className={`category_item ${
+                  index === sentenceIndex && 'select_sentence'
+                }`}
                 key={`${language}_category_${index}`}
-                onFocus={handleFocusCategory(item, index)}
+                onFocus={handleFocusCategory(index)}
                 onKeyDown={handleKeyDown}
                 ref={index === focusedCategoryIndex ? buttonRef : null}
               >

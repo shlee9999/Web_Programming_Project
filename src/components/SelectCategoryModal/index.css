@@ -8,9 +8,11 @@
   width: 50%;
   display: flex;
   justify-content: space-around;
+  margin-bottom: -10px;
 }
 
 .select_language_item {
+  width: 60px;
   padding: 8px;
   background-color: #b1b2ff;
   border: 2px solid #b1b2ff;
@@ -52,6 +54,17 @@
   width: inherit;
   text-align: left;
   cursor: pointer;
+}
+
+.category_item:focus {
+  background-color: rgb(177, 178, 255, 0.2);
+}
+.category_item:hover {
+  background-color: rgb(177, 178, 255, 0.2);
+}
+.category_item:active {
+  /* background-color: rgb(177, 178, 255, 0.2); */
+  color: #293677;
 }
 
 .select_sentence {

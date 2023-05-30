@@ -1,7 +1,7 @@
 import React from 'react';
 import { Element } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../../images/logo.png';
+import Logo from 'assets/logo.png';
 import './index.css';
 export const MainSection = () => {
   const navigate = useNavigate();

@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 4vh;
 }
 .keyboard_keys {
   margin: 5px 2px;
@@ -57,7 +58,7 @@
 .keyboard_keys.active {
   animation-name: blink;
   animation-duration: 0.3s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: backwards;
 }
 
 #start_typing_button {
@@ -89,9 +90,11 @@
   font-size: 1.5rem;
   min-width: 500px;
 }
-
-.correctly_typed {
+.current_sentence {
   color: gray;
+}
+.correctly_typed {
+  color: #293677;
 }
 .mistyped {
   color: red;
