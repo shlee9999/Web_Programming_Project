@@ -57,27 +57,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     }
   };
 
-  const colorKeyboard = (key) => {
-    if (language) setActiveKeys((prev) => [...prev, key.toUpperCase()]);
-    else setActiveKeys((prev) => [...prev, key[key.length - 1]]);
-    setTimeout(() => {
-      setActiveKeys((prev) =>
-        prev.filter((activeKey, index) => index !== prev.length - 1)
-      );
-    }, 300);
-  };
-
-  const initializeKeyboard = () => {
-    setInputValue('');
-    setCurrentIndex(0);
-    setTotalCorrectKeyStrokes(0);
-    setTotalCursor(0);
-    setTypingSpeed(0);
-    setPrevLength(0);
-    setPrevTotalCorrectKeys(0);
-    setTotalAccuracy(100);
-  };
-
   const handleEnter = () => {
     if (inputValue.length < currentSentence.length - 5) return;
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length - 1) {
@@ -110,6 +89,29 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (inputValue.length < 1) return;
     if (totalCorrectKeyStrokes > 0)
       setTotalCorrectKeyStrokes((prev) => prev - 1);
+  };
+
+  const colorKeyboard = (key) => {
+    const lastChar = language ? key.toUpperCase() : key[key.length - 1];
+    if (!activeKeys.includes(lastChar)) {
+      setActiveKeys((prev) => [...prev, lastChar]);
+    }
+    setTimeout(() => {
+      setActiveKeys((prev) =>
+        prev.filter((activeKey) => activeKey !== key && activeKey !== lastChar)
+      );
+    }, 300);
+  };
+
+  const initializeKeyboard = () => {
+    setInputValue('');
+    setCurrentIndex(0);
+    setTotalCorrectKeyStrokes(0);
+    setTotalCursor(0);
+    setTypingSpeed(0);
+    setPrevLength(0);
+    setPrevTotalCorrectKeys(0);
+    setTotalAccuracy(100);
   };
 
   const toggleLanguage = () => {
@@ -207,7 +209,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       ? ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
       : ((totalCorrectKeyStrokes / (time + 1)) * 60 * 1.5).toFixed(0);
     setTypingSpeed(newTypingSpeed);
-  }, [time, totalCorrectKeyStrokes]);
+  }, [time, totalCorrectKeyStrokes, language]);
 
   useEffect(() => {
     setCurrentSentence(
