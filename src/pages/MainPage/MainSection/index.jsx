@@ -26,7 +26,9 @@ export const MainSection = () => {
         <Proposal />
       </div>
 
-      <footer></footer>
+      <footer className='copyrights'>
+        ⓒ 2023 Typing Pro. All rights reserved.
+      </footer>
     </div>
   );
 };

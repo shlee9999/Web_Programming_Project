@@ -49,3 +49,9 @@
   overflow-y: scroll;
   padding-right: 1vw;
 }
+
+.copyrights {
+  text-align: center;
+  padding-bottom: 5px;
+  letter-spacing: 1px;
+}
