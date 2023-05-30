@@ -14,13 +14,17 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
     }
   }, []);
   return (
-    <div className='modal_overlay' onClick={closeTypingStatisticsPopup}>
+    <div
+      className='modal_overlay statistics'
+      onClick={closeTypingStatisticsPopup}
+    >
       <div className='modal' onClick={handleClickModal}>
         <div className='statistics_wrapper'>
           <table className='statistics_table'>
             <thead>
               <tr>
                 <th>닉네임</th>
+                <th>제목</th>
                 <th>타자 속도</th>
                 <th>정확도</th>
                 <th>진행 시간</th>
@@ -29,12 +33,13 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
             </thead>
             <tbody>
               {typingStatistics.map((data, index) => (
-                <tr key={index}>
+                <tr key={index} className='table_row'>
                   <td>{data[0]}</td>
                   <td>{data[1]}</td>
                   <td>{data[2]}</td>
-                  <td>{data[3]}</td>
+                  <td>{data[3]}%</td>
                   <td>{data[4]}</td>
+                  <td>{data[5]}</td>
                 </tr>
               ))}
             </tbody>

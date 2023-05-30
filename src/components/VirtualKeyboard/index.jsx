@@ -4,6 +4,7 @@ import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
 const VirtualKeyboard = ({
+  userName,
   showTypingResultPopup,
   time,
   startTyping,
@@ -19,6 +20,14 @@ const VirtualKeyboard = ({
   const selectCategory = (index) => {
     setProposalIndex(index);
   };
+
+  const date = new Date();
+
+  const year = date.getFullYear() % 2000;
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const currentDate = `${year}.${month}.${day}`;
 
   const getFormattedTime = () => {
     const minutes = Math.floor(time / 60);
@@ -46,11 +55,34 @@ const VirtualKeyboard = ({
     startTyping();
   };
 
+  const addToLocalStorage = (data) => {
+    const existingData = localStorage.getItem('TypingStatistics');
+    let newData = [];
+
+    if (existingData) {
+      newData = JSON.parse(existingData);
+    }
+
+    newData = [...newData, data];
+
+    localStorage.setItem('TypingStatistics', JSON.stringify(newData));
+  };
+
   const endGame = () => {
     inputRef.current.disabled = true;
     stopTyping();
     setIsGameReady(false);
     showTypingResultPopup();
+    const localStorageDataList = [
+      userName,
+      title,
+      typingSpeed,
+      totalAccuracy,
+      getFormattedTime(),
+      currentDate,
+    ];
+
+    addToLocalStorage(localStorageDataList);
   };
 
   const {
@@ -64,6 +96,7 @@ const VirtualKeyboard = ({
     language,
     toggleLanguage,
     activeKeys,
+    title,
   } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
