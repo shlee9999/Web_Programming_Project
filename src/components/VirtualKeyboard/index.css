@@ -57,8 +57,8 @@
 
 .keyboard_keys.active {
   animation-name: blink;
-  animation-duration: 0.8s;
-  animation-fill-mode: forwards;
+  animation-duration: 0.3s;
+  animation-fill-mode: backwards;
 }
 
 #start_typing_button {

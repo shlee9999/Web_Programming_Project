@@ -61,11 +61,10 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (language) setActiveKeys((prev) => [...prev, key.toUpperCase()]);
     else setActiveKeys((prev) => [...prev, key[key.length - 1]]);
     setTimeout(() => {
-      setActiveKeys((prev) => {
-        prev.pop();
-        return prev;
-      });
-    }, 500);
+      setActiveKeys((prev) =>
+        prev.filter((activeKey, index) => index !== prev.length - 1)
+      );
+    }, 300);
   };
 
   const initializeKeyboard = () => {
@@ -204,7 +203,10 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   ]); //한글 영어 모두 적용됨.
 
   useEffect(() => {
-    setTypingSpeed(((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0));
+    const newTypingSpeed = language
+      ? ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
+      : ((totalCorrectKeyStrokes / (time + 1)) * 60 * 1.5).toFixed(0);
+    setTypingSpeed(newTypingSpeed);
   }, [time, totalCorrectKeyStrokes]);
 
   useEffect(() => {
