@@ -3,6 +3,7 @@ import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
+import { getFormattedDate } from 'components/utils/helper';
 const VirtualKeyboard = ({
   userName,
   showTypingResultPopup,
@@ -20,13 +21,7 @@ const VirtualKeyboard = ({
     setProposalIndex(index);
   };
 
-  const date = new Date();
-
-  const year = date.getFullYear() % 2000;
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  const currentDate = `${year}.${month}.${day}`;
+  const currentDate = getFormattedDate();
 
   const getFormattedTime = () => {
     const minutes = Math.floor(time / 60);
