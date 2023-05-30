@@ -1,3 +1,4 @@
+import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../images/logo.png';
 import './index.css';
@@ -7,14 +8,20 @@ import { UserInfoInput } from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { TypingStatisticsModal } from '../../../components/TypingStatisticsModal';
+import { useTimer } from '../../../hooks/useTimer';
+import PauseModal from '../../../components/PauseModal';
+
 
 export const MainSection = () => {
+  const [isTyping, setIsTyping] = useState(false);
+  const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
   const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
   const [viewTypingStatisticsPopup, setViewTypingStatisticsPopup] =
     useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
+
   const [typingTime, setTypingTime] = useState('');
   const [userName, setUserName] = useState('');
   const [userImageIndex, setUserImageIndex] = useState(0);
@@ -48,6 +55,12 @@ export const MainSection = () => {
     setUserImageIndex(imageIndex);
   };
 
+  const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
+
+  const { time, startTimer, stopTimer, initializeTimer } = useTimer({
+    defaultTime: 0,
+  });
+
   const closeUserInfoInputPopup = () => {
     setViewUserInfoInputPopup(false);
   };
@@ -67,6 +80,7 @@ export const MainSection = () => {
 
   const closeTypingResultPopup = () => {
     setViewTypingResultPopup(false);
+    initializeStats();
   };
 
   const showTypingStatisticsPopup = () => {
@@ -84,8 +98,27 @@ export const MainSection = () => {
     setTypingAccuracy(accuracy);
   };
 
-  const handleTypingTimechange = (time) => {
-    setTypingTime(time);
+  const initializeStats = () => {
+    handleTypingAccuracyChange(100);
+    setTotalCorrectKeyStrokes(0);
+    handleTypingSpeedChange(0);
+    initializeTimer();
+  };
+  const startTyping = () => {
+    setIsTyping(true);
+  };
+  const stopTyping = () => {
+    setIsTyping(false);
+  };
+  const handleClickPauseButton = () => {
+    if (!isTyping) return;
+    setIsPauseModalOpen(true);
+    stopTimer();
+  };
+
+  const closeModal = () => {
+    setIsPauseModalOpen(false);
+    startTimer();
   };
 
   return (
@@ -95,9 +128,19 @@ export const MainSection = () => {
         <VirtualKeyboard
           handleTypingSpeedChange={handleTypingSpeedChange}
           handleTypingAccuracyChange={handleTypingAccuracyChange}
-          handleTypingTimechange={handleTypingTimechange}
           showTypingResultPopup={showTypingResultPopup}
           typingTime={typingTime}
+          setTypingSpeed={setTypingSpeed}
+          setTypingAccuracy={setTypingAccuracy}
+          time={time}
+          startTimer={startTimer}
+          stopTimer={stopTimer}
+          initializeTimer={initializeTimer}
+          isTyping={isTyping}
+          startTyping={startTyping}
+          stopTyping={stopTyping}
+          totalCorrectKeyStrokes={totalCorrectKeyStrokes}
+          handleTotalCorrectKeyStrokes={setTotalCorrectKeyStrokes}
         />
       </div>
       <div className='right_container'>
@@ -110,12 +153,18 @@ export const MainSection = () => {
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
         />
+
         <button
           className='statistics_button'
           onClick={showTypingStatisticsPopup}
         >
           나의 타이핑 기록
         </button>
+
+        {!isPauseModalOpen && (
+          <button onClick={handleClickPauseButton}>일시 정지</button>
+        )}
+
       </div>
       {viewUserInfoInputPopup && (
         <UserInfoInput
@@ -132,11 +181,15 @@ export const MainSection = () => {
           typingAccuracy={typingAccuracy}
         />
       )}
+
       {viewTypingStatisticsPopup && (
         <TypingStatisticsModal
           closeTypingStatisticsPopup={closeTypingStatisticsPopup}
         />
       )}
+
+      {isPauseModalOpen && <PauseModal closeModal={closeModal} />}
+
     </div>
   );
 };

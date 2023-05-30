@@ -4,7 +4,6 @@ const PauseModal = ({ closeModal }) => {
   const handleClickModal = (e) => {
     e.stopPropagation();
   };
-
   return (
     <div className='modal_overlay' onClick={closeModal}>
       <div className='modal' onClick={handleClickModal}>
