@@ -3,14 +3,13 @@ import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
-import { getFormattedDate } from 'components/utils/helper';
+import { getFormattedDate, getFormattedTime } from 'components/utils/helper';
 const VirtualKeyboard = ({
   userName,
   showTypingResultPopup,
   time,
   startTyping,
   stopTyping,
-
   inputRef,
 }) => {
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
@@ -20,16 +19,8 @@ const VirtualKeyboard = ({
   const selectCategory = (index) => {
     setProposalIndex(index);
   };
-
   const currentDate = getFormattedDate();
-
-  const getFormattedTime = () => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes < 10 ? '0' : ''}${minutes}:${
-      seconds < 10 ? '0' : ''
-    }${seconds}`;
-  };
+  const formattedTime = getFormattedTime(time);
 
   const onClickStart = () => {
     setIsSelectModalOpen(true);
@@ -72,7 +63,7 @@ const VirtualKeyboard = ({
       title,
       typingSpeed,
       totalAccuracy,
-      getFormattedTime(),
+      formattedTime,
       currentDate,
     ];
 
@@ -99,7 +90,7 @@ const VirtualKeyboard = ({
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
         <div>
-          <br /> 진행 시간 : {getFormattedTime()}
+          <br /> 진행 시간 : {formattedTime}
         </div>
 
         <div className='proposal'>
