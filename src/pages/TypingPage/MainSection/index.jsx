@@ -1,16 +1,15 @@
 import React from 'react';
 import VirtualKeyboard from '../../../components/VirtualKeyboard';
-import Logo from '../../../images/logo.png';
-import './index.css';
+import Logo from '../../../assets/logo.png';
 import { useState } from 'react';
-import { UserInfo } from '../../../components/UserInfo';
-import { UserInfoInput } from '../../../components/UserInfoInputModal';
+import UserInfo from '../../../components/UserInfo';
+import UserInfoInput from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
 import { TypingStatisticsModal } from '../../../components/TypingStatisticsModal';
 import { useTimer } from '../../../hooks/useTimer';
 import PauseModal from '../../../components/PauseModal';
-
+import './index.css';
 
 export const MainSection = () => {
   const [isTyping, setIsTyping] = useState(false);
@@ -55,7 +54,7 @@ export const MainSection = () => {
     setUserImageIndex(imageIndex);
   };
 
-  const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
+  const inputRef = useRef(null);
 
   const { time, startTimer, stopTimer, initializeTimer } = useTimer({
     defaultTime: 0,
@@ -90,35 +89,39 @@ export const MainSection = () => {
     setViewTypingStatisticsPopup(false);
   };
 
-  const handleTypingSpeedChange = (speed) => {
+  const handleTypingSpeed = (speed) => {
+    //VirtualKeyboard에서 받아옴
     setTypingSpeed(speed);
   };
 
-  const handleTypingAccuracyChange = (accuracy) => {
+  const handleTotalAccuracy = (accuracy) => {
+    //VirtualKeyboard에서 받아옴
     setTypingAccuracy(accuracy);
   };
 
   const initializeStats = () => {
-    handleTypingAccuracyChange(100);
-    setTotalCorrectKeyStrokes(0);
-    handleTypingSpeedChange(0);
-    initializeTimer();
+    initializeTimer(); //totalAccuracy, typingSpeed는 time=0으로 초기화 시 초기화되도록 useVirtualKeyboard에 useEffect로 구현
   };
-  const startTyping = () => {
-    setIsTyping(true);
-  };
-  const stopTyping = () => {
-    setIsTyping(false);
-  };
-  const handleClickPauseButton = () => {
+
+  const handleClickPause = () => {
     if (!isTyping) return;
     setIsPauseModalOpen(true);
     stopTimer();
   };
 
-  const closeModal = () => {
+  const closePauseModal = () => {
     setIsPauseModalOpen(false);
     startTimer();
+    inputRef?.current.focus();
+  };
+
+  const startTyping = () => {
+    setIsTyping(true);
+    startTimer();
+  };
+  const stopTyping = () => {
+    setIsTyping(false);
+    stopTimer();
   };
 
   return (
@@ -126,21 +129,13 @@ export const MainSection = () => {
       <div className='left_container'>
         <img src={Logo} className='page_logo' alt='logo' />
         <VirtualKeyboard
-          handleTypingSpeedChange={handleTypingSpeedChange}
-          handleTypingAccuracyChange={handleTypingAccuracyChange}
-          showTypingResultPopup={showTypingResultPopup}
-          typingTime={typingTime}
-          setTypingSpeed={setTypingSpeed}
-          setTypingAccuracy={setTypingAccuracy}
           time={time}
-          startTimer={startTimer}
-          stopTimer={stopTimer}
-          initializeTimer={initializeTimer}
-          isTyping={isTyping}
           startTyping={startTyping}
           stopTyping={stopTyping}
-          totalCorrectKeyStrokes={totalCorrectKeyStrokes}
-          handleTotalCorrectKeyStrokes={setTotalCorrectKeyStrokes}
+          showTypingResultPopup={showTypingResultPopup}
+          handleTypingSpeed={handleTypingSpeed}
+          handleTotalAccuracy={handleTotalAccuracy}
+          inputRef={inputRef}
         />
       </div>
       <div className='right_container'>
@@ -162,9 +157,8 @@ export const MainSection = () => {
         </button>
 
         {!isPauseModalOpen && (
-          <button onClick={handleClickPauseButton}>일시 정지</button>
+          <button onClick={handleClickPause}>일시 정지</button>
         )}
-
       </div>
       {viewUserInfoInputPopup && (
         <UserInfoInput
@@ -188,8 +182,7 @@ export const MainSection = () => {
         />
       )}
 
-      {isPauseModalOpen && <PauseModal closeModal={closeModal} />}
-
+      {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
     </div>
   );
 };

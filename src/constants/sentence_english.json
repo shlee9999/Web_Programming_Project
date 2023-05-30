@@ -48,5 +48,134 @@
         "He would gather twigs and branches to sell at the market."
       ]
     }
+  ],
+  "word": [
+    {
+      "title": "1st",
+      "text": [
+        "Hello",
+        "Love",
+        "Friend",
+        "Family",
+        "Happiness",
+        "Food",
+        "Sea",
+        "Sky",
+        "Coffee",
+        "Library",
+        "School",
+        "Travel",
+        "Soccer",
+        "Music",
+        "Art",
+        "Study",
+        "Dance",
+        "Restaurant",
+        "Market",
+        "Hospital"
+      ]
+    },
+    {
+      "title": "2nd",
+      "text": [
+        "Train",
+        "Bus",
+        "Airplane",
+        "Car",
+        "Bicycle",
+        "Telephone",
+        "Computer",
+        "Chair",
+        "Table",
+        "Umbrella",
+        "Bag",
+        "Watch",
+        "Camera",
+        "Book",
+        "Pen",
+        "Shoes",
+        "T-shirt",
+        "Hat",
+        "Water",
+        "Salt"
+      ]
+    },
+    {
+      "title": "3rd",
+      "text": [
+        [
+          "Cat",
+          "Dog",
+          "Horse",
+          "Cow",
+          "Pig",
+          "Bear",
+          "Lion",
+          "Tiger",
+          "Rabbit",
+          "Giraffe",
+          "Monkey",
+          "Panda",
+          "Sheep",
+          "Frog",
+          "Fish",
+          "Bird",
+          "Chicken",
+          "Turtle",
+          "Deer",
+          "Elephant"
+        ]
+      ]
+    },
+    {
+      "title": "4th",
+      "text": [
+        "Seoul",
+        "Busan",
+        "Incheon",
+        "Daegu",
+        "Daejeon",
+        "Gwangju",
+        "Suwon",
+        "Ulsan",
+        "Changwon",
+        "Jeonju",
+        "Pohang",
+        "Jeju",
+        "Gyeongju",
+        "Gangneung",
+        "Jinju",
+        "Cheongju",
+        "Mokpo",
+        "Yeosu",
+        "Andong",
+        "Suncheon"
+      ]
+    },
+    {
+      "title": "5th",
+      "text": [
+        "Spring",
+        "Summer",
+        "Autumn",
+        "Winter",
+        "Rain",
+        "Snow",
+        "Sun",
+        "Moon",
+        "Stars",
+        "Flower",
+        "Tree",
+        "Mountain",
+        "River",
+        "Lake",
+        "Wind",
+        "Airplane",
+        "Cloud",
+        "Rainbow",
+        "Sand",
+        "Jellyfish"
+      ]
+    }
   ]
 }

@@ -1,5 +1,6 @@
 import './index.css';
-import { avatarList } from '../../constants/avatarList';
+import { avatarList } from 'constants/avatarList';
+import { useEffect, useState } from 'react';
 
 export const UserInfo = ({ userName, userImageIndex }) => {
   // useEffect(() => {

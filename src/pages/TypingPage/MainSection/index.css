@@ -23,6 +23,9 @@
   text-align: center;
   width: 20%;
   padding-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .statistics_button {
