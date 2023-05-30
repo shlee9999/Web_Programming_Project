@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import './index.css';
 import { avatarList } from '../../constants/avatarList';
 
-const UserInfoInput = ({
+export const UserInfoInput = ({
   viewUserInfoInputPopup,
   closeUserInfoInputPopup,
   handleUserName,
@@ -95,5 +95,3 @@ const UserInfoInput = ({
     </div>
   );
 };
-
-export default UserInfoInput;

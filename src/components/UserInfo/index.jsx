@@ -1,7 +1,7 @@
 import './index.css';
 import { avatarList } from '../../constants/avatarList';
 
-const UserInfo = ({ viewUserInfoInputPopup, userName, userImageIndex }) => {
+export const UserInfo = ({ userName, userImageIndex }) => {
   // useEffect(() => {
   //   //불러오기
   //   if (viewUserInfoInputPopup) return;
@@ -26,5 +26,3 @@ const UserInfo = ({ viewUserInfoInputPopup, userName, userImageIndex }) => {
     </div>
   );
 };
-
-export default UserInfo;

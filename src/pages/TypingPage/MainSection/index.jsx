@@ -2,14 +2,17 @@ import VirtualKeyboard from '../../../components/VirtualKeyboard';
 import Logo from '../../../images/logo.png';
 import './index.css';
 import { useState } from 'react';
-import UserInfo from '../../../components/UserInfo';
-import UserInfoInput from '../../../components/UserInfoInputModal';
+import { UserInfo } from '../../../components/UserInfo';
+import { UserInfoInput } from '../../../components/UserInfoInputModal';
 import { TypingResultsContainer } from '../../../components/TypingResultsContainer';
 import { TypingResultsModal } from '../../../components/TypingResultsModal';
+import { TypingStatisticsModal } from '../../../components/TypingStatisticsModal';
 
 export const MainSection = () => {
   const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);
   const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
+  const [viewTypingStatisticsPopup, setViewTypingStatisticsPopup] =
+    useState(false);
   const [typingSpeed, setTypingSpeed] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
   const [typingTime, setTypingTime] = useState('');
@@ -66,6 +69,13 @@ export const MainSection = () => {
     setViewTypingResultPopup(false);
   };
 
+  const showTypingStatisticsPopup = () => {
+    setViewTypingStatisticsPopup(true);
+  };
+  const closeTypingStatisticsPopup = () => {
+    setViewTypingStatisticsPopup(false);
+  };
+
   const handleTypingSpeedChange = (speed) => {
     setTypingSpeed(speed);
   };
@@ -100,7 +110,12 @@ export const MainSection = () => {
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
         />
-        <button className='statistics_button'>나의 타이핑 기록</button>
+        <button
+          className='statistics_button'
+          onClick={showTypingStatisticsPopup}
+        >
+          나의 타이핑 기록
+        </button>
       </div>
       {viewUserInfoInputPopup && (
         <UserInfoInput
@@ -115,6 +130,11 @@ export const MainSection = () => {
           closeTypingResultPopup={closeTypingResultPopup}
           typingSpeed={typingSpeed}
           typingAccuracy={typingAccuracy}
+        />
+      )}
+      {viewTypingStatisticsPopup && (
+        <TypingStatisticsModal
+          closeTypingStatisticsPopup={closeTypingStatisticsPopup}
         />
       )}
     </div>
