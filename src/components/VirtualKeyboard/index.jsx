@@ -8,8 +8,9 @@ import sentence_english from '../../constants/sentence_english.json';
 import { keyRowsKorean, keyRowsEnglish } from '../../constants/keyRows';
 
 const VirtualKeyboard = ({
-  onTypingSpeedChange,
-  onTypingAccuracyChange,
+  handleTypingSpeedChange,
+  handleTypingAccuracyChange,
+  handleTypingTimeChange,
   showTypingResultPopup,
   viewTypingResultPopup,
   time,
@@ -205,27 +206,28 @@ const VirtualKeyboard = ({
   useEffect(() => {
     if (cursor === 0) return;
     setTotalAccuracy((totalCorrectKeyStrokes / totalCursor) * 100);
-    onTypingAccuracyChange(totalAccuracy.toFixed(0));
+    handleTypingAccuracyChange(totalAccuracy.toFixed(0));
   }, [
     cursor,
     totalAccuracy,
     correctKeyStrokes,
-    onTypingAccuracyChange,
+    handleTypingAccuracyChange,
     totalCorrectKeyStrokes,
     totalCursor,
   ]);
 
   useEffect(() => {
     if (totalCorrectKeyStrokes < 0) return;
-    onTypingSpeedChange(
+    handleTypingSpeedChange(
       ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
     );
   }, [
     totalCorrectKeyStrokes,
     time,
-    onTypingAccuracyChange,
-    onTypingSpeedChange,
+    handleTypingAccuracyChange,
+    handleTypingSpeedChange,
   ]);
+
 
   useEffect(() => {}, [viewTypingResultPopup]);
 

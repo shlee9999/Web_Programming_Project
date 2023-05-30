@@ -2,11 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import './index.css';
 import { avatarList } from '../../constants/avatarList';
 
-const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
+export const UserInfoInput = ({
+  viewUserInfoInputPopup,
+  closeUserInfoInputPopup,
+  handleUserName,
+  handleUserImageIndex,
+}) => {
   const nameInputRef = useRef(null);
-  const [actived, setActived] = useState(false);
-
+  const focusedAvatarRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
+  const [focusedAvatarIndex, setFocusedAvatarIndex] = useState(0);
+
   const onClickButton = () => {
     saveUserInfo();
   };
@@ -15,17 +21,15 @@ const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
   };
   const saveUserInfo = () => {
     if (inputValue === '') return;
+    handleUserName(nameInputRef.current.value);
+    handleUserImageIndex(focusedAvatarIndex);
     closeUserInfoInputPopup();
-    localStorage.setItem('user_image', focusedAvatarIndex);
-    localStorage.setItem('user_name', inputValue);
   };
 
   const onFocusImage = () => {
     if (!focusedAvatarRef.current) return;
     focusedAvatarRef.current.focus();
   };
-  const focusedAvatarRef = useRef(null);
-  const [focusedAvatarIndex, setFocusedAvatarIndex] = useState(0);
 
   useEffect(() => {
     if (!nameInputRef) return;
@@ -91,5 +95,3 @@ const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
     </div>
   );
 };
-
-export default UserInfoInput;
