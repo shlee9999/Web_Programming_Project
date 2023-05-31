@@ -10,6 +10,7 @@ const EnterSound = new Audio(enter_sound);
 const EndSound = new Audio(end_sound);
 
 let prevTotalCorrectKeys = 0;
+let title = '';
 const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
   const sentence_total = language ? sentence_english : sentence_korean;
@@ -22,7 +23,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
 
-  const [title, setTitle] = useState('');
   const { setTypingSpeed, setTotalAccuracy } = useContext(MyContext);
   const onChange = ({ target: { value } }) => {
     if (!value) {
@@ -116,7 +116,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setTotalCorrectKeyStrokes(0);
     setTotalCursor(0);
     setTypingSpeed(0);
-
     prevTotalCorrectKeys = 0;
     setTotalAccuracy(100);
   }, [setTotalAccuracy, setTypingSpeed]);
@@ -226,7 +225,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (time === 0) initializeKeyboard(); //time=0으로 초기화(게임 초기화)시 키보드 초기화되도록 함
   }, [time, initializeKeyboard]);
   useEffect(() => {
-    setTitle(sentence_total.sentence[proposalIndex].title);
+    title = sentence_total.sentence[proposalIndex].title;
   }, [proposalIndex, language, sentence_total.sentence]);
   return {
     inputValue,
