@@ -4,6 +4,8 @@ import './index.css';
 import SelectCategoryModal from '../SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
 import { getFormattedDate, getFormattedTime } from 'components/utils/helper';
+import { useContext } from 'react';
+import { MyContext } from 'pages/TypingPage/MainSection';
 const VirtualKeyboard = ({
   userName,
   showTypingResultPopup,
@@ -15,7 +17,8 @@ const VirtualKeyboard = ({
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
   const [isGameReady, setIsGameReady] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
-
+  const { typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy } =
+    useContext(MyContext);
   const selectCategory = (index) => {
     setProposalIndex(index);
   };
@@ -66,7 +69,6 @@ const VirtualKeyboard = ({
       formattedTime,
       currentDate,
     ];
-
     addToLocalStorage(localStorageDataList);
   };
 
@@ -75,8 +77,6 @@ const VirtualKeyboard = ({
     onChange,
     onKeyDown,
     currentSentence,
-    typingSpeed,
-    totalAccuracy,
     initializeKeyboard,
     language,
     toggleLanguage,
