@@ -20,12 +20,9 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [inputValue, setInputValue] = useState('');
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
-  const [prevLength, setPrevLength] = useState(0);
   const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
-
   const [title, setTitle] = useState('');
-  const { typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy } =
-    useContext(MyContext);
+  const { setTypingSpeed, setTotalAccuracy } = useContext(MyContext);
   const onChange = ({ target: { value } }) => {
     if (!value) {
       setInputValue('');
@@ -43,6 +40,13 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       colorKeyboard(key);
     } else if (language && inputValue.length < value.length) colorKeyboard(key);
     setInputValue(value);
+  };
+  const getPrevLength = () => {
+    return sentence_total.sentence[proposalIndex].text.reduce(
+      (acc, sentence, index) =>
+        index < currentIndex ? acc + sentence.length : acc,
+      0
+    );
   };
 
   const onKeyDown = ({ key }) => {
@@ -62,7 +66,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const handleEnter = () => {
     if (inputValue.length < currentSentence.length - 5) return;
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length - 1) {
-      setPrevLength((prev) => prev + currentSentence.length);
       setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
       EnterSound.play();
@@ -111,7 +114,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setTotalCorrectKeyStrokes(0);
     setTotalCursor(0);
     setTypingSpeed(0);
-    setPrevLength(0);
+
     setPrevTotalCorrectKeys(0);
     setTotalAccuracy(100);
   }, [setTotalAccuracy, setTypingSpeed]);
@@ -187,12 +190,8 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   ]);
 
   useEffect(() => {
-    setTotalCursor(prevLength);
-  }, [prevLength]);
-
-  useEffect(() => {
     if (inputValue.length === 0) return;
-    setTotalCursor(prevLength + inputValue.length - 1);
+    setTotalCursor(getPrevLength() + inputValue.length - 1);
     setTotalAccuracy(
       ((totalCorrectKeyStrokes / (totalCursor + 1)) * 100).toFixed(0)
     );
@@ -201,7 +200,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   }, [
     inputValue,
     checkCurrentSentence,
-    prevLength,
+
     totalCorrectKeyStrokes,
     totalCursor,
     setTotalAccuracy,
@@ -215,6 +214,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   }, [time, totalCorrectKeyStrokes, language, setTypingSpeed]);
 
   useEffect(() => {
+    setTotalCursor(getPrevLength());
     setCurrentSentence(
       sentence_total.sentence[proposalIndex].text[currentIndex]
     );
@@ -231,8 +231,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     onChange,
     onKeyDown,
     currentSentence,
-    typingSpeed,
-    totalAccuracy,
     initializeKeyboard,
     language,
     toggleLanguage,
