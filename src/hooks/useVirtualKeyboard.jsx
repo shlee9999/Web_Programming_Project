@@ -9,6 +9,7 @@ import { MyContext } from 'pages/TypingPage/MainSection';
 const EnterSound = new Audio(enter_sound);
 const EndSound = new Audio(end_sound);
 
+let prevTotalCorrectKeys = 0;
 const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
   const sentence_total = language ? sentence_english : sentence_korean;
@@ -20,7 +21,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [inputValue, setInputValue] = useState('');
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
-  const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
+
   const [title, setTitle] = useState('');
   const { setTypingSpeed, setTotalAccuracy } = useContext(MyContext);
   const onChange = ({ target: { value } }) => {
@@ -67,7 +68,8 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (inputValue.length < currentSentence.length - 5) return;
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length - 1) {
       setCurrentIndex((prev) => prev + 1);
-      setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
+      prevTotalCorrectKeys = totalCorrectKeyStrokes;
+      console.log('prev = ' + prevTotalCorrectKeys);
       EnterSound.play();
     } //다음 문장으로 넘어간다.
 
@@ -115,7 +117,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setTotalCursor(0);
     setTypingSpeed(0);
 
-    setPrevTotalCorrectKeys(0);
+    prevTotalCorrectKeys = 0;
     setTotalAccuracy(100);
   }, [setTotalAccuracy, setTypingSpeed]);
 
