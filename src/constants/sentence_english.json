@@ -3,49 +3,60 @@
     {
       "title": "Le Petit Prince",
       "text": [
-        "When a mystery is too overpowering, one dare not disobey.",
-        "Absurd as it might seem to me,",
-        "a thousand miles from any human habitation and in danger of death,",
-        "I took out of my pocket a sheet of paper and my fountainpen."
+        "When a mystery is too overpowering",
+        "one dare not disobey.",
+        "Absurd as it might seem to me",
+        "a thousand miles from any human habitation",
+        "and in danger of death",
+        "I took out of my pocket",
+        "a sheet of paper and my fountain pen."
       ]
     },
     {
       "title": "Tom Sawyer",
       "text": [
-        "Aunt Polly hears a faint noise behind her,",
-        "and turns around just in time to seize a skinny young boy",
+        "Aunt Polly hears a faint noise behind her",
+        "and turns around just in time",
+        "to seize a skinny young boy",
         "with a mouth full of strawberry jam.",
         "Tom, look at your mouth."
       ]
     },
     {
-      "title": "Alice`s Adventures in Wonderland",
+      "title": "Alice's Adventures in Wonderland",
       "text": [
-        "Alice felt too sleepy to play, and there was nobody to play with.",
-        "When Alice began to get up, she saw a rabbit.",
-        "Alice often saw rabbits in the garden, but this rabbit was different.",
-        "He had large, pink ears, like most rabbits,",
-        "but unlike most rabbits, he was wearing a blue coat and had a watch in his hand."
+        "Alice felt too sleepy to play,",
+        "and there was no one to play with.",
+        "When Alice got up, she saw a rabbit.",
+        "Alice often saw rabbits in the garden",
+        "but this rabbit was different.",
+        "He was wearing a blue coat",
+        "and had a watch in his hand."
       ]
     },
     {
       "title": "The Frog Prince",
       "text": [
-        "Once upon a time, there was a young princess named Polly.",
-        "She lived in a beautiful castle with her father and her two sisters.",
+        "Once upon a time, there was a young princess.",
+        "She lived in a beautiful castle",
+        "with her father and her two sisters.",
         "The princess had a favorite toy, golden ball.",
-        "The girls chased each other and threw this ball for a while.",
-        "They took off their shoes and put their feet in the river."
+        "The girls chased each other",
+        "and threw this ball for a while.",
+        "They took off their shoes",
+        "and put their feet in the river."
       ]
     },
     {
       "title": "Ali Baba and the Forty Thieves",
       "text": [
         "Long ago in Persia, there lived two brothers.",
-        "Kasim was a rich merchant, but Ali Baba was only a poor woodcutter.",
+        "Kasim was a rich merchant,",
+        "but Ali Baba was only a poor woodcutter.",
         "While Kasim ran a large store in town,",
         "Ali Baba spent his time collecting firewood.",
-        "He would gather twigs and branches to sell at the market."
+        "He would gather twigs and branches",
+        "to sell at the market."
       ]
     }
   ],
