@@ -1,32 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
-import SelectCategoryModal from '../SelectCategoryModal';
+import SelectCategoryModal from 'components/WithoutContext/SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
+import { getFormattedDate, getFormattedTime } from 'utils/helper';
+import { useContext } from 'react';
+import { MyContext } from 'pages/TypingPage/MainSection';
 const VirtualKeyboard = ({
+  userName,
   showTypingResultPopup,
   time,
   startTyping,
   stopTyping,
-  handleTypingSpeed,
-  handleTotalAccuracy,
   inputRef,
 }) => {
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
   const [isGameReady, setIsGameReady] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
-
+  const { typingSpeed, totalAccuracy } = useContext(MyContext);
   const selectCategory = (index) => {
     setProposalIndex(index);
   };
-
-  const getFormattedTime = () => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${minutes < 10 ? '0' : ''}${minutes}:${
-      seconds < 10 ? '0' : ''
-    }${seconds}`;
-  };
+  const currentDate = getFormattedDate();
+  const formattedTime = getFormattedTime(time);
 
   const onClickStart = () => {
     setIsSelectModalOpen(true);
@@ -46,11 +42,34 @@ const VirtualKeyboard = ({
     startTyping();
   };
 
+  const addToLocalStorage = (data) => {
+    const existingData = localStorage.getItem('TypingStatistics');
+    let newData = [];
+
+    if (existingData) {
+      newData = JSON.parse(existingData);
+    }
+
+    newData = [...newData, data];
+
+    localStorage.setItem('TypingStatistics', JSON.stringify(newData));
+  };
+
   const endGame = () => {
-    inputRef.current.disabled = true;
-    stopTyping();
     setIsGameReady(false);
+    stopTyping();
     showTypingResultPopup();
+    const localStorageDataList = [
+      userName,
+      title,
+      typingSpeed,
+      totalAccuracy,
+      formattedTime,
+      currentDate,
+    ];
+    addToLocalStorage(localStorageDataList);
+    inputRef.current.disabled = true;
+    return;
   };
 
   const {
@@ -58,29 +77,20 @@ const VirtualKeyboard = ({
     onChange,
     onKeyDown,
     currentSentence,
-    typingSpeed,
-    totalAccuracy,
     initializeKeyboard,
     language,
     toggleLanguage,
     activeKeys,
+    title,
   } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
-
-  useEffect(() => {
-    handleTypingSpeed(typingSpeed);
-  }, [typingSpeed, handleTypingSpeed]);
-
-  useEffect(() => {
-    handleTotalAccuracy(totalAccuracy);
-  }, [totalAccuracy, handleTotalAccuracy]);
 
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
         <div>
-          <br /> 진행 시간 : {getFormattedTime()}
+          <br /> 진행 시간 : {formattedTime}
         </div>
 
         <div className='proposal'>
