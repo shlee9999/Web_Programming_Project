@@ -112,7 +112,7 @@ export const MainSection = () => {
         <UserInfo
           userName={userName}
           userImageIndex={userImageIndex}
-          viewUserInfoInputPopup={viewUserInfoInputPopup}
+          handleUserName={handleUserName}
         />
         <TypingResultsContainer
           typingSpeed={typingSpeed}
