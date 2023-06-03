@@ -115,6 +115,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setTypingSpeed(0);
     prevTotalCorrectKeys = 0;
     setTotalAccuracy(100);
+    setTotalBackSpace(0);
   }, [setTotalAccuracy, setTypingSpeed]);
 
   const toggleLanguage = () => {
