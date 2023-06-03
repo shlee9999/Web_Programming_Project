@@ -16,8 +16,9 @@ export const UserInfoInputModal = ({
   const onClickButton = () => {
     saveUserInfo();
   };
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  const onChange = ({ target: { value } }) => {
+    if (value.length > 10) return;
+    setInputValue(value);
   };
   const saveUserInfo = () => {
     if (inputValue === '') return;
@@ -31,18 +32,20 @@ export const UserInfoInputModal = ({
     focusedAvatarRef.current.focus();
   };
 
+  const onClickAnywhere = () => {
+    if (!nameInputRef) return;
+    nameInputRef.current.focus();
+  };
+
+  const handleClickAvatar = (index) => () => {
+    setFocusedAvatarIndex(index);
+  };
+
   useEffect(() => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
   }, [viewUserInfoInputPopup]);
 
-  const onClickAnywhere = () => {
-    if (!nameInputRef) return;
-    nameInputRef.current.focus();
-  };
-  const handleClickAvatar = (index) => () => {
-    setFocusedAvatarIndex(index);
-  };
   return (
     <div className='modal_overlay' onClick={onClickAnywhere}>
       <div className='modal header_title'>
@@ -79,13 +82,14 @@ export const UserInfoInputModal = ({
             type='text'
             id='name'
             ref={nameInputRef}
-            onChange={handleInputChange}
+            onChange={onChange}
             className='name_input'
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 saveUserInfo();
               }
             }}
+            value={inputValue}
           />
         </div>
         <button onClick={onClickButton} className='submit_button'>
