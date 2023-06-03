@@ -44,12 +44,12 @@ export const UserInfo = ({ userName, userImageIndex, handleUserName }) => {
         <div className='user_name_wrapper' onClick={onClickUserName}>
           {isEditing ? (
             <input
-              className='user_info_input'
+              className='user_name_input'
               value={inputValue}
               onChange={onChange}
               onKeyDown={onKeyDown}
               ref={inputRef}
-            ></input>
+            />
           ) : (
             <p className='user_name'>{userName}</p>
           )}
