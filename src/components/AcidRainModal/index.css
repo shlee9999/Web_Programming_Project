@@ -1,0 +1,33 @@
+@keyframes animate-height {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.acid_rain_modal {
+  animation: animate-height 1s;
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: white;
+}
+.acid_rain_input {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%);
+}
+
+.limit {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: inherit;
+  height: 10vh;
+  background-color: pink;
+}
