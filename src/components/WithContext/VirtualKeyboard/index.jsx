@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
 import SelectCategoryModal from 'components/WithoutContext/SelectCategoryModal';
@@ -68,6 +68,7 @@ const VirtualKeyboard = ({
       currentDate,
     ];
     addToLocalStorage(localStorageDataList);
+    inputRef.current.disabled = true;
     return;
   };
 
@@ -84,11 +85,6 @@ const VirtualKeyboard = ({
   } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
-
-  useEffect(() => {
-    if (!inputRef.current) return;
-    inputRef.current.disabled = !isGameReady;
-  }, [isGameReady, inputRef]);
 
   return (
     <div className='virtual_keyboard'>
@@ -114,6 +110,7 @@ const VirtualKeyboard = ({
           type='text'
           value={inputValue}
           placeholder={isGameReady ? '' : 'Please Press Start Typing Button.'}
+          disabled
           ref={inputRef}
         />
 
