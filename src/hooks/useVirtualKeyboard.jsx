@@ -192,12 +192,14 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       return;
     }
     setTotalCursor(getPrevLength() + inputValue.length - 1);
-    setTotalAccuracy(
-      (
-        ((totalCorrectKeyStrokes - totalBackSpace) / (totalCursor + 1)) *
-        100
-      ).toFixed(0)
-    );
+    if (totalCorrectKeyStrokes - totalBackSpace < 0) setTotalAccuracy(0);
+    else
+      setTotalAccuracy(
+        (
+          ((totalCorrectKeyStrokes - totalBackSpace) / (totalCursor + 1)) *
+          100
+        ).toFixed(0)
+      );
     checkCurrentSentence(); //Input 검사 로직
   }, [
     totalBackSpace,
