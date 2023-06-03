@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import useVirtualKeyboard from 'hooks/useVirtualKeyboard';
 import './index.css';
-import SelectCategoryModal from '../SelectCategoryModal';
+import SelectCategoryModal from 'components/WithoutContext/SelectCategoryModal';
 import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
-import { getFormattedDate, getFormattedTime } from 'components/utils/helper';
+import { getFormattedDate, getFormattedTime } from 'utils/helper';
 import { useContext } from 'react';
 import { MyContext } from 'pages/TypingPage/MainSection';
 const VirtualKeyboard = ({

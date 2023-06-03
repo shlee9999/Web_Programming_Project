@@ -1,13 +1,13 @@
 import React, { createContext } from 'react';
-import VirtualKeyboard from 'components/VirtualKeyboard';
+import VirtualKeyboard from 'components/WithContext/VirtualKeyboard';
 import Logo from 'assets/logo.png';
 import { useState, useRef } from 'react';
-import { UserInfo } from 'components/UserInfo';
-import { UserInfoInputModal } from 'components/UserInfoInputModal';
-import { TypingResultsContainer } from 'components/TypingResultsContainer';
-import { TypingResultsModal } from 'components/TypingResultsModal';
-import { TypingStatisticsModal } from 'components/TypingStatisticsModal';
-import PauseModal from 'components/PauseModal';
+import { UserInfo } from 'components/WithoutContext/UserInfo';
+import { UserInfoInputModal } from 'components/WithoutContext/UserInfoInputModal';
+import { TypingResultsContainer } from 'components/WithContext/TypingResultsContainer';
+import { TypingResultsModal } from 'components/WithContext/TypingResultsModal';
+import { TypingStatisticsModal } from 'components/WithoutContext/TypingStatisticsModal';
+import PauseModal from 'components/WithoutContext/PauseModal';
 import './index.css';
 import { useMainSection } from 'hooks/useMainSection';
 
