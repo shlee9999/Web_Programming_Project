@@ -70,11 +70,10 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length) {
       currentIndex++;
       prevTotalCorrectKeys = totalCorrectKeyStrokes;
-      console.log('prev = ' + prevTotalCorrectKeys);
-      EnterSound.play();
     } //다음 문장으로 넘어간다.
-
-    if (currentIndex === sentence_total.sentence[proposalIndex].text.length) {
+    if (currentIndex !== sentence_total.sentence[proposalIndex].text.length)
+      EnterSound.play();
+    else {
       //마지막 문장에서 엔터를 쳤을 때
       EndSound.play();
       endGame();
