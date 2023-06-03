@@ -23,7 +23,7 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
     if (localStorageData) {
       setTypingStatistics(JSON.parse(localStorageData));
     }
-  }, []);
+  }, [localStorageData]);
 
   useEffect(() => {
     localStorage.setItem('TypingStatistics', JSON.stringify(typingStatistics));
