@@ -17,8 +17,7 @@ const VirtualKeyboard = ({
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
   const [isGameReady, setIsGameReady] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
-  const { typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy } =
-    useContext(MyContext);
+  const { typingSpeed, totalAccuracy } = useContext(MyContext);
   const selectCategory = (index) => {
     setProposalIndex(index);
   };

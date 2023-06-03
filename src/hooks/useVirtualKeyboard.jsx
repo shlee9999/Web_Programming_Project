@@ -12,6 +12,7 @@ const EndSound = new Audio(end_sound);
 let prevTotalCorrectKeys = 0;
 let title = '';
 let currentIndex = 0;
+
 const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
   const sentence_total = language ? sentence_english : sentence_korean;

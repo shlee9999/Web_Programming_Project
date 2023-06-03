@@ -7,83 +7,37 @@ import { UserInfoInputModal } from 'components/UserInfoInputModal';
 import { TypingResultsContainer } from 'components/TypingResultsContainer';
 import { TypingResultsModal } from 'components/TypingResultsModal';
 import { TypingStatisticsModal } from 'components/TypingStatisticsModal';
-import { useTimer } from 'hooks/useTimer';
 import PauseModal from 'components/PauseModal';
 import './index.css';
+import { useMainSection } from 'hooks/useMainSection';
 
 export const MyContext = createContext();
 
 export const MainSection = () => {
-  const [isTyping, setIsTyping] = useState(false);
-  const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
-  const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);
-  const [viewTypingResultPopup, setViewTypingResultPopup] = useState(false);
-  const [viewTypingStatisticsPopup, setViewTypingStatisticsPopup] =
-    useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(0);
-  const [totalAccuracy, setTotalAccuracy] = useState(100);
-  const [userName, setUserName] = useState('');
-  const [userImageIndex, setUserImageIndex] = useState(0);
-
-  const handleUserName = (name) => {
-    setUserName(name);
-  };
-
-  const handleUserImageIndex = (imageIndex) => {
-    setUserImageIndex(imageIndex);
-  };
-
   const inputRef = useRef(null);
 
-  const { time, startTimer, stopTimer, initializeTimer } = useTimer({
-    defaultTime: 0,
-  });
-
-  const closeUserInfoInputPopup = () => {
-    setViewUserInfoInputPopup(false);
-  };
-
-  const showTypingResultPopup = () => {
-    setViewTypingResultPopup(true);
-  };
-
-  const closeTypingResultPopup = () => {
-    setViewTypingResultPopup(false);
-    initializeStats();
-  };
-
-  const showTypingStatisticsPopup = () => {
-    setViewTypingStatisticsPopup(true);
-  };
-  const closeTypingStatisticsPopup = () => {
-    setViewTypingStatisticsPopup(false);
-  };
-
-  const initializeStats = () => {
-    initializeTimer(); //totalAccuracy, typingSpeed는 time=0으로 초기화 시 초기화되도록 useVirtualKeyboard에 useEffect로 구현
-  };
-
-  const handleClickPause = () => {
-    if (!isTyping) return;
-    setIsPauseModalOpen(true);
-    stopTimer();
-  };
-
-  const closePauseModal = () => {
-    setIsPauseModalOpen(false);
-    startTimer();
-    inputRef?.current.focus();
-  };
-
-  const startTyping = () => {
-    setIsTyping(true);
-    startTimer();
-  };
-  const stopTyping = () => {
-    setIsTyping(false);
-    stopTimer();
-  };
-
+  const [typingSpeed, setTypingSpeed] = useState(0);
+  const [totalAccuracy, setTotalAccuracy] = useState(100);
+  const {
+    handleUserName,
+    handleUserImageIndex,
+    closeUserInfoInputPopup,
+    showTypingResultPopup,
+    closeTypingResultPopup,
+    showTypingStatisticsPopup,
+    closeTypingStatisticsPopup,
+    handleClickPause,
+    closePauseModal,
+    startTyping,
+    stopTyping,
+    isPauseModalOpen,
+    viewUserInfoInputPopup,
+    viewTypingResultPopup,
+    viewTypingStatisticsPopup,
+    userName,
+    userImageIndex,
+    time,
+  } = useMainSection();
   return (
     <MyContext.Provider
       value={{ typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy }}
