@@ -23,6 +23,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [inputValue, setInputValue] = useState('');
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
+  const [totalBackSpace, setTotalBackSpace] = useState(0);
 
   const { setTypingSpeed, setTotalAccuracy } = useContext(MyContext);
   const onChange = ({ target: { value } }) => {
@@ -91,8 +92,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
 
   const handleBackspace = () => {
     if (inputValue.length < 1) return;
-    if (totalCorrectKeyStrokes > 0)
-      setTotalCorrectKeyStrokes((prev) => prev - 1);
+    setTotalBackSpace((prev) => prev + 1);
   };
 
   const colorKeyboard = (key) => {
@@ -191,11 +191,14 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     }
     setTotalCursor(getPrevLength() + inputValue.length - 1);
     setTotalAccuracy(
-      ((totalCorrectKeyStrokes / (totalCursor + 1)) * 100).toFixed(0)
+      (
+        ((totalCorrectKeyStrokes - totalBackSpace) / (totalCursor + 1)) *
+        100
+      ).toFixed(0)
     );
-    // console.log(totalCorrectKeyStrokes + ' ' + totalCursor);
     checkCurrentSentence(); //Input 검사 로직
   }, [
+    totalBackSpace,
     sentence_total.sentence,
     getPrevLength,
     inputValue,
