@@ -72,21 +72,22 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       currentIndex++;
       prevTotalCorrectKeys = totalCorrectKeyStrokes;
     } //다음 문장으로 넘어간다.
-    if (currentIndex !== sentence_total.sentence[proposalIndex].text.length)
+    if (currentIndex !== sentence_total.sentence[proposalIndex].text.length) {
+      //마지막 문장이 아닌 곳에서 엔터를 쳤을 때
       EnterSound.play();
-    else {
+      if (!language) {
+        inputRef.current.disabled = true;
+        setTimeout(() => {
+          inputRef.current.disabled = false;
+          inputRef.current.focus();
+        }, 0); //macOS 한국어 input초기화 시 버그가 있어서 넣은 코드입니다.
+      }
+    } else {
       //마지막 문장에서 엔터를 쳤을 때
       EndSound.play();
       endGame();
     }
 
-    if (!language) {
-      inputRef.current.disabled = true;
-      setTimeout(() => {
-        inputRef.current.disabled = false;
-        inputRef.current.focus();
-      }, 0); //macOS 한국어 input초기화 시 버그가 있어서 넣은 코드입니다.
-    }
     setInputValue('');
   };
 
@@ -108,6 +109,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   };
 
   const initializeKeyboard = useCallback(() => {
+    setTotalBackSpace(0);
     setInputValue('');
     currentIndex = 0;
     setTotalCorrectKeyStrokes(0);
@@ -115,7 +117,6 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setTypingSpeed(0);
     prevTotalCorrectKeys = 0;
     setTotalAccuracy(100);
-    setTotalBackSpace(0);
   }, [setTotalAccuracy, setTypingSpeed]);
 
   const toggleLanguage = () => {
