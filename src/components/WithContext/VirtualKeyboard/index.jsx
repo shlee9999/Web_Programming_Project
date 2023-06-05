@@ -6,6 +6,7 @@ import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
 import { getFormattedDate, getFormattedTime } from 'utils/helper';
 import { useContext } from 'react';
 import { MyContext } from 'pages/TypingPage/MainSection';
+import { AcidRainModal } from 'components/AcidRainModal';
 const VirtualKeyboard = ({
   userName,
   showTypingResultPopup,
@@ -14,6 +15,7 @@ const VirtualKeyboard = ({
   stopTyping,
   inputRef,
 }) => {
+  const [isAcidRainOpen, setIsAcidRainOpen] = useState(false);
   const [proposalIndex, setProposalIndex] = useState(0); ////현재 제시문이 몇 번째 제시문인가?
   const [isGameReady, setIsGameReady] = useState(false);
   const [isSelectModalOpen, setIsSelectModalOpen] = useState(false);
@@ -89,6 +91,13 @@ const VirtualKeyboard = ({
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
+        <button
+          onClick={() => {
+            setIsAcidRainOpen(true);
+          }}
+        >
+          산 성 비
+        </button>
         <div>
           <br /> 진행 시간 : {formattedTime}
         </div>
@@ -135,13 +144,13 @@ const VirtualKeyboard = ({
       {isSelectModalOpen && (
         <SelectCategoryModal
           closeModal={closeSelectModal}
-          // isTyping={isTyping}
           selectCategory={selectCategory}
           startGame={startGame}
           language={language}
           toggleLanguage={toggleLanguage}
         />
       )}
+      {isAcidRainOpen && <AcidRainModal />}
     </div>
   );
 };
