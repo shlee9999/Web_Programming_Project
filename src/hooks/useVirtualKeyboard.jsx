@@ -1,5 +1,5 @@
 import hangul from 'hangul-js';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import sentence_korean from 'constants/sentence_korean.json';
 import sentence_english from 'constants/sentence_english.json';
 import enter_sound from 'assets/sounds/Enter.mp3';
@@ -14,10 +14,19 @@ let title = '';
 let currentIndex = 0;
 
 const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
+  const [typingMode, setTypingMode] = useState(false); // word : true, sentence : false
   const [language, setLanguage] = useState(false); //Eng: true, Kor: false
-  const sentence_total = language ? sentence_english : sentence_korean;
+
+  const sentences = useMemo(() => {
+    if (typingMode) {
+      return language ? sentence_english.word : sentence_korean.word;
+    } else {
+      return language ? sentence_english.sentence : sentence_korean.sentence;
+    }
+  }, [language, typingMode]);
+
   const [currentSentence, setCurrentSentence] = useState(
-    sentence_total.sentence[proposalIndex].text[currentIndex] //현재 문장
+    sentences[proposalIndex].text[currentIndex] //현재 문장
   );
   const [activeKeys, setActiveKeys] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -29,9 +38,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const onChange = ({ target: { value } }) => {
     if (!value) {
       setInputValue('');
-      setCurrentSentence(
-        sentence_total.sentence[proposalIndex].text[currentIndex]
-      );
+      setCurrentSentence(sentences[proposalIndex].text[currentIndex]);
       return;
     }
     const lastChar = value[value.length - 1];
@@ -45,12 +52,12 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setInputValue(value);
   };
   const getPrevLength = useCallback(() => {
-    return sentence_total.sentence[proposalIndex].text.reduce(
+    return sentences[proposalIndex].text.reduce(
       (acc, sentence, index) =>
         index < currentIndex ? acc + sentence.length : acc,
       0
     );
-  }, [proposalIndex, sentence_total.sentence]);
+  }, [proposalIndex, sentences]);
 
   const onKeyDown = ({ key }) => {
     //엔터키 등 특수 이벤트 처리
@@ -68,11 +75,11 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
 
   const handleEnter = () => {
     if (inputValue.length < currentSentence.length - 5) return;
-    if (currentIndex < sentence_total.sentence[proposalIndex].text.length) {
+    if (currentIndex < sentences[proposalIndex].text.length) {
       currentIndex++;
       prevTotalCorrectKeys = totalCorrectKeyStrokes;
     } //다음 문장으로 넘어간다.
-    if (currentIndex !== sentence_total.sentence[proposalIndex].text.length) {
+    if (currentIndex !== sentences[proposalIndex].text.length) {
       //마지막 문장이 아닌 곳에서 엔터를 쳤을 때
       EnterSound.play();
       if (!language) {
@@ -123,11 +130,15 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     setLanguage(!language);
   };
 
+  const toggleMode = () => {
+    setTypingMode(!typingMode);
+  };
+
   const checkCurrentSentence = useCallback(() => {
     const splitInput = inputValue.split('');
     let correctKeys = 0;
     setCurrentSentence(
-      sentence_total.sentence[proposalIndex].text[currentIndex]
+      sentences[proposalIndex].text[currentIndex]
         .split('')
         .map((letter, index) => {
           if (index > inputValue.length - 1) return letter;
@@ -180,15 +191,12 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
         })
     );
     setTotalCorrectKeyStrokes(prevTotalCorrectKeys + correctKeys);
-  }, [inputValue, language, proposalIndex, sentence_total.sentence]);
+  }, [inputValue, language, proposalIndex, sentences]);
 
   useEffect(() => {
-    if (currentIndex >= sentence_total.sentence[proposalIndex].text.length)
-      return;
+    if (currentIndex >= sentences[proposalIndex].text.length) return;
     if (inputValue.length === 0) {
-      setCurrentSentence(
-        sentence_total.sentence[proposalIndex].text[currentIndex]
-      );
+      setCurrentSentence(sentences[proposalIndex].text[currentIndex]);
       return;
     }
     setTotalCursor(getPrevLength() + inputValue.length - 1);
@@ -203,7 +211,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     checkCurrentSentence(); //Input 검사 로직
   }, [
     totalBackSpace,
-    sentence_total.sentence,
+    sentences,
     getPrevLength,
     inputValue,
     checkCurrentSentence,
@@ -222,17 +230,15 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
 
   useEffect(() => {
     setTotalCursor(getPrevLength());
-    setCurrentSentence(
-      sentence_total.sentence[proposalIndex].text[currentIndex]
-    );
-  }, [proposalIndex, sentence_total.sentence, getPrevLength]);
+    setCurrentSentence(sentences[proposalIndex].text[currentIndex]);
+  }, [proposalIndex, sentences, getPrevLength]);
 
   useEffect(() => {
     if (time === 0) initializeKeyboard(); //time=0으로 초기화(게임 초기화)시 키보드 초기화되도록 함
   }, [time, initializeKeyboard]);
   useEffect(() => {
-    title = sentence_total.sentence[proposalIndex].title;
-  }, [proposalIndex, language, sentence_total.sentence]);
+    title = sentences[proposalIndex].title;
+  }, [proposalIndex, language, sentences]);
   return {
     inputValue,
     onChange,
@@ -241,8 +247,10 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     initializeKeyboard,
     language,
     toggleLanguage,
+    toggleMode,
     activeKeys,
     title,
+    typingMode,
   };
 };
 
