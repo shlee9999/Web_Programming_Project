@@ -3,7 +3,7 @@ import './index.css';
 import sentence_english from 'constants/sentence_english.json';
 import sentence_korean from 'constants/sentence_korean.json';
 
-const Modal = ({
+const SelectCategoryModal = ({
   closeModal,
   selectCategory,
   startGame,
@@ -179,4 +179,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default SelectCategoryModal;

@@ -1,0 +1,118 @@
+@keyframes animate-height {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.acid_rain_modal {
+  animation: animate-height 0.55s;
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  border: 3px solid #b1b2ff;
+  border-radius: 10px;
+  background-color: #eef1ff;
+}
+.acid_rain_init_contents {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+.acid_rain_title {
+  margin: 30px 0;
+  font-size: 2.5rem;
+}
+
+.acid_rain_contents {
+  animation: fade-in 1s;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+}
+
+.acid_rain_input {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%);
+}
+
+.limit {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: inherit;
+  height: 10vh;
+  background-color: pink;
+}
+.acid_rain_start_button {
+  font-size: 1.5rem;
+  height: 50px;
+  width: 200px;
+  margin-bottom: 30px;
+}
+
+.level_button {
+  margin: 0 10px;
+  width: 60px;
+  padding: 8px;
+  background-color: #b1b2ff;
+  border: 2px solid #b1b2ff;
+  border-radius: 10px;
+  color: white;
+}
+.level_button:focus {
+  background-color: white;
+  color: #b1b2ff;
+}
+.level_button:hover {
+  filter: brightness(1);
+}
+.level_button:active {
+  background-color: white;
+  color: #b1b2ff;
+}
+.select_language_item {
+  width: 60px;
+  padding: 8px;
+  background-color: #b1b2ff;
+  border: 2px solid #b1b2ff;
+  border-radius: 10px;
+  color: white;
+  &.item_active {
+    background-color: white;
+    color: #b1b2ff;
+  }
+}
+
+.select_language_item:hover {
+  background-color: #b1b2ff;
+  color: white;
+}
+
+.select_language_item:active {
+  background-color: #8468fa;
+  border: 2px solid #8468fa;
+}
+
+.level_buttons_wrapper {
+  position: absolute;
+  top: 110px;
+}

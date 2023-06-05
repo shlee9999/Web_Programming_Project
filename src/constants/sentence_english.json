@@ -114,28 +114,26 @@
     {
       "title": "3rd",
       "text": [
-        [
-          "Cat",
-          "Dog",
-          "Horse",
-          "Cow",
-          "Pig",
-          "Bear",
-          "Lion",
-          "Tiger",
-          "Rabbit",
-          "Giraffe",
-          "Monkey",
-          "Panda",
-          "Sheep",
-          "Frog",
-          "Fish",
-          "Bird",
-          "Chicken",
-          "Turtle",
-          "Deer",
-          "Elephant"
-        ]
+        "Cat",
+        "Dog",
+        "Horse",
+        "Cow",
+        "Pig",
+        "Bear",
+        "Lion",
+        "Tiger",
+        "Rabbit",
+        "Giraffe",
+        "Monkey",
+        "Panda",
+        "Sheep",
+        "Frog",
+        "Fish",
+        "Bird",
+        "Chicken",
+        "Turtle",
+        "Deer",
+        "Elephant"
       ]
     },
     {

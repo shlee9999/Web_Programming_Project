@@ -38,6 +38,7 @@ export const MainSection = () => {
     userImageIndex,
     time,
   } = useMainSection();
+
   return (
     <MyContext.Provider
       value={{ typingSpeed, totalAccuracy, setTypingSpeed, setTotalAccuracy }}
