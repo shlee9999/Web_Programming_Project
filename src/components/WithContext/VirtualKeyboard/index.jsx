@@ -80,8 +80,10 @@ const VirtualKeyboard = ({
     initializeKeyboard,
     language,
     toggleLanguage,
+    toggleMode,
     activeKeys,
     title,
+    typingMode,
   } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
@@ -135,11 +137,12 @@ const VirtualKeyboard = ({
       {isSelectModalOpen && (
         <SelectCategoryModal
           closeModal={closeSelectModal}
-          // isTyping={isTyping}
           selectCategory={selectCategory}
           startGame={startGame}
           language={language}
           toggleLanguage={toggleLanguage}
+          toggleMode={toggleMode}
+          typingMode={typingMode}
         />
       )}
     </div>

@@ -9,8 +9,9 @@ const Modal = ({
   startGame,
   language,
   toggleLanguage,
+  toggleMode,
+  typingMode,
 }) => {
-  const [typingMode, setTypingMode] = useState(false); // 긴 글(sentence) : false, 단어(word) : true
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [focusedCategoryIndex, setFocusedCategoryIndex] = useState(0);
   const buttonRef = useRef(null);
@@ -62,12 +63,14 @@ const Modal = ({
 
   const toSentenceMode = () => {
     if (!typingMode) return;
-    setTypingMode(!typingMode);
+
+    toggleMode();
   };
 
   const toWordMode = () => {
     if (typingMode) return;
-    setTypingMode(!typingMode);
+
+    toggleMode();
   };
 
   const toKorean = () => {
