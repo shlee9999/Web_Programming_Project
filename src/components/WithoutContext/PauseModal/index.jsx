@@ -4,11 +4,10 @@ const PauseModal = ({ closeModal }) => {
   const handleClickModal = (e) => {
     e.stopPropagation();
   };
-
   return (
     <div className='modal_overlay' onClick={closeModal}>
       <div className='modal' onClick={handleClickModal}>
-        <h2>일시정지</h2>
+        <h2>일시 정지</h2>
       </div>
     </div>
   );

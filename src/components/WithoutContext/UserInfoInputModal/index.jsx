@@ -1,44 +1,51 @@
 import { useState, useRef, useEffect } from 'react';
 import './index.css';
-import { avatarList } from '../../constants/avatarList';
+import { avatarList } from 'constants/avatarList';
 
-const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
+export const UserInfoInputModal = ({
+  viewUserInfoInputPopup,
+  closeUserInfoInputPopup,
+  handleUserName,
+  handleUserImageIndex,
+}) => {
   const nameInputRef = useRef(null);
-  const [actived, setActived] = useState(false);
-
+  const focusedAvatarRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
+  const [focusedAvatarIndex, setFocusedAvatarIndex] = useState(0);
+
   const onClickButton = () => {
     saveUserInfo();
   };
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  const onChange = ({ target: { value } }) => {
+    if (value.length > 10) return;
+    setInputValue(value);
   };
   const saveUserInfo = () => {
     if (inputValue === '') return;
+    handleUserName(nameInputRef.current.value);
+    handleUserImageIndex(focusedAvatarIndex);
     closeUserInfoInputPopup();
-    localStorage.setItem('user_image', focusedAvatarIndex);
-    localStorage.setItem('user_name', inputValue);
   };
 
   const onFocusImage = () => {
     if (!focusedAvatarRef.current) return;
     focusedAvatarRef.current.focus();
   };
-  const focusedAvatarRef = useRef(null);
-  const [focusedAvatarIndex, setFocusedAvatarIndex] = useState(0);
+
+  const onClickAnywhere = () => {
+    if (!nameInputRef) return;
+    nameInputRef.current.focus();
+  };
+
+  const handleClickAvatar = (index) => () => {
+    setFocusedAvatarIndex(index);
+  };
 
   useEffect(() => {
     if (!nameInputRef) return;
     nameInputRef.current.focus();
   }, [viewUserInfoInputPopup]);
 
-  const onClickAnywhere = () => {
-    if (!nameInputRef) return;
-    nameInputRef.current.focus();
-  };
-  const handleClickAvatar = (index) => () => {
-    setFocusedAvatarIndex(index);
-  };
   return (
     <div className='modal_overlay' onClick={onClickAnywhere}>
       <div className='modal header_title'>
@@ -75,13 +82,14 @@ const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
             type='text'
             id='name'
             ref={nameInputRef}
-            onChange={handleInputChange}
+            onChange={onChange}
             className='name_input'
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 saveUserInfo();
               }
             }}
+            value={inputValue}
           />
         </div>
         <button onClick={onClickButton} className='submit_button'>
@@ -91,5 +99,3 @@ const UserInfoInput = ({ viewUserInfoInputPopup, closeUserInfoInputPopup }) => {
     </div>
   );
 };
-
-export default UserInfoInput;
