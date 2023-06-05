@@ -141,6 +141,14 @@ const Modal = ({
           >
             단어 연습
           </button>
+          <button
+            className={`select_mode_item select_item ${
+              !typingMode && 'item_active'
+            }`}
+            onClick={toWordMode}
+          >
+            산성비 게임
+          </button>
         </div>
         <div className='select_mode_child_wrapper'>
           <div className='select_language'>
