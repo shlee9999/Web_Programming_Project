@@ -75,6 +75,7 @@ const VirtualKeyboard = ({
   };
 
   const {
+    inputValue,
     onChange,
     onKeyDown,
     currentSentence,
@@ -82,10 +83,9 @@ const VirtualKeyboard = ({
     language,
     toggleLanguage,
     toggleMode,
-
+    activeKeys,
     title,
     typingMode,
-    state,
   } = useVirtualKeyboard({ time, proposalIndex, endGame, inputRef });
 
   const keyRows = language ? keyRowsEnglish : keyRowsKorean;
@@ -119,7 +119,7 @@ const VirtualKeyboard = ({
           onKeyDown={onKeyDown}
           onChange={onChange} //korean
           type='text'
-          value={state.inputValue}
+          value={inputValue}
           placeholder={isGameReady ? '' : 'Please Press Start Typing Button.'}
           disabled
           ref={inputRef}
@@ -132,7 +132,7 @@ const VirtualKeyboard = ({
                 <button
                   key={index}
                   className={`keyboard_keys ${
-                    state.activeKeys.includes(key.toUpperCase()) ? 'active' : ''
+                    activeKeys.includes(key.toUpperCase()) ? 'active' : ''
                   }`}
                   id={key}
                 >
