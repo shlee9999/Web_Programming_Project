@@ -1,5 +1,11 @@
 import hangul from 'hangul-js';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import sentence_korean from 'constants/sentence_korean.json';
 import sentence_english from 'constants/sentence_english.json';
 import enter_sound from 'assets/sounds/Enter.mp3';
@@ -9,45 +15,76 @@ import { MyContext } from 'pages/TypingPage/MainSection';
 const EnterSound = new Audio(enter_sound);
 const EndSound = new Audio(end_sound);
 
+function reducer(state, action) {
+  switch (action.type) {
+    case 'CHANGE_INPUT_VALUE':
+      return { ...state, inputValue: action.inputValue };
+    case 'CHANGE_CURRENT_SENTENCE':
+      return { ...state, currentSentence: action.currentSentence };
+    case 'ADD_ACTIVE_KEY':
+      return { ...state, activeKeys: [...state.activeKeys, action.lastChar] };
+    case 'POP_ACTIVE_KEY':
+      return {
+        ...state,
+        activeKeys: state.activeKeys.filter(
+          (activeKey) =>
+            activeKey !== action.key && activeKey !== action.lastChar
+        ),
+      };
+    case 'TOGGLE_LANGUAGE':
+      return { ...state, language: !state.language };
+    default:
+      return;
+  }
+}
+
+const initialState = {
+  inputValue: '',
+  currentSentence: sentence_korean.sentence[0].text[0],
+  activeKeys: [],
+  language: false, //Eng: true, Kor: false
+};
+
 const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
-  const [language, setLanguage] = useState(false); //Eng: true, Kor: false
-  const sentence_total = language ? sentence_english : sentence_korean;
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const sentence_total = state.language ? sentence_english : sentence_korean;
   const [currentIndex, setCurrentIndex] = useState(0); //현재 문장이 몇 번째 문장인가?
-  const [currentSentence, setCurrentSentence] = useState(
-    sentence_total.sentence[proposalIndex].text[currentIndex] //현재 문장
-  );
-  const [activeKeys, setActiveKeys] = useState([]);
-  const [inputValue, setInputValue] = useState('');
   const [totalCorrectKeyStrokes, setTotalCorrectKeyStrokes] = useState(0);
   const [totalCursor, setTotalCursor] = useState(0);
   const [prevTotalCorrectKeys, setPrevTotalCorrectKeys] = useState(0);
   const [title, setTitle] = useState('');
   const { setTypingSpeed, setTotalAccuracy } = useContext(MyContext);
+
   const onChange = ({ target: { value } }) => {
     if (!value) {
-      setInputValue('');
-      setCurrentSentence(
-        sentence_total.sentence[proposalIndex].text[currentIndex]
-      );
+      dispatch({ type: 'CHANGE_INPUT_VALUE', inputValue: '' });
+      dispatch({
+        type: 'CHANGE_CURRENT_SENTENCE',
+        currentSentence:
+          sentence_total.sentence[proposalIndex].text[currentIndex],
+      });
       return;
     }
     const lastChar = value[value.length - 1];
-    const key = language ? lastChar : hangul.disassemble(lastChar);
+    const key = state.language ? lastChar : hangul.disassemble(lastChar);
     if (
-      !language &&
-      hangul.disassemble(inputValue).length < hangul.disassemble(value).length
+      !state.language &&
+      hangul.disassemble(state.inputValue).length <
+        hangul.disassemble(value).length
     ) {
       colorKeyboard(key);
-    } else if (language && inputValue.length < value.length) colorKeyboard(key);
-    setInputValue(value);
+    } else if (state.language && state.inputValue.length < value.length)
+      colorKeyboard(key);
+    dispatch({ type: 'CHANGE_INPUT_VALUE', inputValue: value });
   };
-  const getPrevLength = () => {
+
+  const getPrevLength = useCallback(() => {
     return sentence_total.sentence[proposalIndex].text.reduce(
       (acc, sentence, index) =>
         index < currentIndex ? acc + sentence.length : acc,
       0
     );
-  };
+  }, [currentIndex, proposalIndex, sentence_total.sentence]);
 
   const onKeyDown = ({ key }) => {
     //엔터키 등 특수 이벤트 처리
@@ -64,7 +101,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   };
 
   const handleEnter = () => {
-    if (inputValue.length < currentSentence.length - 5) return;
+    if (state.inputValue.length < state.currentSentence.length - 5) return;
     if (currentIndex < sentence_total.sentence[proposalIndex].text.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
@@ -80,36 +117,34 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       endGame();
     }
 
-    if (!language) {
+    if (!state.language) {
       inputRef.current.disabled = true;
       setTimeout(() => {
         inputRef.current.disabled = false;
         inputRef.current.focus();
       }, 0); //macOS 한국어 input초기화 시 버그가 있어서 넣은 코드입니다.
     }
-    setInputValue('');
+    dispatch({ type: 'CHANGE_INPUT_VALUE', inputValue: '' });
   };
 
   const handleBackspace = () => {
-    if (inputValue.length < 1) return;
+    if (state.inputValue.length < 1) return;
     if (totalCorrectKeyStrokes > 0)
       setTotalCorrectKeyStrokes((prev) => prev - 1);
   };
 
   const colorKeyboard = (key) => {
-    const lastChar = language ? key.toUpperCase() : key[key.length - 1];
-    if (!activeKeys.includes(lastChar)) {
-      setActiveKeys((prev) => [...prev, lastChar]);
+    const lastChar = state.language ? key.toUpperCase() : key[key.length - 1];
+    if (!state.activeKeys.includes(lastChar)) {
+      dispatch({ type: 'ADD_ACTIVE_KEY', lastChar: lastChar });
     }
     setTimeout(() => {
-      setActiveKeys((prev) =>
-        prev.filter((activeKey) => activeKey !== key && activeKey !== lastChar)
-      );
+      dispatch({ type: 'POP_ACTIVE_KEY', key: key, lastChar: lastChar });
     }, 300);
   };
 
   const initializeKeyboard = useCallback(() => {
-    setInputValue('');
+    dispatch({ type: 'CHANGE_INPUT_VALUE', inputValue: '' });
     setCurrentIndex(0);
     setTotalCorrectKeyStrokes(0);
     setTotalCursor(0);
@@ -120,121 +155,124 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   }, [setTotalAccuracy, setTypingSpeed]);
 
   const toggleLanguage = () => {
-    setLanguage(!language);
+    dispatch({ type: 'TOGGLE_LANGUAGE' });
   };
 
   const checkCurrentSentence = useCallback(() => {
-    const splitInput = inputValue.split('');
+    const splitInput = state.inputValue.split('');
     let correctKeys = 0;
-    setCurrentSentence(
-      sentence_total.sentence[proposalIndex].text[currentIndex]
-        .split('')
-        .map((letter, index) => {
-          if (index > inputValue.length - 1) return letter;
-          if (index === inputValue.length - 1) {
-            if (!language) {
-              //한글 로직
-              const disassembledLetter = hangul.disassemble(letter);
-              const disassembledLastChar = hangul.disassemble(
-                inputValue[inputValue.length - 1]
-              );
-              const minLength = Math.min(
-                disassembledLetter.length,
-                disassembledLastChar.length
-              );
-              let isSame = true;
-              for (let i = 0; i < minLength; i++) {
-                if (disassembledLetter[i] !== disassembledLastChar[i])
-                  isSame = false;
-              }
-              if (isSame) {
-                correctKeys++;
-                return (
-                  <span key={index} className='correctly_typed'>
-                    {letter}
-                  </span>
-                );
-              }
-              if (!isSame)
-                return (
-                  <span key={index} className='mistyped'>
-                    {letter}
-                  </span>
-                );
-            } //한글 로직 끝
-            //영어
-          }
-          if (letter === splitInput[index]) {
-            correctKeys++;
-            return (
-              <span key={index} className='correctly_typed'>
-                {letter}
-              </span>
+    const newSentence = sentence_total.sentence[proposalIndex].text[
+      currentIndex
+    ]
+      .split('')
+      .map((letter, index) => {
+        if (index > state.inputValue.length - 1) return letter;
+        if (index === state.inputValue.length - 1) {
+          if (!state.language) {
+            //한글 로직
+            const disassembledLetter = hangul.disassemble(letter);
+            const disassembledLastChar = hangul.disassemble(
+              state.inputValue[state.inputValue.length - 1]
             );
-          }
+            const minLength = Math.min(
+              disassembledLetter.length,
+              disassembledLastChar.length
+            );
+            let isSame = true;
+            for (let i = 0; i < minLength; i++) {
+              if (disassembledLetter[i] !== disassembledLastChar[i])
+                isSame = false;
+            }
+            if (isSame) {
+              correctKeys++;
+              return (
+                <span key={index} className='correctly_typed'>
+                  {letter}
+                </span>
+              );
+            }
+            if (!isSame)
+              return (
+                <span key={index} className='mistyped'>
+                  {letter}
+                </span>
+              );
+          } //한글 로직 끝
+          //영어
+        }
+        if (letter === splitInput[index]) {
+          correctKeys++;
           return (
-            <span key={index} className='mistyped'>
+            <span key={index} className='correctly_typed'>
               {letter}
             </span>
           );
-        })
-    );
+        }
+        return (
+          <span key={index} className='mistyped'>
+            {letter}
+          </span>
+        );
+      });
+    dispatch({ type: 'CHANGE_CURRENT_SENTENCE', currentSentence: newSentence });
     setTotalCorrectKeyStrokes(prevTotalCorrectKeys + correctKeys);
   }, [
     currentIndex,
-    inputValue,
-    language,
+    state.inputValue,
+    state.language,
     prevTotalCorrectKeys,
     proposalIndex,
     sentence_total.sentence,
   ]);
 
   useEffect(() => {
-    if (inputValue.length === 0) return;
-    setTotalCursor(getPrevLength() + inputValue.length - 1);
+    if (state.inputValue.length === 0) return;
+    setTotalCursor(getPrevLength() + state.inputValue.length - 1);
     setTotalAccuracy(
       ((totalCorrectKeyStrokes / (totalCursor + 1)) * 100).toFixed(0)
     );
     // console.log(totalCorrectKeyStrokes + ' ' + totalCursor);
     checkCurrentSentence(); //Input 검사 로직
   }, [
-    inputValue,
+    state.inputValue,
     checkCurrentSentence,
-
+    getPrevLength,
     totalCorrectKeyStrokes,
     totalCursor,
     setTotalAccuracy,
   ]); //한글 영어 모두 적용됨.
 
   useEffect(() => {
-    const newTypingSpeed = language
+    const newTypingSpeed = state.language
       ? ((totalCorrectKeyStrokes / (time + 1)) * 60).toFixed(0)
       : ((totalCorrectKeyStrokes / (time + 1)) * 60 * 1.5).toFixed(0);
     setTypingSpeed(newTypingSpeed);
-  }, [time, totalCorrectKeyStrokes, language, setTypingSpeed]);
+  }, [time, totalCorrectKeyStrokes, state.language, setTypingSpeed]);
 
   useEffect(() => {
     setTotalCursor(getPrevLength());
-    setCurrentSentence(
-      sentence_total.sentence[proposalIndex].text[currentIndex]
-    );
-  }, [currentIndex, proposalIndex, sentence_total.sentence]);
+    dispatch({
+      type: 'CHANGE_CURRENT_SENTENCE',
+      currentSentence:
+        sentence_total.sentence[proposalIndex].text[currentIndex],
+    });
+  }, [currentIndex, proposalIndex, sentence_total.sentence, getPrevLength]);
 
   useEffect(() => {
     if (time === 0) initializeKeyboard(); //time=0으로 초기화(게임 초기화)시 키보드 초기화되도록 함
   }, [time, initializeKeyboard]);
   useEffect(() => {
     setTitle(sentence_total.sentence[proposalIndex].title);
-  }, [proposalIndex, language, sentence_total.sentence]);
+  }, [proposalIndex, state.language, sentence_total.sentence]);
   return {
-    inputValue,
+    inputValue: state.inputValue,
     onChange,
     onKeyDown,
-    currentSentence,
+    currentSentence: state.currentSentence,
     initializeKeyboard,
-    language,
+    language: state.language,
     toggleLanguage,
-    activeKeys,
+    activeKeys: state.activeKeys,
     title,
   };
 };
