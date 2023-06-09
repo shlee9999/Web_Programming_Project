@@ -40,7 +40,11 @@ const VirtualKeyboard = ({
     initializeKeyboard();
     setIsGameReady(true);
     inputRef.current.disabled = false;
-    inputRef.current.focus();
+    setTimeout(() => {
+      //이렇게 안하면 focus 안됨
+      inputRef.current.focus();
+    }, 0);
+
     startTyping();
   };
 

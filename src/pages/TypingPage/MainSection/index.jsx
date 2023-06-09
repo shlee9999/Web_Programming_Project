@@ -37,7 +37,7 @@ export const MainSection = () => {
     userName,
     userImageIndex,
     time,
-  } = useMainSection();
+  } = useMainSection({ inputRef });
 
   return (
     <MyContext.Provider
