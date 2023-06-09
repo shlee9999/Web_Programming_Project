@@ -11,16 +11,18 @@ const non_movingStyle = {
   opacity: 0,
 };
 
-// Helper function to create a delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const Word = ({
   word,
+  id,
   isChecked,
   timeLimit,
   interval,
   replaceCurrentWordList,
+  LENGTH,
 }) => {
+  const [count, setCount] = useState(0);
   const [isFalling, setIsFalling] = useState(false);
   const [isTyped, setIsTyped] = useState(false);
   const [position, setPosition] = useState(0);
@@ -47,8 +49,9 @@ export const Word = ({
     try {
       await delay(timeLimit * 1000);
       setIsFalling(false);
+      setPosition(0); //다 떨어졌을때 올라감
     } catch (err) {
-      console.error(err);
+      console.error(err); //type 성공 (다 안떨어짐)
     }
   }, [timeLimit]);
 
@@ -56,10 +59,9 @@ export const Word = ({
     try {
       await startFalling();
       await endFalling();
-      if (position === 0) {
-        await delay(timeLimit * 1000);
-        checkFallingWords();
-      }
+      await delay(timeLimit * 1000);
+      setCount((prev) => prev + 0.5); //왜 2번씩 증가?
+      checkFallingWords();
     } catch (err) {
       console.error(err);
     }
@@ -70,15 +72,11 @@ export const Word = ({
   }, []);
 
   useEffect(() => {
-    if (isTyped) {
-      setPosition(0);
-      setIsTyped(false);
-      setIsFalling(false);
-      delay(1000).then(() => {
-        replaceCurrentWordList(word);
-      });
-    }
-  }, [isTyped, replaceCurrentWordList, word]);
+    console.log('count = ' + count);
+    delay(1000).then(() => {
+      replaceCurrentWordList(word, LENGTH * count + id);
+    });
+  }, [count, LENGTH, id, replaceCurrentWordList, word]);
 
   useEffect(() => {
     if (isChecked && isFalling) {
@@ -88,6 +86,14 @@ export const Word = ({
       });
     }
   }, [isChecked, word, isFalling]);
+
+  useEffect(() => {
+    if (isTyped) {
+      setPosition(0);
+      setIsTyped(false);
+      setIsFalling(false);
+    }
+  }, [isTyped, replaceCurrentWordList, word]);
 
   return (
     <div className='word'>
