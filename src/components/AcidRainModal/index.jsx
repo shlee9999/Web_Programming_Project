@@ -37,6 +37,7 @@ const acidRainWords = [
 
 const levelList = ['1단계', '2단계', '3단계', '4단계', '5단계'];
 const LENGTH = 5;
+
 function shuffleArray() {
   //순서 섞기 위한 배열
   let arr = Array.from({ length: LENGTH }, (_, i) => i); // 0부터 10까지의 배열 생성
@@ -63,6 +64,7 @@ export const AcidRainModal = () => {
   const interval = timeLimit / LENGTH;
   const inputRef = useRef(null);
 
+  // useEffect(() => {}, [level]);
   const onKeyDown = ({ key }) => {
     switch (key) {
       case 'Enter':
@@ -72,12 +74,10 @@ export const AcidRainModal = () => {
         break;
     }
   };
-  const replaceCurrentWordList = (word) => {
+  const replaceCurrentWordList = (word, index) => {
     setCurrentWordList((prev) =>
       prev.map((prevWord) =>
-        prevWord === word
-          ? acidRainWords[LENGTH + checkedWords.length - 1]
-          : prevWord
+        prevWord === word ? acidRainWords[index] : prevWord
       )
     );
   };
@@ -111,6 +111,22 @@ export const AcidRainModal = () => {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+  // useEffect(() => {
+  //   switch (level) {
+  //     case 1:
+  //       break;
+  //     case 2:
+  //       break;
+  //     case 3:
+  //       break;
+  //     case 4:
+  //       break;
+  //     case 5:
+  //       break;
+  //     default:
+  //       console.error('Level Missing');
+  //   }
+  // }, [level]);
 
   if (!isStarted)
     return (
@@ -147,7 +163,9 @@ export const AcidRainModal = () => {
           {currentWordList.map((word, index) => (
             <Word
               key={index}
+              id={index}
               word={word}
+              LENGTH={LENGTH}
               inputValue={inputValue}
               isChecked={checkedWords.includes(word)}
               timeLimit={timeLimit}
