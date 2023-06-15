@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import './index.css';
 import { Word } from 'components/Word';
 
@@ -36,11 +36,10 @@ const acidRainWords = [
 ];
 
 const levelList = ['1단계', '2단계', '3단계', '4단계', '5단계'];
-const LENGTH = 5;
+const LENGTH = 5; //가로 단어 개수
 
 function shuffleArray() {
-  //순서 섞기 위한 배열
-  let arr = Array.from({ length: LENGTH }, (_, i) => i); // 0부터 10까지의 배열 생성
+  let arr = Array.from({ length: acidRainWords.length }, (_, i) => i); // 0부터 10까지의 배열 생성
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1)); // 0부터 i까지 랜덤 인덱스 생성
     [arr[i], arr[j]] = [arr[j], arr[i]]; // 해당 인덱스와 랜덤 인덱스의 요소 교환
@@ -48,23 +47,36 @@ function shuffleArray() {
   return arr;
 }
 
+function chunkArray(array, chunkSize) {
+  let result = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    result.push(array.slice(i, i + chunkSize));
+  }
+  return result;
+}
 let shuffledIndexes = shuffleArray(); //다음 게임 시 초기화
+let chunks = chunkArray(shuffledIndexes, LENGTH); //LENGTH개의 원소로 나눔
 
 export const AcidRainModal = () => {
-  const [currentWordList, setCurrentWordList] = useState(
-    acidRainWords.slice(0, LENGTH)
-  ); //현재 보여주는 단어 리스트
   const [isStarted, setIsStarted] = useState(false);
   //객체 배열 만들기
-
   const [checkedWords, setCheckedWords] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [level, setLevel] = useState(0); //레벨은 1단계~5단계
   const timeLimit = 21 - 4 * level; //떨어지는 데 걸리는 시간(초기 버튼 클릭으로 받아올듯)
   const interval = timeLimit / LENGTH;
   const inputRef = useRef(null);
+  const [fallingWords, setFallingWords] = useState([]);
 
-  // useEffect(() => {}, [level]);
+  const addFallingWords = (word) => {
+    if (!fallingWords.includes(word))
+      setFallingWords((prev) => [...prev, word]);
+  };
+
+  const popFallingWords = (word) => {
+    setFallingWords((prev) => prev.filter((prevWord) => prevWord !== word));
+  };
+
   const onKeyDown = ({ key }) => {
     switch (key) {
       case 'Enter':
@@ -74,29 +86,33 @@ export const AcidRainModal = () => {
         break;
     }
   };
-  const replaceCurrentWordList = (word, index) => {
-    setCurrentWordList((prev) =>
-      prev.map((prevWord) =>
-        prevWord === word ? acidRainWords[index] : prevWord
-      )
-    );
-  };
+
   const handleEnter = () => {
     if (!inputRef.current) return;
-    // console.log(currentWordList + ' : ' + inputValue);
-    // console.log('Falling : ' + fallingWords);
-    currentWordList.forEach((word, index) => {
-      if (word === inputValue) {
-        //falling중이 아니면 추가X
-        setCheckedWords((prev) => [...prev, currentWordList[index]]); //falling중이 아니면 pop해줘야할지도
-      }
-    });
+    addCheckedWords();
+    focusInput();
+  };
+
+  const focusInput = () => {
     inputRef.current.disabled = true;
     setTimeout(() => {
       inputRef.current.disabled = false;
       inputRef.current.focus();
     }, 0);
     setInputValue('');
+  };
+
+  const addCheckedWords = () => {
+    fallingWords.forEach((word) => {
+      if (word === inputValue) {
+        setCheckedWords((prev) => {
+          if (!prev.includes(word)) {
+            return [...prev, word];
+          }
+          return prev;
+        });
+      }
+    });
   };
 
   const onChange = ({ target: { value } }) => {
@@ -160,19 +176,22 @@ export const AcidRainModal = () => {
             <br />
             경계선 - 구현 완료 후 아래로 내리면 글씨 안보임
           </div>
-          {currentWordList.map((word, index) => (
-            <Word
-              key={index}
-              id={index}
-              word={word}
-              LENGTH={LENGTH}
-              inputValue={inputValue}
-              isChecked={checkedWords.includes(word)}
-              timeLimit={timeLimit}
-              interval={interval * shuffledIndexes[index]}
-              replaceCurrentWordList={replaceCurrentWordList}
-            />
+          {chunks.map((row, rowIndex) => (
+            <div className='acid_rain_top_row' key={rowIndex}>
+              {row.map((wordIndex, index) => (
+                <Word
+                  key={index}
+                  word={acidRainWords[wordIndex]}
+                  isChecked={checkedWords.includes(acidRainWords[wordIndex])}
+                  timeLimit={timeLimit}
+                  interval={interval * shuffledIndexes[wordIndex]}
+                  addFallingWords={addFallingWords}
+                  popFallingWords={popFallingWords}
+                />
+              ))}
+            </div>
           ))}
+          <div className='acid_rain_result'>{checkedWords.length}</div>
           <input
             className='acid_rain_input'
             value={inputValue}
