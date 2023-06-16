@@ -34,6 +34,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .acid_rain_title {
   margin: 30px 0;
   font-size: 2.5rem;
@@ -46,7 +47,14 @@
   display: flex;
   justify-content: center;
 }
-
+.acid_rain_top_row {
+  position: absolute;
+  width: fit-content;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%);
+  display: flex;
+}
 .acid_rain_input {
   position: absolute;
   left: 50%;
