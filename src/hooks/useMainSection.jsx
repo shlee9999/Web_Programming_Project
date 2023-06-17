@@ -1,6 +1,6 @@
-import { useState, inputRef } from 'react';
+import { useState } from 'react';
 import { useTimer } from './useTimer';
-export const useMainSection = () => {
+export const useMainSection = ({ inputRef }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isPauseModalOpen, setIsPauseModalOpen] = useState(false);
   const [viewUserInfoInputPopup, setViewUserInfoInputPopup] = useState(true);

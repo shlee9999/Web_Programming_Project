@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 
 const baseStyle = {
@@ -11,7 +11,6 @@ const non_movingStyle = {
   opacity: 0,
 };
 
-// Helper function to create a delay
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const Word = ({
@@ -19,9 +18,9 @@ export const Word = ({
   isChecked,
   timeLimit,
   interval,
-  replaceCurrentWordList,
+  addFallingWords,
+  popFallingWords,
 }) => {
-  const [isFalling, setIsFalling] = useState(false);
   const [isTyped, setIsTyped] = useState(false);
   const [position, setPosition] = useState(0);
 
@@ -33,61 +32,24 @@ export const Word = ({
     transition: `opacity 0.5s, transform ${timeLimit}s linear`,
   };
 
-  const startFalling = useCallback(async () => {
-    try {
-      await delay(interval * 1000);
-      setIsFalling(true);
-      setPosition(70);
-    } catch (err) {
-      console.error(err);
-    }
-  }, [interval]);
-
-  const endFalling = useCallback(async () => {
-    try {
-      await delay(timeLimit * 1000);
-      setIsFalling(false);
-    } catch (err) {
-      console.error(err);
-    }
-  }, [timeLimit]);
-
-  const checkFallingWords = useCallback(async () => {
-    try {
-      await startFalling();
-      await endFalling();
-      if (position === 0) {
-        await delay(timeLimit * 1000);
-        checkFallingWords();
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [position, timeLimit, endFalling, startFalling]);
-
   useEffect(() => {
-    checkFallingWords();
-  }, []);
-
-  useEffect(() => {
-    if (isTyped) {
-      setPosition(0);
-      setIsTyped(false);
-      setIsFalling(false);
-      delay(1000).then(() => {
-        replaceCurrentWordList(word);
-      });
-    }
-  }, [isTyped, replaceCurrentWordList, word]);
-
-  useEffect(() => {
-    if (isChecked && isFalling) {
+    if (isChecked) {
       setIsTyped(true);
-      delay(0).then(() => {
-        throw new Error(word + ' 성공');
-      });
+      setPosition(0); // Stop current word from falling
+      popFallingWords(word);
     }
-  }, [isChecked, word, isFalling]);
+  }, [isChecked]);
+
+  useEffect(() => {
+    const moveWord = async () => {
+      await delay(interval * 1000); //Falling 시작
+      setPosition(70);
+      addFallingWords(word);
+      await delay(timeLimit * 1000); //Falling 끝
+      popFallingWords(word);
+    };
+    moveWord();
+  }, []);
 
   return (
     <div className='word'>
