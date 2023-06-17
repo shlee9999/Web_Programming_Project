@@ -25,7 +25,9 @@ const VirtualKeyboard = ({
   };
   const currentDate = getFormattedDate();
   const formattedTime = getFormattedTime(time);
-
+  const closeAcidRainModal = () => {
+    setIsAcidRainOpen(false);
+  };
   const onClickStart = () => {
     setIsSelectModalOpen(true);
   };
@@ -158,7 +160,9 @@ const VirtualKeyboard = ({
           typingMode={typingMode}
         />
       )}
-      {isAcidRainOpen && <AcidRainModal />}
+      {isAcidRainOpen && (
+        <AcidRainModal closeAcidRainModal={closeAcidRainModal} />
+      )}
     </div>
   );
 };

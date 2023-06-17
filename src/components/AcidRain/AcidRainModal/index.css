@@ -58,8 +58,8 @@
 .acid_rain_input {
   position: absolute;
   left: 50%;
-  bottom: 20px;
-  transform: translate(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .limit {
@@ -123,4 +123,14 @@
 .level_buttons_wrapper {
   position: absolute;
   top: 110px;
+}
+.life {
+  position: absolute;
+  left: 90px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.umbrella_img {
+  width: 30px;
+  margin: 0 10px;
 }
