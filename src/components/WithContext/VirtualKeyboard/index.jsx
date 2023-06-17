@@ -6,7 +6,7 @@ import { keyRowsKorean, keyRowsEnglish } from 'constants/keyRows';
 import { getFormattedDate, getFormattedTime } from 'utils/helper';
 import { useContext } from 'react';
 import { MyContext } from 'pages/TypingPage/MainSection';
-import { AcidRainModal } from 'components/AcidRainModal';
+import { AcidRainModal } from 'components/AcidRain/AcidRainModal';
 const VirtualKeyboard = ({
   userName,
   showTypingResultPopup,

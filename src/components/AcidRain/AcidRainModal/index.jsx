@@ -1,72 +1,25 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
-import { Word } from 'components/Word';
+import { Word } from 'components/AcidRain/Word';
+import { acidRainWords, levelList } from 'constants/acidRainContents';
+import { chunkArray, getInfo, shuffleArray } from 'utils/helper';
+import AcidRainResultModal from '../AcidRainResultModal';
 
-const acidRainWords = [
-  '물고기',
-  '바다',
-  '꽃밭',
-  '나비',
-  '숲속',
-  '하늘',
-  '달빛',
-  '별빛',
-  '햇살',
-  '바람',
-  '새소리',
-  '푸른색',
-  '빨간색',
-  '노란색',
-  '하얀색',
-  '검은색',
-  '작은새',
-  '큰돌',
-  '작은구름',
-  '길가',
-  '맑은물',
-  '산길',
-  '바위산',
-  '비바람',
-  '바다풍경',
-  '산풍경',
-  '해변',
-  '무지개',
-  '푸른하늘',
-  '까만밤',
-];
-
-const levelList = ['1단계', '2단계', '3단계', '4단계', '5단계'];
-const LENGTH = 5; //가로 단어 개수
-
-function shuffleArray() {
-  let arr = Array.from({ length: acidRainWords.length }, (_, i) => i); // 0부터 10까지의 배열 생성
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1)); // 0부터 i까지 랜덤 인덱스 생성
-    [arr[i], arr[j]] = [arr[j], arr[i]]; // 해당 인덱스와 랜덤 인덱스의 요소 교환
-  }
-  return arr;
-}
-
-function chunkArray(array, chunkSize) {
-  let result = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
-  }
-  return result;
-}
-let shuffledIndexes = shuffleArray(); //다음 게임 시 초기화
-let chunks = chunkArray(shuffledIndexes, LENGTH); //LENGTH개의 원소로 나눔
+let shuffledIndexes = shuffleArray(acidRainWords); //다음 게임 시 초기화
+let lastWord = acidRainWords[shuffledIndexes.indexOf(acidRainWords.length - 1)]; //게임 끝내기 위해 필요
 
 export const AcidRainModal = () => {
   const [isStarted, setIsStarted] = useState(false);
-  //객체 배열 만들기
   const [checkedWords, setCheckedWords] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [level, setLevel] = useState(0); //레벨은 1단계~5단계
-  const timeLimit = 21 - 4 * level; //떨어지는 데 걸리는 시간(초기 버튼 클릭으로 받아올듯)
-  const interval = timeLimit / LENGTH;
+  const [level, setLevel] = useState(1);
   const inputRef = useRef(null);
+  const buttonRef = useRef(null);
   const [fallingWords, setFallingWords] = useState([]);
+  const { LENGTH, timeLimit } = getInfo(level);
+  const interval = timeLimit / LENGTH;
+  const chunks = chunkArray(shuffledIndexes, LENGTH); //LENGTH개의 원소로 나눔
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
 
   const addFallingWords = (word) => {
     if (!fallingWords.includes(word))
@@ -74,10 +27,11 @@ export const AcidRainModal = () => {
   };
 
   const popFallingWords = (word) => {
+    if (word === lastWord) setIsResultModalOpen(true);
     setFallingWords((prev) => prev.filter((prevWord) => prevWord !== word));
   };
 
-  const onKeyDown = ({ key }) => {
+  const handleInputKeyDown = ({ key }) => {
     switch (key) {
       case 'Enter':
         handleEnter();
@@ -86,7 +40,21 @@ export const AcidRainModal = () => {
         break;
     }
   };
-
+  const handleButtonKeyDown = ({ key }) => {
+    switch (key) {
+      case 'ArrowLeft': //한국어로 전환
+        setLevel((prev) => prev - 1);
+        return;
+      case 'ArrowRight':
+        setLevel((prev) => prev + 1);
+        return;
+      case 'Enter':
+        onClickStart();
+        return;
+      default:
+        break;
+    }
+  };
   const handleEnter = () => {
     if (!inputRef.current) return;
     addCheckedWords();
@@ -114,7 +82,10 @@ export const AcidRainModal = () => {
       }
     });
   };
-
+  const closeResultModal = () => {
+    setIsResultModalOpen(false);
+    setIsStarted(false);
+  };
   const onChange = ({ target: { value } }) => {
     setInputValue(value);
   };
@@ -127,23 +98,13 @@ export const AcidRainModal = () => {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
-  // useEffect(() => {
-  //   switch (level) {
-  //     case 1:
-  //       break;
-  //     case 2:
-  //       break;
-  //     case 3:
-  //       break;
-  //     case 4:
-  //       break;
-  //     case 5:
-  //       break;
-  //     default:
-  //       console.error('Level Missing');
-  //   }
-  // }, [level]);
 
+  useEffect(() => {
+    buttonRef.current?.focus();
+  }, [level]);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [isStarted]);
   if (!isStarted)
     return (
       <div className='modal_overlay'>
@@ -151,13 +112,15 @@ export const AcidRainModal = () => {
           <div className='acid_rain_init_contents'>
             <p className='acid_rain_title'>산 성 비</p>
             <div className='level_buttons_wrapper'>
-              {levelList.map((level, index) => (
+              {levelList.map((lev, index) => (
                 <button
                   key={index}
                   className='level_button'
                   onClick={onClickLevelButton(index + 1)}
+                  ref={level - 1 === index ? buttonRef : null}
+                  onKeyDown={handleButtonKeyDown}
                 >
-                  {level}
+                  {lev}
                 </button>
               ))}
             </div>
@@ -172,10 +135,6 @@ export const AcidRainModal = () => {
     <div className='modal_overlay'>
       <div className='acid_rain_modal'>
         <div className='acid_rain_contents'>
-          <div className='limit'>
-            <br />
-            경계선 - 구현 완료 후 아래로 내리면 글씨 안보임
-          </div>
           {chunks.map((row, rowIndex) => (
             <div className='acid_rain_top_row' key={rowIndex}>
               {row.map((wordIndex, index) => (
@@ -191,16 +150,23 @@ export const AcidRainModal = () => {
               ))}
             </div>
           ))}
-          <div className='acid_rain_result'>{checkedWords.length}</div>
+          <div className='limit'></div>
+          <div className='acid_rain_result'>점수 : {checkedWords.length}</div>
           <input
             className='acid_rain_input'
             value={inputValue}
             onChange={onChange}
-            onKeyDown={onKeyDown}
+            onKeyDown={handleInputKeyDown}
             ref={inputRef}
           />
         </div>
       </div>
+      {isResultModalOpen && (
+        <AcidRainResultModal
+          closeModal={closeResultModal}
+          score={checkedWords.length}
+        />
+      )}
     </div>
   );
 };
