@@ -1,5 +1,7 @@
-.proposal_container {
-  height: 40vh;
+.section_wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0px;
 }
 
 .proposal_section {
@@ -8,14 +10,6 @@
   border: 1px solid #b1b2ff;
   box-shadow: 1px 1px 2px 1px #b1b2ff;
   border-radius: 10px;
-}
-
-.introduction_section {
-  margin-bottom: 30px;
-}
-
-.feature_section {
-  height: 35vh;
 }
 
 .section_title {
@@ -44,13 +38,6 @@
 
 .main_title {
   font-weight: 600;
-}
-
-.feature_list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  line-height: 1.8;
 }
 
 @media (max-width: 600px) or (max-height: 600px) {
