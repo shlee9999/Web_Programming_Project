@@ -161,7 +161,10 @@ const VirtualKeyboard = ({
         />
       )}
       {isAcidRainOpen && (
-        <AcidRainModal closeAcidRainModal={closeAcidRainModal} />
+        <AcidRainModal
+          closeAcidRainModal={closeAcidRainModal}
+          userName={userName}
+        />
       )}
     </div>
   );

@@ -2,13 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import './index.css';
 import { Word } from 'components/AcidRain/Word';
 import { acidRainWords, levelList } from 'constants/acidRainContents';
-import { chunkArray, getInfo, shuffleArray } from 'utils/helper';
+import {
+  chunkArray,
+  getFormattedDate,
+  getInfo,
+  shuffleArray,
+} from 'utils/helper';
 import AcidRainResultModal from '../AcidRainResultModal';
+import { AcidRainStatisticsModal } from '../AcidRainStatisticsModal';
 
 let shuffledIndexes = shuffleArray(acidRainWords); //다음 게임 시 초기화
 let lastWord = acidRainWords[shuffledIndexes.indexOf(acidRainWords.length - 1)]; //게임 끝내기 위해 필요
 
-export const AcidRainModal = ({ closeAcidRainModal }) => {
+export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const [isStarted, setIsStarted] = useState(false);
   const [checkedWords, setCheckedWords] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -23,7 +29,11 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
   const handleClickModal = (e) => {
     e.stopPropagation();
   };
+  const [isStatisticsModalOpen, setIsStatisticsModalOpen] = useState(false);
 
+  const onClickStatisticsButton = () => {
+    setIsStatisticsModalOpen(true);
+  };
   const handleClickOutside = () => {
     if (!isStarted) closeAcidRainModal();
   };
@@ -93,10 +103,20 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
   };
   const closeResultModal = () => {
     //게임 초기화 & 통계 저장?
+    const data = JSON.parse(localStorage.getItem('AcidRainStatistics')) ?? [];
+    localStorage.setItem(
+      'AcidRainStatistics',
+      JSON.stringify([
+        ...data,
+        {
+          date: getFormattedDate(),
+          userName: userName,
+          score: checkedWords.length,
+          level: level,
+        },
+      ])
+    );
     setIsResultModalOpen(false);
-    setIsStarted(false);
-    setLevel(1);
-    setCheckedWords([]);
     closeAcidRainModal();
   };
   const onChange = ({ target: { value } }) => {
@@ -124,6 +144,7 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
       <div className='modal_overlay' onClick={handleClickOutside}>
         <div className='acid_rain_modal' onClick={handleClickModal}>
           <div className='acid_rain_init_contents'>
+            <button onClick={onClickStatisticsButton}>산성비 통계</button>
             <p className='acid_rain_title'>산 성 비</p>
             <div className='level_buttons_wrapper'>
               {levelList.map((lev, index) => (
@@ -149,6 +170,7 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
             score={checkedWords.length}
           />
         )}
+        {isStatisticsModalOpen && <AcidRainStatisticsModal />}
       </div>
     );
   return (
@@ -182,12 +204,12 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
           <div className='acid_rain_result'>점수 : {checkedWords.length}</div>
         </div>
       </div>
-      {isResultModalOpen && (
+      {/* {isResultModalOpen && (
         <AcidRainResultModal
           closeModal={closeResultModal}
           score={checkedWords.length}
         />
-      )}
+      )} */}
     </div>
   );
 };
