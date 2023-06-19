@@ -41,8 +41,22 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
     >
       <div className='modal' onClick={handleClickModal}>
         <div className='button_wrapper'>
-          <button onClick={toSentenceMode}>긴글</button>
-          <button onClick={toWordMode}>단어</button>
+          <button
+            className={`select_mode_button select_item ${
+              typingType === 'sentence' && 'button_active'
+            }`}
+            onClick={toSentenceMode}
+          >
+            긴 글
+          </button>
+          <button
+            className={`select_mode_button select_item ${
+              typingType === 'word' && 'button_active'
+            }`}
+            onClick={toWordMode}
+          >
+            단 어
+          </button>
         </div>
         <div className='statistics_wrapper'>
           {typingStatistics.length ? (
