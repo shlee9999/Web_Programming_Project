@@ -20,7 +20,6 @@ export const Word = ({
   interval,
   addFallingWords,
   popFallingWords,
-  decreaseLife,
 }) => {
   const [isTyped, setIsTyped] = useState(false);
   const [position, setPosition] = useState(0);
