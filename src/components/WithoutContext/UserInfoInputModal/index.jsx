@@ -14,6 +14,10 @@ export const UserInfoInputModal = ({
   const [focusedAvatarIndex, setFocusedAvatarIndex] = useState(0);
 
   const onClickButton = () => {
+    if (inputValue.trim() === '') {
+      alert('닉네임은 최소 한 자 이상이어야 합니다.');
+      return;
+    }
     saveUserInfo();
   };
   const onChange = ({ target: { value } }) => {

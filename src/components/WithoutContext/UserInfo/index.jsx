@@ -25,9 +25,14 @@ export const UserInfo = ({ userName, userImageIndex, handleUserName }) => {
     }
   };
   const handleEnter = () => {
+    if (inputValue.trim() === '') {
+      alert('닉네임은 최소 한 자 이상이어야 합니다.');
+      return;
+    }
     handleUserName(inputValue);
     setIsEditing(false);
   };
+
   useEffect(() => {
     if (isEditing) inputRef.current?.focus();
   }, [isEditing]);
@@ -48,6 +53,7 @@ export const UserInfo = ({ userName, userImageIndex, handleUserName }) => {
               value={inputValue}
               onChange={onChange}
               onKeyDown={onKeyDown}
+              onBlur={handleEnter}
               ref={inputRef}
             />
           ) : (
