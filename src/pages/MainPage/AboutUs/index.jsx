@@ -5,7 +5,7 @@ import { aboutUsAvatarList } from '../../../constants/aboutUsAvatarList';
 
 const AboutUs = () => {
   return (
-    <div className="container">
+    <div className='container'>
       {developerInfo.map((developer, index) => {
         return (
           <div key={index} className='developer_info_wrapper'>
@@ -19,9 +19,7 @@ const AboutUs = () => {
               </div>
               <div className='developer_name'>{developer.name}</div>
             </div>
-            <div className='developer_info'>
-              {developer.introduction}
-            </div>
+            <div className='developer_info'>{developer.introduction}</div>
           </div>
         );
       })}
