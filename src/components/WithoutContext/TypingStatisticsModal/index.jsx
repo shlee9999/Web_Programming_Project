@@ -3,8 +3,17 @@ import './index.css';
 
 export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
   const [typingStatistics, setTypingStatistics] = useState([]);
+  const [typingType, setTypingType] = useState('sentence');
+
   const handleClickModal = (e) => {
     e.stopPropagation();
+  };
+
+  const toWordMode = () => {
+    setTypingType('word');
+  };
+  const toSentenceMode = () => {
+    setTypingType('sentence');
   };
 
   const onClickClearButton = () => {
@@ -25,16 +34,16 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('TypingStatistics', JSON.stringify(typingStatistics));
-  }, [typingStatistics]);
-
   return (
     <div
       className='modal_overlay statistics'
       onClick={closeTypingStatisticsPopup}
     >
       <div className='modal' onClick={handleClickModal}>
+        <div className='button_wrapper'>
+          <button onClick={toSentenceMode}>긴글</button>
+          <button onClick={toWordMode}>단어</button>
+        </div>
         <div className='statistics_wrapper'>
           {typingStatistics.length ? (
             <table className='statistics_table'>
@@ -49,16 +58,32 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
                 </tr>
               </thead>
               <tbody>
-                {typingStatistics.map((data, index) => (
-                  <tr key={index} className='table_row'>
-                    <td>{data[0]}</td>
-                    <td>{data[1]}</td>
-                    <td>{data[2]}</td>
-                    <td>{data[3]}%</td>
-                    <td>{data[4]}</td>
-                    <td>{data[5]}</td>
-                  </tr>
-                ))}
+                {typingType === 'sentence' &&
+                  typingStatistics
+                    .filter((item) => item[6] === false)
+                    .map((data, index) => (
+                      <tr key={index} className='table_row'>
+                        {data.slice(0, 6).map((d, i) => (
+                          <td>
+                            {d}
+                            {i === 3 ? '%' : ''}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                {typingType === 'word' &&
+                  typingStatistics
+                    .filter((item) => item[6] === true)
+                    .map((data, index) => (
+                      <tr key={index} className='table_row'>
+                        {data.slice(0, 6).map((d, i) => (
+                          <td>
+                            {d}
+                            {i === 3 ? '%' : ''}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
               </tbody>
             </table>
           ) : (

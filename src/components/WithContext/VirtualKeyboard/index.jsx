@@ -74,6 +74,7 @@ const VirtualKeyboard = ({
       totalAccuracy,
       formattedTime,
       currentDate,
+      typingMode,
     ];
     addToLocalStorage(localStorageDataList);
     inputRef.current.disabled = true;
