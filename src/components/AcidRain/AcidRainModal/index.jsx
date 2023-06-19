@@ -33,7 +33,10 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
   };
 
   const popFallingWords = (word) => {
-    if (word === lastWord) setIsResultModalOpen(true);
+    if (word === lastWord) {
+      setIsResultModalOpen(true);
+      setIsStarted(false);
+    }
     setFallingWords((prev) => prev.filter((prevWord) => prevWord !== word));
   };
 
@@ -89,9 +92,12 @@ export const AcidRainModal = ({ closeAcidRainModal }) => {
     });
   };
   const closeResultModal = () => {
-    //게임 초기화
+    //게임 초기화 & 통계 저장?
     setIsResultModalOpen(false);
     setIsStarted(false);
+    setLevel(1);
+    setCheckedWords([]);
+    closeAcidRainModal();
   };
   const onChange = ({ target: { value } }) => {
     setInputValue(value);
