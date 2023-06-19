@@ -4,6 +4,7 @@ import './global.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainPage from './pages/MainPage/index';
 import TypingPage from './pages/TypingPage/index';
+import NotFound from 'pages/NotFound';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: '/Typing/',
     element: <TypingPage />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
