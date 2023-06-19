@@ -47,6 +47,7 @@ export const Word = ({
       addFallingWords(word);
       await delay(timeLimit * 1000); //Falling 끝
       popFallingWords(word);
+      //땅에 떨어짐
     };
     moveWord();
   }, []);

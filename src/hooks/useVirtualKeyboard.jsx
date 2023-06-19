@@ -121,9 +121,7 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
       //마지막 문장에서 엔터를 쳤을 때
       EndSound.play();
       endGame();
-    }
-
-    if (!state.language) {
+    } else if (!state.language) {
       inputRef.current.disabled = true;
       setTimeout(() => {
         inputRef.current.disabled = false;
