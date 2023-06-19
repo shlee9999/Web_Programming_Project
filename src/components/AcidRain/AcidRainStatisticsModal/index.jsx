@@ -8,9 +8,6 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
   const handleClickModal = (e) => {
     e.stopPropagation();
   };
-  useEffect(() => {
-    console.log(acidRainStatistics);
-  }, [acidRainStatistics]);
 
   const onClickClearButton = () => {
     if (acidRainStatistics.length === 0) {
@@ -27,11 +24,12 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
 
   return (
     <div className='modal_overlay' onClick={closeModal}>
-      <div className='modal' onClick={handleClickModal}>
-        <div className='statistics_wrapper'>
+      <div className='acid_rain_statistics_modal' onClick={handleClickModal}>
+        <div className='acid_rain_statistics_title'>소나기</div>
+
+        <div className='acid_rain_statistics_wrapper'>
           {acidRainStatistics.length ? (
-            <table className='statistics_table'>
-              <caption className='acid_rain_statistics_title'>산성비</caption>
+            <table className='acid_rain_statistics_table'>
               <thead>
                 <tr>
                   <th>닉네임</th>
@@ -42,7 +40,7 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
               </thead>
               <tbody>
                 {acidRainStatistics.map((data, index) => (
-                  <tr key={index} className='table_row'>
+                  <tr key={index} className='acid_rain_table_row'>
                     <td>{data.userName}</td>
                     <td>{data.score}</td>
                     <td>{data.date}</td>
@@ -52,8 +50,8 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
               </tbody>
             </table>
           ) : (
-            <div className='text_wrapper'>
-              <p> 산성비 통계 기록이 없습니다. </p>
+            <div className='acid_rain_text_wrapper'>
+              <p> 소나기 통계 기록이 없습니다. </p>
             </div>
           )}
         </div>

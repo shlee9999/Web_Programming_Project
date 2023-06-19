@@ -10,6 +10,8 @@ import {
 } from 'utils/helper';
 import AcidRainResultModal from '../AcidRainResultModal';
 import { AcidRainStatisticsModal } from '../AcidRainStatisticsModal';
+import rain_sound from 'assets/sounds/Rain.mp3';
+const RainSound = new Audio(rain_sound);
 
 let shuffledIndexes = shuffleArray(acidRainWords); //다음 게임 시 초기화
 let lastWord = acidRainWords[shuffledIndexes.indexOf(acidRainWords.length - 1)]; //게임 끝내기 위해 필요
@@ -31,10 +33,11 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   };
   const [isStatisticsModalOpen, setIsStatisticsModalOpen] = useState(false);
 
-  const onClickStatisticsButton = () => {
+  const onClickTitle = () => {
     setIsStatisticsModalOpen(true);
   };
   const handleClickOutside = () => {
+    if (isStatisticsModalOpen) return;
     if (!isStarted) closeAcidRainModal();
   };
   const addFallingWords = (word) => {
@@ -61,10 +64,10 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   };
   const handleButtonKeyDown = ({ key }) => {
     switch (key) {
-      case 'ArrowLeft': //한국어로 전환
+      case 'ArrowUp': //한국어로 전환
         setLevel((prev) => prev - 1);
         return;
-      case 'ArrowRight':
+      case 'ArrowDown':
         setLevel((prev) => prev + 1);
         return;
       case 'Enter':
@@ -117,7 +120,6 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
       ])
     );
     setIsResultModalOpen(false);
-    closeAcidRainModal();
   };
   const onChange = ({ target: { value } }) => {
     setInputValue(value);
@@ -125,8 +127,11 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const onClickStart = () => {
     setIsStarted(true);
   };
-  const onClickLevelButton = (level) => () => {
-    setLevel(level);
+  const onClickLevelButton = (lev) => () => {
+    setLevel(lev);
+  };
+  const closeStatisticsModal = () => {
+    setIsStatisticsModalOpen(false);
   };
   useEffect(() => {
     inputRef.current?.focus();
@@ -136,6 +141,11 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
     buttonRef.current?.focus();
   }, [level]);
   useEffect(() => {
+    if (isStarted) RainSound.play();
+    else {
+      RainSound.pause();
+      RainSound.currentTime = 0;
+    }
     inputRef.current?.focus();
   }, [isStarted]);
 
@@ -144,21 +154,37 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
       <div className='modal_overlay' onClick={handleClickOutside}>
         <div className='acid_rain_modal' onClick={handleClickModal}>
           <div className='acid_rain_init_contents'>
-            <button onClick={onClickStatisticsButton}>산성비 통계</button>
-            <p className='acid_rain_title'>산 성 비</p>
-            <div className='level_buttons_wrapper'>
-              {levelList.map((lev, index) => (
-                <button
-                  key={index}
-                  className='level_button'
-                  onClick={onClickLevelButton(index + 1)}
-                  ref={level - 1 === index ? buttonRef : null}
-                  onKeyDown={handleButtonKeyDown}
-                >
-                  {lev}
-                </button>
-              ))}
-            </div>
+            <p className='acid_rain_title' onClick={onClickTitle}>
+              소 나 기
+            </p>
+            <table className='acid_rain_info_table'>
+              {/* <caption className='acid_rain_info_title'>난이도</caption> */}
+              <thead>
+                <tr>
+                  <th>단계</th>
+                  <th>한 번에 떨어지는 단어 수</th>
+                  <th>낙하 시간</th>
+                </tr>
+              </thead>
+              <tbody>
+                {levelList.map((el, index) => (
+                  <tr key={index} onKeyDown={handleButtonKeyDown}>
+                    <td>
+                      <button
+                        className='level_button'
+                        ref={index === level - 1 ? buttonRef : null}
+                        onClick={onClickLevelButton(index + 1)}
+                      >
+                        {el.level}
+                      </button>
+                    </td>
+                    <td>{el.count}</td>
+                    <td>{el.timeLimit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
             <button className='acid_rain_start_button' onClick={onClickStart}>
               Start!
             </button>
@@ -170,13 +196,16 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
             score={checkedWords.length}
           />
         )}
-        {isStatisticsModalOpen && <AcidRainStatisticsModal />}
+        {isStatisticsModalOpen && (
+          <AcidRainStatisticsModal closeModal={closeStatisticsModal} />
+        )}
       </div>
     );
   return (
     <div className='modal_overlay' onClick={handleClickOutside}>
       <div className='acid_rain_modal' onClick={handleClickModal}>
         <div className='acid_rain_contents'>
+          <div className='acid_rain_level'>{level}단계</div>
           {chunks.map((row, rowIndex) => (
             <div className='acid_rain_top_row' key={rowIndex}>
               {row.map((wordIndex, index) => (
@@ -200,8 +229,10 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
               onKeyDown={handleInputKeyDown}
               ref={inputRef}
             />
+            <div className='acid_rain_result'>
+              맞은 개수 : {checkedWords.length}
+            </div>
           </div>
-          <div className='acid_rain_result'>점수 : {checkedWords.length}</div>
         </div>
       </div>
       {/* {isResultModalOpen && (
