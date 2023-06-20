@@ -12,6 +12,7 @@ import AcidRainResultModal from '../AcidRainResultModal';
 import { AcidRainStatisticsModal } from '../AcidRainStatisticsModal';
 import rain_sound from 'assets/sounds/Rain.mp3';
 import water_drop from 'assets/sounds/WaterDrop.wav';
+import ExitButton from 'assets/ExitButton.png';
 const RainSound = new Audio(rain_sound);
 const WaterDrop = new Audio(water_drop);
 
@@ -31,6 +32,7 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const chunks = chunkArray(shuffledIndexes, LENGTH); //LENGTH개의 원소로 나눔
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const handleClickModal = (e) => {
+    buttonRef?.current.focus();
     e.stopPropagation();
   };
   const [isStatisticsModalOpen, setIsStatisticsModalOpen] = useState(false);
@@ -214,9 +216,12 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   return (
     <div className='modal_overlay' onClick={handleClickOutside}>
       <div className='acid_rain_modal' onClick={handleClickModal}>
-        <button className='acid_rain_exit_button' onClick={onClickExitButton}>
-          X
-        </button>
+        <img
+          className='acid_rain_exit_button'
+          onClick={onClickExitButton}
+          alt='exit_button'
+          src={ExitButton}
+        />
         <div className='acid_rain_contents'>
           <div className='acid_rain_level'>{level}단계</div>
           {chunks.map((row, rowIndex) => (
