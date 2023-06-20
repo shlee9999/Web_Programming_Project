@@ -74,7 +74,9 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
         <button
           onClick={onClickClearButton}
           disabled={acidRainStatistics.length ? false : true}
-          className={acidRainStatistics.length ? '' : 'inactive'}
+          className={
+            acidRainStatistics.length ? 'clear_button' : 'clear_button inactive'
+          }
         >
           {' '}
           초기화
