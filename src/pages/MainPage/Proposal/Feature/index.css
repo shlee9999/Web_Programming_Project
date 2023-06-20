@@ -1,0 +1,11 @@
+.feature_section {
+  height: 35vh;
+  margin-bottom: 40px;
+}
+
+.feature_list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.8;
+}

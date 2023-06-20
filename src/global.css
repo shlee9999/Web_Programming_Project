@@ -20,13 +20,11 @@
   margin-left: 1.5vw;
   cursor: pointer;
 }
-
 .page_logo {
   margin: 10vh 0 5vh;
   width: 25vw;
   min-width: 300px;
 }
-
 button {
   border-radius: 10px;
   background-color: #b1b2ff;

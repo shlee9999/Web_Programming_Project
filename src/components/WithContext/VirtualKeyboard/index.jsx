@@ -25,6 +25,9 @@ const VirtualKeyboard = ({
   };
   const currentDate = getFormattedDate();
   const formattedTime = getFormattedTime(time);
+  const openAcidRainModal = () => {
+    setIsAcidRainOpen(true);
+  };
   const closeAcidRainModal = () => {
     setIsAcidRainOpen(false);
   };
@@ -100,13 +103,6 @@ const VirtualKeyboard = ({
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
-        <button
-          onClick={() => {
-            setIsAcidRainOpen(true);
-          }}
-        >
-          산 성 비
-        </button>
         <div>
           <br /> 진행 시간 : {formattedTime}
         </div>
@@ -152,6 +148,7 @@ const VirtualKeyboard = ({
       </div>
       {isSelectModalOpen && (
         <SelectCategoryModal
+          openAcidRainModal={openAcidRainModal}
           closeModal={closeSelectModal}
           selectCategory={selectCategory}
           startGame={startGame}
