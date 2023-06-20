@@ -17,7 +17,7 @@ export const TypingResultsModal = ({ closeTypingResultPopup }) => {
           className='typing_result_close_button'
           onClick={closeTypingResultPopup}
         >
-          close
+          Close
         </button>
       </div>
     </div>

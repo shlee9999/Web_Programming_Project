@@ -10,6 +10,7 @@ const SelectCategoryModal = ({
   language,
   toggleLanguage,
   toggleMode,
+  typingMode,
 }) => {
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [focusedCategoryIndex, setFocusedCategoryIndex] = useState(0);
@@ -101,6 +102,10 @@ const SelectCategoryModal = ({
     if (!buttonRef.current) return;
     buttonRef.current.focus();
   }, [focusedMode]);
+
+  useEffect(() => {
+    if (typingMode) toggleMode();
+  }, []);
 
   const renderCategory = (mode) => {
     if (mode === 'game') return <div></div>;

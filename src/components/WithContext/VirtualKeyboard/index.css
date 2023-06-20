@@ -71,6 +71,7 @@
 
 .keyboard_keys_container {
   margin-bottom: 3vh;
+  pointer-events: none;
 }
 .proposal {
   width: 50vw;

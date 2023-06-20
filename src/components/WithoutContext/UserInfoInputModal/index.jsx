@@ -79,7 +79,7 @@ export const UserInfoInputModal = ({
         <div>
           <div className='name_label_wrapper'>
             <label htmlFor='name' className='name_label'>
-              nickname
+              Nickname
             </label>
           </div>
           <input

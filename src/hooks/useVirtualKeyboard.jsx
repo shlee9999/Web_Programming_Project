@@ -44,6 +44,7 @@ const initialState = {
   currentSentence: sentence_korean.sentence[0].text[0],
   activeKeys: [],
   language: false, //Eng: true, Kor: false
+  typingMode: false,
 };
 
 const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
