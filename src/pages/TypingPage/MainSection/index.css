@@ -1,11 +1,12 @@
 .typing_page_main {
   width: 85vw;
-  height: 100vh;
+  height: 99vh;
   border-top: none;
   margin: 0 auto;
   border: 2px solid #b1b2ff;
   display: flex;
-  min-width: 800px;
+  min-width: 830px;
+  min-height: 630px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -17,6 +18,7 @@
   width: 80%;
   border-right: 2px solid #b1b2ff;
   text-align: center;
+  min-width: 650px;
 }
 
 .right_container {
@@ -27,11 +29,19 @@
   flex-direction: column;
   align-items: center;
   row-gap: 20px;
+  min-width: 180px;
 }
 
 .statistics_button {
-  margin-top: 20px;
+  margin-top: 1%;
   color: white;
-  width: 90%;
-  height: 35px;
+  width: 85%;
+  height: 4vh;
+}
+
+.pause_button {
+  background-color: brown;
+  color: white;
+  width: 85%;
+  height: 4vh;
 }
