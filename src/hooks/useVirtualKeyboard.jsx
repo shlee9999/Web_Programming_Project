@@ -110,7 +110,13 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   };
 
   const handleEnter = () => {
-    if (state.inputValue.length < state.currentSentence.length - 5) return;
+    if (
+      (!typingMode &&
+        state.inputValue.length < state.currentSentence.length - 5) ||
+      (typingMode && state.inputValue.length < state.currentSentence.length)
+    )
+      return;
+
     if (currentIndex < sentences[proposalIndex].text.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
