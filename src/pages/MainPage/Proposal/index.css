@@ -1,0 +1,49 @@
+.section_wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0px;
+}
+
+.proposal_section {
+  width: 700px;
+  height: 20vh;
+  border: 1px solid #b1b2ff;
+  box-shadow: 1px 1px 2px 1px #b1b2ff;
+  border-radius: 10px;
+}
+
+.section_title {
+  font-size: 1.4vw;
+  background-color: #b1b2ff;
+  border: 1px solid #b1b2ff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 1px #8e8faa;
+  color: white;
+  padding: 6px 10px;
+  margin: -10px;
+  z-index: 1;
+}
+
+.section_main {
+  margin: 10px;
+  padding: 10px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.section_main_content {
+  margin: 5px 0px;
+  font-size: 20px;
+}
+
+.main_title {
+  font-weight: 600;
+}
+
+@media (max-width: 600px) or (max-height: 600px) {
+  .proposal_section {
+    width: 600px;
+    height: 200px;
+    overflow: auto;
+  }
+}
