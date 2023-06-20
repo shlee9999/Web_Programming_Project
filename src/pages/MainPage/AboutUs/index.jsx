@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
-import { developerInfo } from '../../../constants/aboutUsDeveloperInfo';
-import { aboutUsAvatarList } from '../../../constants/aboutUsAvatarList';
+import { developerInfo } from 'constants/aboutUsDeveloperInfo';
+import { aboutUsAvatarList } from 'constants/aboutUsAvatarList';
 
 const AboutUs = () => {
   return (
