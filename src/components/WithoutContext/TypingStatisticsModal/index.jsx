@@ -59,18 +59,18 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
           </button>
         </div>
         <div className='statistics_wrapper'>
+          <table className='statistics_table_header'>
+            <thead>
+              <th>닉네임</th>
+              <th>제목</th>
+              <th>타자 속도</th>
+              <th>정확도</th>
+              <th>진행 시간</th>
+              <th>날짜</th>
+            </thead>
+          </table>
           {typingStatistics.length ? (
             <table className='statistics_table'>
-              <thead>
-                <tr>
-                  <th>닉네임</th>
-                  <th>제목</th>
-                  <th>타자 속도</th>
-                  <th>정확도</th>
-                  <th>진행 시간</th>
-                  <th>날짜</th>
-                </tr>
-              </thead>
               <tbody>
                 {typingType === 'sentence' &&
                   typingStatistics
