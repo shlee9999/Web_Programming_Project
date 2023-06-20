@@ -60,6 +60,8 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
 
   const onClickExitButton = () => {
     closeAcidRainModal();
+    RainSound.pause();
+    RainSound.currentTime = 0;
   };
   const handleInputKeyDown = ({ key }) => {
     switch (key) {
