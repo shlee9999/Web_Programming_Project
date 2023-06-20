@@ -10,10 +10,34 @@
   overflow: scroll;
 }
 
+.button_wrapper {
+  display: flex;
+  width: 100%;
+  margin-bottom: -1px;
+}
+
+.select_mode_button {
+  width: 50%;
+  background-color: white;
+  border: 1px solid #b1b2ff;
+  border-end-start-radius: 0px;
+  border-end-end-radius: 0px;
+  padding: 5px;
+  color: #b1b2ff;
+  text-align: center;
+  letter-spacing: 30px;
+  &.button_active {
+    background-color: transparent;
+    border-bottom: transparent;
+    color: #b1b2ff;
+    font-weight: 800;
+  }
+}
+
 .statistics_table {
   width: 100%;
-  margin: 10px auto;
   font-size: 10pt;
+  margin: 10px auto;
   border-collapse: collapse;
   border-spacing: 10px;
 }
@@ -26,7 +50,6 @@
 }
 
 .statistics_table th {
-  background-color: #eef1ff;
   font-weight: bold;
   color: #333;
 }
