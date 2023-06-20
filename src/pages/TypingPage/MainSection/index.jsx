@@ -37,6 +37,7 @@ export const MainSection = () => {
     userName,
     userImageIndex,
     time,
+    isTyping,
   } = useMainSection({ inputRef });
 
   return (
@@ -69,7 +70,7 @@ export const MainSection = () => {
             My Typing Results
           </button>
 
-          {!isPauseModalOpen && (
+          {isTyping && !isPauseModalOpen && (
             <button className='modal_button' onClick={handleClickPause}>
               Pause
             </button>
