@@ -11,7 +11,9 @@ import {
 import AcidRainResultModal from '../AcidRainResultModal';
 import { AcidRainStatisticsModal } from '../AcidRainStatisticsModal';
 import rain_sound from 'assets/sounds/Rain.mp3';
+import water_drop from 'assets/sounds/WaterDrop.wav';
 const RainSound = new Audio(rain_sound);
+const WaterDrop = new Audio(water_drop);
 
 let shuffledIndexes = shuffleArray(acidRainWords); //다음 게임 시 초기화
 let lastWord = acidRainWords[shuffledIndexes.indexOf(acidRainWords.length - 1)]; //게임 끝내기 위해 필요
@@ -100,6 +102,9 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const addCheckedWords = () => {
     fallingWords.forEach((word) => {
       if (word === inputValue) {
+        WaterDrop.pause();
+        WaterDrop.currentTime = 0;
+        WaterDrop.play();
         setCheckedWords((prev) => {
           if (!prev.includes(word)) {
             return [...prev, word];
