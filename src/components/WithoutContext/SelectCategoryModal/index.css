@@ -64,6 +64,7 @@
 }
 
 .category_wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -117,4 +118,21 @@
   background-color: #8468fa;
   border: 3px solid #8468fa;
   color: white;
+}
+
+.acid_rain_title_typo {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+.acid_rain_description {
+  margin-top: 20px;
+}
+.acid_rain_description_typo {
+  margin-top: 5px;
+  font-size: 15px;
 }

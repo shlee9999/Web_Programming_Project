@@ -171,3 +171,9 @@
   height: 50px;
   line-height: 50px;
 }
+
+.acid_rain_exit_button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
