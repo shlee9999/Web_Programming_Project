@@ -13,6 +13,7 @@
   box-sizing: border-box;
   min-width: 830px;
   min-height: 40px;
+  z-index: 1;
 }
 .header_logo {
   width: 6vw;
@@ -73,4 +74,5 @@ button:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 }
