@@ -12,7 +12,8 @@ import AcidRainResultModal from '../AcidRainResultModal';
 import { AcidRainStatisticsModal } from '../AcidRainStatisticsModal';
 import rain_sound from 'assets/sounds/Rain.mp3';
 import water_drop from 'assets/sounds/WaterDrop.wav';
-import ExitButton from 'assets/ExitButton.png';
+import ExitButton from 'assets/ExitButton.svg';
+
 const RainSound = new Audio(rain_sound);
 const WaterDrop = new Audio(water_drop);
 
