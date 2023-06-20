@@ -1,19 +1,34 @@
-.statistics_wrapper {
+.acid_rain_statistics_modal {
+  position: fixed;
+  border: 3px solid #b1b2ff;
+  border-radius: 10px;
+  background-color: #eef1ff;
+  width: 550px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  font-weight: 500;
+  justify-content: center;
+  text-align: center;
+}
+
+.acid_rain_statistics_wrapper {
   margin: 0 auto;
   width: 100%;
-  height: 80%;
+  height: 70%;
   padding-top: 0;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .acid_rain_statistics_table {
   width: 100%;
-  margin-top: 50px;
+  margin-top: 20px;
   font-size: 10pt;
   border-collapse: collapse;
   border-spacing: 10px;
   max-height: 500px; /* Set a max height */
-  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .acid_rain_statistics_table th,
@@ -51,23 +66,6 @@ button.inactive:hover {
 
 .acid_rain_statistics_title {
   position: absolute;
-  top: 10px;
+  top: 20px;
   font-size: 26px;
-  margin-bottom: 25px;
-}
-
-.acid_rain_statistics_modal {
-  position: fixed;
-  border: 3px solid #b1b2ff;
-  border-radius: 10px;
-  background-color: #eef1ff;
-  width: 550px;
-  height: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  font-weight: 500;
-  justify-content: center;
-  text-align: center;
 }
