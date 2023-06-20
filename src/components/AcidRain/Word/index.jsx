@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './index.css';
 
 const baseStyle = {
-  width: '100px',
+  width: '120px',
+  height: '40px',
   margin: '0 10px',
+  lineHeight: '40px',
+  fontSize: '20px',
+  borderRadius: '20px',
 };
 
 const non_movingStyle = {

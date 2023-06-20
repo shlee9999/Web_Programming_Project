@@ -11,6 +11,12 @@
   overflow: hidden;
 }
 
+.typing_page_logo {
+  margin: 12vh 0 5vh;
+  width: 25vw;
+  min-width: 300px;
+}
+
 .left_container {
   display: flex;
   flex-direction: column;

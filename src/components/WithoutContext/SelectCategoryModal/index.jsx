@@ -10,10 +10,10 @@ const SelectCategoryModal = ({
   language,
   toggleLanguage,
   toggleMode,
-  typingMode,
 }) => {
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [focusedCategoryIndex, setFocusedCategoryIndex] = useState(0);
+  const [focusedMode, setFocusedMode] = useState('sentence');
   const buttonRef = useRef(null);
   const sentence_total = language ? sentence_english : sentence_korean;
 
@@ -32,10 +32,6 @@ const SelectCategoryModal = ({
         return;
       case 'ArrowRight':
         toEnglish();
-        return;
-      case 'Tab':
-        toSentenceMode();
-        toWordMode();
         return;
       case 'Enter':
         startGame();
@@ -60,17 +56,24 @@ const SelectCategoryModal = ({
     selectCategory(index);
     setFocusedCategoryIndex(index);
   };
-
-  const toSentenceMode = () => {
-    if (!typingMode) return;
-
-    toggleMode();
+  const handleFocusMode = (mode) => {
+    setFocusedMode(mode);
   };
 
-  const toWordMode = () => {
-    if (typingMode) return;
-
+  const toSentenceMode = () => {
+    if (focusedMode === 'sentence') return;
+    // if (!typingMode) return;
     toggleMode();
+    handleFocusMode('sentence');
+  };
+  const toWordMode = () => {
+    if (focusedMode === 'word') return;
+    // if (typingMode) return;
+    toggleMode();
+    handleFocusMode('word');
+  };
+  const toGameMode = () => {
+    handleFocusMode('game');
   };
 
   const toKorean = () => {
@@ -97,10 +100,12 @@ const SelectCategoryModal = ({
   useEffect(() => {
     if (!buttonRef.current) return;
     buttonRef.current.focus();
-  }, [typingMode]);
+  }, [focusedMode]);
 
   const renderCategory = (mode) => {
-    const data = mode ? sentence_total.word : sentence_total.sentence;
+    if (mode === 'game') return <div></div>;
+    const data =
+      mode === 'word' ? sentence_total.word : sentence_total.sentence;
     return data.map((item, index) => {
       return (
         <button
@@ -127,7 +132,7 @@ const SelectCategoryModal = ({
         <div className='select_typing_mode'>
           <button
             className={`select_mode_item select_item ${
-              typingMode && 'item_active'
+              focusedMode !== 'sentence' && 'item_active'
             }`}
             onClick={toSentenceMode}
           >
@@ -135,11 +140,19 @@ const SelectCategoryModal = ({
           </button>
           <button
             className={`select_mode_item select_item ${
-              !typingMode && 'item_active'
+              focusedMode !== 'word' && 'item_active'
             }`}
             onClick={toWordMode}
           >
             단어 연습
+          </button>
+          <button
+            className={`select_mode_item select_item ${
+              focusedMode !== 'game' && 'item_active'
+            }`}
+            onClick={toGameMode}
+          >
+            산성비 게임
           </button>
         </div>
         <div className='select_mode_child_wrapper'>
@@ -161,7 +174,7 @@ const SelectCategoryModal = ({
               English
             </button>
           </div>
-          <div className='category_wrapper'>{renderCategory(typingMode)}</div>
+          <div className='category_wrapper'>{renderCategory(focusedMode)}</div>
         </div>
         <button className='modal_start_button' onClick={handleClickStart}>
           Start!
