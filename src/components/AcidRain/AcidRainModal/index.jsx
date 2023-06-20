@@ -53,6 +53,9 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
     setFallingWords((prev) => prev.filter((prevWord) => prevWord !== word));
   };
 
+  const onClickExitButton = () => {
+    closeAcidRainModal();
+  };
   const handleInputKeyDown = ({ key }) => {
     switch (key) {
       case 'Enter':
@@ -206,6 +209,9 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   return (
     <div className='modal_overlay' onClick={handleClickOutside}>
       <div className='acid_rain_modal' onClick={handleClickModal}>
+        <button className='acid_rain_exit_button' onClick={onClickExitButton}>
+          X
+        </button>
         <div className='acid_rain_contents'>
           <div className='acid_rain_level'>{level}단계</div>
           {chunks.map((row, rowIndex) => (
