@@ -1,8 +1,8 @@
 .virtual_keyboard {
   width: 100%;
+  height: 90%;
   display: flex;
   justify-content: center;
-  margin-top: 4vh;
 }
 .keyboard_keys {
   margin: 5px 2px;
