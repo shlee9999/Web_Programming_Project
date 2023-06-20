@@ -178,4 +178,5 @@
   right: 20px;
   width: 30px;
   cursor: pointer;
+  z-index: 99;
 }
