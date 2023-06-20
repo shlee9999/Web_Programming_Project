@@ -27,16 +27,18 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
       <div className='acid_rain_statistics_modal' onClick={handleClickModal}>
         <div className='acid_rain_statistics_title'>소나기</div>
         <div className='acid_rain_statistics_wrapper'>
-          {acidRainStatistics.length ? (
-            <table className='acid_rain_statistics_table'>
-              <thead>
-                <tr>
-                  <th>닉네임</th>
-                  <th>맞춘 개수</th>
-                  <th>날짜</th>
-                  <th>레벨</th>
-                </tr>
-              </thead>
+          <table className='acid_rain_statistics_table_header'>
+            <thead>
+              <tr>
+                <th>닉네임</th>
+                <th>맞춘 개수</th>
+                <th>날짜</th>
+                <th>레벨</th>
+              </tr>
+            </thead>
+          </table>
+          <table className='acid_rain_statistics_table'>
+            {acidRainStatistics.length ? (
               <tbody>
                 {acidRainStatistics.map((data, index) => (
                   <tr key={index} className='acid_rain_table_row'>
@@ -47,23 +49,21 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
                   </tr>
                 ))}
               </tbody>
-            </table>
-          ) : (
-            <div className='acid_rain_text_wrapper'>
-              <p> 소나기 통계 기록이 없습니다. </p>
-            </div>
-          )}
+            ) : (
+              <div className='acid_rain_text_wrapper'>
+                <p> 소나기 통계 기록이 없습니다. </p>
+              </div>
+            )}
+          </table>
         </div>
-        <div>
-          <button
-            onClick={onClickClearButton}
-            disabled={acidRainStatistics.length ? false : true}
-            className={acidRainStatistics.length ? '' : 'inactive'}
-          >
-            {' '}
-            초기화
-          </button>
-        </div>
+        <button
+          onClick={onClickClearButton}
+          disabled={acidRainStatistics.length ? false : true}
+          className={acidRainStatistics.length ? '' : 'inactive'}
+        >
+          {' '}
+          초기화
+        </button>
       </div>
     </div>
   );

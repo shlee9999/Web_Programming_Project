@@ -15,23 +15,41 @@
 }
 
 .acid_rain_statistics_wrapper {
-  margin: 0 auto;
+  position: relative;
+  margin: 3vh auto;
   width: 100%;
-  height: 70%;
+  height: 75%;
   padding-top: 0;
+
   overflow: scroll;
 }
 
-.acid_rain_statistics_table {
+.acid_rain_statistics_table_header {
+  position: sticky;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin-top: 20px;
+  height: 50px;
   font-size: 10pt;
   border-collapse: collapse;
   border-spacing: 10px;
   max-height: 500px; /* Set a max height */
+  background-color: #eef1ff;
+  z-index: 99;
 }
 
-.acid_rain_statistics_table th,
+.acid_rain_statistics_table {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 10pt;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-spacing: 10px;
+}
+
+.acid_rain_statistics_table_header th,
 .acid_rain_statistics_table td {
   width: 150px;
   padding: 12px;
@@ -55,12 +73,13 @@
   color: #aba8a8;
 }
 
-button.inactive {
+.clear_button.inactive {
   color: #ddd;
   background-color: #aba8a8;
   cursor: not-allowed;
 }
-button.inactive:hover {
+
+.clear_button.inactive:hover {
   filter: initial;
 }
 
