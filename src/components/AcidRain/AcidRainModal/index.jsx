@@ -33,6 +33,7 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const chunks = chunkArray(shuffledIndexes, LENGTH); //LENGTH개의 원소로 나눔
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const handleClickModal = (e) => {
+    buttonRef?.current.focus();
     e.stopPropagation();
   };
   const [isStatisticsModalOpen, setIsStatisticsModalOpen] = useState(false);

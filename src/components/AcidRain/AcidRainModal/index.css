@@ -174,8 +174,8 @@
 
 .acid_rain_exit_button {
   position: absolute;
-  top: 5px;
-  right: 10px;
-  width: 50px;
+  top: 15px;
+  right: 20px;
+  width: 30px;
   cursor: pointer;
 }
