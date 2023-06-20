@@ -22,11 +22,17 @@ const SelectCategoryModal = ({
   const handleKeyDown = ({ nativeEvent: { key } }) => {
     switch (key) {
       case 'ArrowUp':
-        if (focusedCategoryIndex <= 0) return;
+        if (focusedCategoryIndex <= 0) {
+          setFocusedCategoryIndex(4);
+          return;
+        }
         setFocusedCategoryIndex((prev) => prev - 1);
         return;
       case 'ArrowDown':
-        if (focusedCategoryIndex >= sentence_total.length) return;
+        if (focusedCategoryIndex === 4) {
+          setFocusedCategoryIndex(0);
+          return;
+        }
         setFocusedCategoryIndex((prev) => prev + 1);
         return;
       case 'ArrowLeft': //한국어로 전환

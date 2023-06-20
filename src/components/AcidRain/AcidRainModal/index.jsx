@@ -38,7 +38,7 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   };
   const [isStatisticsModalOpen, setIsStatisticsModalOpen] = useState(false);
 
-  const onClickTitle = () => {
+  const handleStatisticsModalOpen = () => {
     setIsStatisticsModalOpen(true);
   };
   const handleClickOutside = () => {
@@ -169,7 +169,7 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
       <div className='modal_overlay' onClick={handleClickOutside}>
         <div className='acid_rain_modal' onClick={handleClickModal}>
           <div className='acid_rain_init_contents'>
-            <p className='acid_rain_title' onClick={onClickTitle}>
+            <p className='acid_rain_title' onClick={handleStatisticsModalOpen}>
               소 나 기
             </p>
             <table className='acid_rain_info_table'>
@@ -209,6 +209,7 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
           <AcidRainResultModal
             closeModal={closeResultModal}
             score={checkedWords.length}
+            openStatisticsModal={handleStatisticsModalOpen}
           />
         )}
         {isStatisticsModalOpen && (
@@ -251,17 +252,11 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
               ref={inputRef}
             />
             <div className='acid_rain_result'>
-              맞은 개수 : {checkedWords.length}
+              Correct Words : {checkedWords.length}
             </div>
           </div>
         </div>
       </div>
-      {/* {isResultModalOpen && (
-        <AcidRainResultModal
-          closeModal={closeResultModal}
-          score={checkedWords.length}
-        />
-      )} */}
     </div>
   );
 };
