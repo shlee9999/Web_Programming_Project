@@ -114,7 +114,6 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
               typingStatistics.length ? '' : 'inactive'
             }`}
           >
-            {' '}
             Reset
           </button>
           <button className='modal_button' onClick={closeTypingStatisticsPopup}>

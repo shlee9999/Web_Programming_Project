@@ -38,7 +38,7 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
             </thead>
           </table>
           <table className='acid_rain_statistics_table'>
-            {acidRainStatistics.length ? (
+            {acidRainStatistics ? (
               <tbody>
                 {acidRainStatistics.map((data, index) => (
                   <tr key={index} className='acid_rain_table_row'>
@@ -49,12 +49,12 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
                   </tr>
                 ))}
               </tbody>
-            </table>
-          ) : (
-            <div className='acid_rain_text_wrapper'>
-              <p> 소나기 통계 기록이 없습니다. </p>
-            </div>
-          )}
+            ) : (
+              <div className='acid_rain_text_wrapper'>
+                <p> 소나기 통계 기록이 없습니다. </p>
+              </div>
+            )}
+          </table>
         </div>
         <div className='modal_button_wrapper'>
           <button
@@ -71,16 +71,6 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
             Close
           </button>
         </div>
-        <button
-          onClick={onClickClearButton}
-          disabled={acidRainStatistics.length ? false : true}
-          className={
-            acidRainStatistics.length ? 'clear_button' : 'clear_button inactive'
-          }
-        >
-          {' '}
-          초기화
-        </button>
       </div>
     </div>
   );
