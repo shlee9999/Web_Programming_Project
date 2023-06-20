@@ -138,6 +138,7 @@ const VirtualKeyboard = ({
                     activeKeys.includes(key.toUpperCase()) ? 'active' : ''
                   }`}
                   id={key}
+                  disabled='disabled'
                 >
                   {key}
                 </button>

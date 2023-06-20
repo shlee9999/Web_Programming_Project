@@ -33,13 +33,17 @@
   cursor: pointer;
 }
 
+.user_name_wrapper:hover {
+  background-color: #dde3fd;
+}
+
 .user_name {
   width: 150px;
   font-size: 1rem;
 }
 
 .user_name_input {
-  width: 150px;
+  width: 95%;
   font-size: 1rem;
   border: none;
   outline: none;
