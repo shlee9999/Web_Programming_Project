@@ -209,7 +209,6 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
           <AcidRainResultModal
             closeModal={closeResultModal}
             score={checkedWords.length}
-            openStatisticsModal={handleStatisticsModalOpen}
           />
         )}
         {isStatisticsModalOpen && (
