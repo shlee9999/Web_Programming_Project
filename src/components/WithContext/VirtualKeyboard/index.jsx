@@ -100,13 +100,13 @@ const VirtualKeyboard = ({
   return (
     <div className='virtual_keyboard'>
       <div className='keyboard_wrapper'>
-        <button
+        {/* <button
           onClick={() => {
             setIsAcidRainOpen(true);
           }}
         >
           산 성 비
-        </button>
+        </button> */}
         <div>
           <br /> 진행 시간 : {formattedTime}
         </div>
