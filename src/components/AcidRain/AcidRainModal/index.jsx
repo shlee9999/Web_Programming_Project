@@ -65,9 +65,11 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const handleButtonKeyDown = ({ key }) => {
     switch (key) {
       case 'ArrowUp': //한국어로 전환
+        if (level <= 1) return;
         setLevel((prev) => prev - 1);
         return;
       case 'ArrowDown':
+        if (level >= 5) return;
         setLevel((prev) => prev + 1);
         return;
       case 'Enter':
