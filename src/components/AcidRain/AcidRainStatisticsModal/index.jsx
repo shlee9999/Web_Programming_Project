@@ -26,7 +26,6 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
     <div className='modal_overlay' onClick={closeModal}>
       <div className='acid_rain_statistics_modal' onClick={handleClickModal}>
         <div className='acid_rain_statistics_title'>소나기</div>
-
         <div className='acid_rain_statistics_wrapper'>
           {acidRainStatistics.length ? (
             <table className='acid_rain_statistics_table'>

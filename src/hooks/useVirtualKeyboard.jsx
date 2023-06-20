@@ -114,6 +114,8 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (currentIndex < sentences[proposalIndex].text.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
+      EnterSound.pause();
+      EnterSound.currentTime = 0;
       EnterSound.play();
     } //다음 문장으로 넘어간다.
 
