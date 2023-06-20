@@ -86,6 +86,7 @@
   height: 50px;
   width: 200px;
   margin-bottom: 5vh;
+  color: white;
 }
 
 .level_button {
@@ -175,5 +176,8 @@
 .acid_rain_exit_button {
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 20px;
+  width: 30px;
+  cursor: pointer;
+  z-index: 99;
 }

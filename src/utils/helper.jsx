@@ -53,7 +53,7 @@ export const getInfo = (level) => {
       break;
     case 5:
       LENGTH = 8;
-      timeLimit = 1;
+      timeLimit = 5;
       break;
     default:
       console.error('Level Missing');

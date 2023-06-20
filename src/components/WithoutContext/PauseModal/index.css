@@ -1,0 +1,21 @@
+.pause_modal {
+  position: fixed;
+  border: 3px solid #b1b2ff;
+  border-radius: 10px;
+  background-color: #eef1ff;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  font-weight: 500;
+  justify-content: center;
+  text-align: center;
+}
+
+.restart_button {
+  position: relative;
+  bottom: -40px;
+  color: white;
+}

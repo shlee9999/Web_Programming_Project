@@ -6,8 +6,11 @@ const PauseModal = ({ closeModal }) => {
   };
   return (
     <div className='modal_overlay' onClick={closeModal}>
-      <div className='modal' onClick={handleClickModal}>
-        <h2>일시 정지</h2>
+      <div className='pause_modal' onClick={handleClickModal}>
+        <h2>Pause</h2>
+        <button className='restart_button' onClick={closeModal}>
+          Restart
+        </button>
       </div>
     </div>
   );

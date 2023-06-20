@@ -106,14 +106,19 @@ export const TypingStatisticsModal = ({ closeTypingStatisticsPopup }) => {
             </div>
           )}
         </div>
-        <div>
+        <div className='modal_button_wrapper'>
           <button
             onClick={onClickClearButton}
             disabled={typingStatistics.length ? false : true}
-            className={typingStatistics.length ? '' : 'inactive'}
+            className={`modal_button ${
+              typingStatistics.length ? '' : 'inactive'
+            }`}
           >
             {' '}
-            초기화
+            Reset
+          </button>
+          <button className='modal_button' onClick={closeTypingStatisticsPopup}>
+            Close
           </button>
         </div>
       </div>

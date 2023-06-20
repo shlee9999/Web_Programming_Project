@@ -37,6 +37,7 @@ export const MainSection = () => {
     userName,
     userImageIndex,
     time,
+    isTyping,
   } = useMainSection({ inputRef });
 
   return (
@@ -66,11 +67,13 @@ export const MainSection = () => {
             className='statistics_button'
             onClick={showTypingStatisticsPopup}
           >
-            나의 타이핑 기록
+            My Typing Results
           </button>
 
-          {!isPauseModalOpen && (
-            <button onClick={handleClickPause}>일시 정지</button>
+          {isTyping && !isPauseModalOpen && (
+            <button className='modal_button' onClick={handleClickPause}>
+              Pause
+            </button>
           )}
         </div>
         {viewUserInfoInputPopup && (
@@ -82,7 +85,11 @@ export const MainSection = () => {
           />
         )}
         {viewTypingResultPopup && (
-          <TypingResultsModal closeTypingResultPopup={closeTypingResultPopup} />
+          <TypingResultsModal
+            closeTypingResultPopup={closeTypingResultPopup}
+            startTyping={startTyping}
+            stopTyping={stopTyping}
+          />
         )}
 
         {viewTypingStatisticsPopup && (

@@ -17,7 +17,7 @@
   border: 2px solid #b1b2ff;
   border-end-start-radius: 0px;
   border-end-end-radius: 0px;
-  padding: 5px;
+  margin: 0 -0.5px;
   color: white;
   &.item_active {
     background-color: white;
@@ -82,11 +82,11 @@
   cursor: pointer;
 }
 
-.category_item:focus {
-  background-color: rgb(177, 178, 255, 0.2);
-}
 .category_item:hover {
-  background-color: rgb(177, 178, 255, 0.2);
+  background-color: rgb(177, 178, 255, 0.15);
+}
+.category_item:focus {
+  background-color: rgb(177, 178, 255, 0.4);
 }
 .category_item:active {
   color: #293677;

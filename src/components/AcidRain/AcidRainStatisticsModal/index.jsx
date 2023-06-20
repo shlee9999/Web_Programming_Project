@@ -49,12 +49,27 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
                   </tr>
                 ))}
               </tbody>
-            ) : (
-              <div className='acid_rain_text_wrapper'>
-                <p> 소나기 통계 기록이 없습니다. </p>
-              </div>
-            )}
-          </table>
+            </table>
+          ) : (
+            <div className='acid_rain_text_wrapper'>
+              <p> 소나기 통계 기록이 없습니다. </p>
+            </div>
+          )}
+        </div>
+        <div className='modal_button_wrapper'>
+          <button
+            onClick={onClickClearButton}
+            disabled={acidRainStatistics.length ? false : true}
+            className={`modal_button ${
+              acidRainStatistics.length ? '' : 'inactive'
+            }`}
+          >
+            {' '}
+            Reset
+          </button>
+          <button className='modal_button' onClick={closeModal}>
+            Close
+          </button>
         </div>
         <button
           onClick={onClickClearButton}

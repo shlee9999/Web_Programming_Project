@@ -87,5 +87,6 @@ export const useMainSection = ({ inputRef }) => {
     userName,
     userImageIndex,
     time,
+    isTyping,
   };
 };

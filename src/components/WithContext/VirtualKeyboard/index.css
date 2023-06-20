@@ -30,14 +30,6 @@
   box-shadow: 5px 5px 5px 5px #b1b2ff;
   min-width: 600px;
 }
-.pause_button {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 100px;
-  height: 30px;
-  color: white;
-}
 .keyboard_input {
   border: 1px solid #b1b2ff;
   border-radius: 10px;
@@ -79,6 +71,7 @@
 
 .keyboard_keys_container {
   margin-bottom: 3vh;
+  pointer-events: none;
 }
 .proposal {
   width: 50vw;

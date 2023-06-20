@@ -36,5 +36,5 @@ export const levelList = [
   { level: '2단계', count: '5개', timeLimit: '6초' },
   { level: '3단계', count: '6개', timeLimit: '5초' },
   { level: '4단계', count: '7개', timeLimit: '5초' },
-  { level: '5단계', count: '8개', timeLimit: '1초' },
+  { level: '5단계', count: '8개', timeLimit: '5초' },
 ];

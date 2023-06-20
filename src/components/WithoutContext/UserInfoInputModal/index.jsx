@@ -79,7 +79,7 @@ export const UserInfoInputModal = ({
         <div>
           <div className='name_label_wrapper'>
             <label htmlFor='name' className='name_label'>
-              닉네임
+              Nickname
             </label>
           </div>
           <input
@@ -97,7 +97,7 @@ export const UserInfoInputModal = ({
           />
         </div>
         <button onClick={onClickButton} className='submit_button'>
-          저장
+          Save
         </button>
       </div>
     </div>
