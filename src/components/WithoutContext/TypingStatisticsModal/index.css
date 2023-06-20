@@ -80,3 +80,9 @@ button.inactive {
 button.inactive:hover {
   filter: initial;
 }
+
+.modal_button_wrapper {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+}

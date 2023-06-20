@@ -9,10 +9,16 @@ export const TypingResultsModal = ({ closeTypingResultPopup }) => {
   };
   return (
     <div className='modal_overlay' onClick={closeTypingResultPopup}>
-      <div className='modal' onClick={handleClickModal}>
+      <div className='result_modal' onClick={handleClickModal}>
         <h1>Congratulation!</h1>
         <p> Your Typing Speed : {typingSpeed}</p>
         <p> Your Typing Accuracy : {totalAccuracy}%</p>
+        <button
+          className='typing_result_close_button'
+          onClick={closeTypingResultPopup}
+        >
+          close
+        </button>
       </div>
     </div>
   );

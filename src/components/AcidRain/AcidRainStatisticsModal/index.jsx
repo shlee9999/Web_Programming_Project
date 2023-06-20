@@ -55,14 +55,19 @@ export const AcidRainStatisticsModal = ({ closeModal }) => {
             </div>
           )}
         </div>
-        <div>
+        <div className='modal_button_wrapper'>
           <button
             onClick={onClickClearButton}
             disabled={acidRainStatistics.length ? false : true}
-            className={acidRainStatistics.length ? '' : 'inactive'}
+            className={`modal_button ${
+              acidRainStatistics.length ? '' : 'inactive'
+            }`}
           >
             {' '}
-            초기화
+            Reset
+          </button>
+          <button className='modal_button' onClick={closeModal}>
+            Close
           </button>
         </div>
       </div>
