@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Web_Programming_Project/static/css/main.6c501ac8.css",
+    "main.js": "/Web_Programming_Project/static/js/main.1f4c737e.js",
+    "static/media/Rain.mp3": "/Web_Programming_Project/static/media/Rain.bcd4fbe080ea832607d8.mp3",
+    "static/media/Yeah.wav": "/Web_Programming_Project/static/media/Yeah.790169b2ad54c720dcbb.wav",
+    "static/media/logo.png": "/Web_Programming_Project/static/media/logo.c9294718a3ba78888c61.png",
+    "static/media/Enter.mp3": "/Web_Programming_Project/static/media/Enter.3c21219293c9c063cd41.mp3",
+    "static/media/Dog.png": "/Web_Programming_Project/static/media/Dog.6b8044b066493fff8861.png",
+    "static/media/female-developer.png": "/Web_Programming_Project/static/media/female-developer.6e539cc71d65ed9a81c9.png",
+    "static/media/male-developer.png": "/Web_Programming_Project/static/media/male-developer.03d6dcf53353401387e0.png",
+    "static/media/WaterDrop.wav": "/Web_Programming_Project/static/media/WaterDrop.58f2d5baf1b4d6cd9016.wav",
+    "static/media/Female.png": "/Web_Programming_Project/static/media/Female.c1ddb9b5567a4ef8e939.png",
+    "static/media/Male.png": "/Web_Programming_Project/static/media/Male.c18ffcce2c78f1e72cf6.png",
+    "static/media/header_logo.png": "/Web_Programming_Project/static/media/header_logo.ff2cd792c57461ec628b.png",
+    "index.html": "/Web_Programming_Project/index.html",
+    "static/media/ExitButton.svg": "/Web_Programming_Project/static/media/ExitButton.85f9f2a1f603d5a966a44474678a7981.svg",
+    "main.6c501ac8.css.map": "/Web_Programming_Project/static/css/main.6c501ac8.css.map",
+    "main.1f4c737e.js.map": "/Web_Programming_Project/static/js/main.1f4c737e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c501ac8.css",
+    "static/js/main.1f4c737e.js"
+  ]
+}
