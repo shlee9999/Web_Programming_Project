@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from 'assets/logo.png';
+import Logo from 'assets/logo.webp';
 import './index.css';
 import { useNavigate } from 'react-router';
 

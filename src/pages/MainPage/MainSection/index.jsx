@@ -1,7 +1,7 @@
 import React from 'react';
 import { Element } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
-import Logo from 'assets/logo.png';
+import Logo from 'assets/logo.webp';
 import AboutUs from '../AboutUs/index';
 import Proposal from '../Proposal/index';
 import './index.css';

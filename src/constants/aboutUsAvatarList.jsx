@@ -1,5 +1,5 @@
-import MaleDeveloper from '../images/aboutUs/male-developer.png';
-import FemaleDeveloper from '../images/aboutUs/female-developer.png';
+import MaleDeveloper from '../images/aboutUs/male-developer.webp';
+import FemaleDeveloper from '../images/aboutUs/female-developer.webp';
 
 export const aboutUsAvatarList = [
   MaleDeveloper,

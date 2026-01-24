@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import VirtualKeyboard from 'components/WithContext/VirtualKeyboard';
-import Logo from 'assets/logo.png';
+import Logo from 'assets/logo.webp';
 import { useState, useRef } from 'react';
 import { UserInfo } from 'components/WithoutContext/UserInfo';
 import { UserInfoInputModal } from 'components/WithoutContext/UserInfoInputModal';
