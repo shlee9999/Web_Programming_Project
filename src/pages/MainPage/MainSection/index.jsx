@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Element } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 import Logo from 'assets/logo.webp';
-import AboutUs from '../AboutUs/index';
-import Proposal from '../Proposal/index';
 import './index.css';
 import { useRef } from 'react';
-import { useState } from 'react';
 import { useEffect } from 'react';
 import Introduction from '../Proposal/Introduction';
 import Feature from '../Proposal/Feature';
+
+// Below-the-fold 컴포넌트를 lazy loading
+const AboutUs = lazy(() => import('../AboutUs/index'));
 
 export const MainSection = () => {
   const navigate = useNavigate();
@@ -17,15 +17,10 @@ export const MainSection = () => {
     navigate('/Typing/');
   };
   const targetRefs = useRef(null);
-  // const [visibleIndices, setVisibleIndices] = useState([]);
 
   useEffect(() => {
     if (!targetRefs.current) return;
     const handleScroll = (entries) => {
-      // const scrollTop = window.scrollY || window.pageYOffset;
-      // const windowHeight = window.innerHeight;
-      // const containerTop = targetRefs.current[0]?.offsetTop || 0;
-
       entries.forEach((entry) => {
         let targetStyle = entry.target.style;
         if (entry.isIntersecting) {
@@ -43,17 +38,16 @@ export const MainSection = () => {
     });
   }, [targetRefs]);
 
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
   return (
     <div className='main_page_main'>
       <div className='upper_container'>
-        <img src={Logo} className='main_page_logo' alt='logo' />
+        <img 
+          src={Logo} 
+          className='main_page_logo' 
+          alt='logo'
+          width='400'
+          height='400'
+        />
         <button className='start_button' onClick={navigateToTypingPage}>
           Begin Your Typing Practice
         </button>
@@ -70,7 +64,9 @@ export const MainSection = () => {
         <div className='about_us_info'>
           Typing Pro를 개발한 사람들을 소개합니다!
         </div>
-        <AboutUs />
+        <Suspense fallback={<div>Loading...</div>}>
+          <AboutUs />
+        </Suspense>
       </div>
 
       <footer className='copyrights'>

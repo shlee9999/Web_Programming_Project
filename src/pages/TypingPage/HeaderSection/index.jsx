@@ -15,6 +15,8 @@ export const HeaderSection = () => {
         className='header_logo'
         alt='header_logo'
         onClick={handleHeaderLogoClick}
+        width='180'
+        height='50'
       />
     </div>
   );

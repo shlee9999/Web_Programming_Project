@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './global.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MainPage from './pages/MainPage/index';
-import TypingPage from './pages/TypingPage/index';
 import NotFound from 'pages/NotFound';
+
+// Route-based code splitting
+const MainPage = lazy(() => import('./pages/MainPage/index'));
+const TypingPage = lazy(() => import('./pages/TypingPage/index'));
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainPage />,
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <MainPage />
+      </Suspense>
+    ),
   },
   {
     path: '/Typing/',
-    element: <TypingPage />,
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <TypingPage />
+      </Suspense>
+    ),
   },
   {
     path: '*',

@@ -15,6 +15,8 @@ const AboutUs = () => {
                   className='developer_avatar_image'
                   src={aboutUsAvatarList[index]}
                   alt='avatarImage'
+                  width='200'
+                  height='200'
                 />
               </div>
               <div className='developer_name'>{developer.name}</div>

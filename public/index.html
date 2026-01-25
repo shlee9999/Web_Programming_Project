@@ -7,12 +7,30 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="타이핑 연습을 위한 최고의 플랫폼 - TypingPro"
     />
+    
+    <!-- Preconnect to Google Fonts (DNS lookup, TCP handshake, TLS negotiation 시간 절약) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- 폰트를 비동기로 로드하여 렌더링 블로킹 제거 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Archivo:wght@100&family=Lora&family=Montserrat:wght@100;500;600&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@100&family=Lora&family=Montserrat:wght@100;500;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    
+    <!-- LCP 이미지 preload (메인 페이지의 가장 큰 콘텐츠) -->
+    <link rel="preload" as="image" href="%PUBLIC_URL%/logo.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="%PUBLIC_URL%/header_logo.webp" fetchpriority="high" />
 
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -29,6 +47,77 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>TypingPro</title>
+    
+    <!-- Critical CSS (Above-the-fold content) -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: 'Montserrat', sans-serif;
+        color: #293677;
+      }
+      /* Header - Always visible */
+      .header_section {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 85vw;
+        height: 7vh;
+        border: 2px solid #b1b2ff;
+        background-color: #eef1ff;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%);
+        min-width: 830px;
+        min-height: 40px;
+        z-index: 1;
+      }
+      .header_logo {
+        width: 6vw;
+        margin-left: 1.5vw;
+        cursor: pointer;
+      }
+      /* Main page upper container - LCP area */
+      .main_page_main {
+        border: 2px solid #b1b2ff;
+        margin: 0 auto;
+        width: 85vw;
+        min-width: 830px;
+      }
+      .upper_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 8vh;
+      }
+      .main_page_logo {
+        margin: 14vh 0 5vh;
+        width: 32vw;
+        min-width: 300px;
+      }
+      .start_button {
+        margin: 4vh;
+        width: 25vw;
+        height: 6vh;
+        min-width: 300px;
+        color: white;
+        font-size: 1.3rem;
+        border-radius: 10px;
+        background-color: #b1b2ff;
+        border: none;
+        outline: none;
+      }
+      .start_button:hover {
+        cursor: pointer;
+        filter: brightness(0.9);
+      }
+    </style>
   </head>
   <body
     style="

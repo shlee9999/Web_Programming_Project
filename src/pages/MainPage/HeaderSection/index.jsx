@@ -6,7 +6,13 @@ import { Link } from 'react-scroll';
 export const HeaderSection = () => {
   return (
     <div className='header_section'>
-      <img src={HeaderLogo} className='header_logo' alt='header_logo' />
+      <img 
+        src={HeaderLogo} 
+        className='header_logo' 
+        alt='header_logo'
+        width='180'
+        height='50'
+      />
       <div className='navigation_item'>
         <Link to='scrollToProposal' smooth={true} duration={500}>
           Proposal
