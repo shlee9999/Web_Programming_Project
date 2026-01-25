@@ -12,24 +12,24 @@
     "passed": false,
     "auditId": "color-contrast",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Background and foreground colors do not have a sufficient contrast ratio.",
     "auditDocumentationLink": "https://dequeuniversity.com/rules/axe/4.10/color-contrast"
   },
   {
     "name": "minScore",
     "expected": 0.9,
-    "actual": 0.69,
+    "actual": 0.67,
     "values": [
+      0.66,
       0.67,
-      0.69,
-      0.67
+      0.66
     ],
     "operator": ">=",
     "passed": false,
     "auditId": "first-contentful-paint",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "First Contentful Paint",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/"
   },
@@ -46,7 +46,7 @@
     "passed": false,
     "auditId": "image-delivery-insight",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Improve image delivery",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/"
   },
@@ -63,7 +63,7 @@
     "passed": false,
     "auditId": "largest-contentful-paint",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Largest Contentful Paint",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/"
   },
@@ -80,7 +80,7 @@
     "passed": false,
     "auditId": "lcp-discovery-insight",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "LCP request discovery",
     "auditDocumentationLink": "https://web.dev/articles/optimize-lcp#1_eliminate_resource_load_delay"
   },
@@ -97,7 +97,7 @@
     "passed": false,
     "auditId": "legacy-javascript",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Avoid serving legacy JavaScript to modern browsers",
     "auditDocumentationLink": "https://web.dev/baseline"
   },
@@ -114,7 +114,7 @@
     "passed": false,
     "auditId": "network-dependency-tree-insight",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Network dependency tree",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains"
   },
@@ -131,7 +131,7 @@
     "passed": false,
     "auditId": "prioritize-lcp-image",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Preload Largest Contentful Paint image",
     "auditDocumentationLink": "https://web.dev/articles/optimize-lcp#optimize_when_the_resource_is_discovered"
   },
@@ -148,7 +148,7 @@
     "passed": false,
     "auditId": "render-blocking-insight",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Render blocking requests",
     "auditDocumentationLink": "https://web.dev/learn/performance/understanding-the-critical-path#render-blocking_resources"
   },
@@ -165,24 +165,24 @@
     "passed": false,
     "auditId": "render-blocking-resources",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Eliminate render-blocking resources",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/"
   },
   {
     "name": "minScore",
     "expected": 0.9,
-    "actual": 0.77,
+    "actual": 0.79,
     "values": [
-      0.75,
-      0.75,
-      0.77
+      0.79,
+      0.79,
+      0.78
     ],
     "operator": ">=",
     "passed": false,
     "auditId": "speed-index",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Speed Index",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/speed-index/"
   },
@@ -199,7 +199,7 @@
     "passed": false,
     "auditId": "total-byte-weight",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Avoid enormous network payloads",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/"
   },
@@ -216,7 +216,7 @@
     "passed": false,
     "auditId": "unsized-images",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Image elements do not have explicit `width` and `height`",
     "auditDocumentationLink": "https://web.dev/articles/optimize-cls#images_without_dimensions"
   },
@@ -233,7 +233,7 @@
     "passed": false,
     "auditId": "unused-javascript",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Reduce unused JavaScript",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/"
   },
@@ -250,24 +250,24 @@
     "passed": false,
     "auditId": "uses-responsive-images",
     "level": "error",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Properly size images",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/"
   },
   {
     "name": "minScore",
     "expected": 0.9,
-    "actual": 0.02,
+    "actual": 0.03,
     "values": [
-      0.02,
-      0.02,
+      0.03,
+      0.03,
       0.02
     ],
     "operator": ">=",
     "passed": false,
     "auditId": "interactive",
     "level": "warn",
-    "url": "http://localhost:9528/index.html",
+    "url": "http://localhost:13834/index.html",
     "auditTitle": "Time to Interactive",
     "auditDocumentationLink": "https://developer.chrome.com/docs/lighthouse/performance/interactive/"
   }
