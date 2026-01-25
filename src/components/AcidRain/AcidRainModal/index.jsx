@@ -1,6 +1,4 @@
 import ExitButton from 'assets/ExitButton.svg';
-import rain_sound from 'assets/sounds/Rain.mp3';
-import water_drop from 'assets/sounds/WaterDrop.wav';
 import WordRow from 'components/AcidRain/WordRow';
 import { WORDS, levelList } from 'constants/acidRainContents';
 import { useEffect, useRef, useState } from 'react';
@@ -14,8 +12,20 @@ import AcidRainResultModal from '../AcidRainResultModal';
 import { AcidRainStatisticsModal } from '../AcidRainStatisticsModal';
 import './index.css';
 
-const RainSound = new Audio(rain_sound);
-const WaterDrop = new Audio(water_drop);
+// 사운드 파일을 lazy loading (특히 Rain.mp3는 3.3MB로 매우 큼)
+let RainSound = null;
+let WaterDrop = null;
+
+const loadAcidRainSounds = async () => {
+  if (!RainSound) {
+    const rain_sound = await import('assets/sounds/Rain.mp3');
+    RainSound = new Audio(rain_sound.default);
+  }
+  if (!WaterDrop) {
+    const water_drop = await import('assets/sounds/WaterDrop.wav');
+    WaterDrop = new Audio(water_drop.default);
+  }
+};
 
 let shuffledWordIndexes = getShuffledIndexArray(WORDS); //다음 게임 시 초기화
 let lastWord = WORDS[shuffledWordIndexes.indexOf(WORDS.length - 1)]; //게임 끝내기 위해 필요
@@ -28,6 +38,7 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const inputRef = useRef(null);
   const buttonRef = useRef(null);
   const [fallingWords, setFallingWords] = useState([]);
+  const soundsLoadedRef = useRef(false);
   const { columns, timeLimit, interval } = getLevelInfo(level);
 
   const chunkedShuffledWordIndexes = chunkArray(shuffledWordIndexes, columns); //LENGTH개의 원소로 나눔
@@ -60,8 +71,10 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
 
   const onClickExitButton = () => {
     closeAcidRainModal();
-    RainSound.pause();
-    RainSound.currentTime = 0;
+    if (RainSound) {
+      RainSound.pause();
+      RainSound.currentTime = 0;
+    }
   };
   const handleInputKeyDown = ({ key }) => {
     switch (key) {
@@ -107,9 +120,11 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   const addCheckedWords = () => {
     fallingWords.forEach((word) => {
       if (word === inputValue) {
-        WaterDrop.pause();
-        WaterDrop.currentTime = 0;
-        WaterDrop.play();
+        if (WaterDrop) {
+          WaterDrop.pause();
+          WaterDrop.currentTime = 0;
+          WaterDrop.play().catch(() => {});
+        }
         setCheckedWords((prev) => {
           if (!prev.includes(word)) {
             return [...prev, word];
@@ -155,9 +170,19 @@ export const AcidRainModal = ({ closeAcidRainModal, userName }) => {
   useEffect(() => {
     buttonRef.current?.focus();
   }, [level]);
+  
+  // 사운드 로드
   useEffect(() => {
-    if (isStarted) RainSound.play();
-    else {
+    if (!soundsLoadedRef.current) {
+      loadAcidRainSounds();
+      soundsLoadedRef.current = true;
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (isStarted && RainSound) {
+      RainSound.play().catch(() => {});
+    } else if (RainSound) {
       RainSound.pause();
       RainSound.currentTime = 0;
     }

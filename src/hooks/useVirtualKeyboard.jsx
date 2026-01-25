@@ -6,15 +6,26 @@ import {
   useMemo,
   useReducer,
   useState,
+  useRef,
 } from 'react';
 import sentence_korean from 'constants/sentence_korean.json';
 import sentence_english from 'constants/sentence_english.json';
-import enter_sound from 'assets/sounds/Enter.mp3';
-import end_sound from 'assets/sounds/Yeah.wav';
 import { MyContext } from 'pages/TypingPage/MainSection';
 
-const EnterSound = new Audio(enter_sound);
-const EndSound = new Audio(end_sound);
+// 사운드 파일을 lazy loading하여 초기 렌더링 성능 향상
+let EnterSound = null;
+let EndSound = null;
+
+const loadSounds = async () => {
+  if (!EnterSound) {
+    const enter_sound = await import('assets/sounds/Enter.mp3');
+    EnterSound = new Audio(enter_sound.default);
+  }
+  if (!EndSound) {
+    const end_sound = await import('assets/sounds/Yeah.wav');
+    EndSound = new Audio(end_sound.default);
+  }
+};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -56,7 +67,16 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
   const [title, setTitle] = useState('');
   const [totalBackSpace, setTotalBackSpace] = useState(0);
   const [typingMode, setTypingMode] = useState(false); // word : true, sentence : false
+  const soundsLoadedRef = useRef(false);
   const { setTypingSpeed, setTotalAccuracy } = useContext(MyContext);
+  
+  // 사운드를 필요할 때만 로드
+  useEffect(() => {
+    if (!soundsLoadedRef.current && time > 0) {
+      loadSounds();
+      soundsLoadedRef.current = true;
+    }
+  }, [time]);
   const sentences = useMemo(() => {
     if (typingMode) {
       return state.language ? sentence_english.word : sentence_korean.word;
@@ -121,14 +141,18 @@ const useVirtualKeyboard = ({ time, proposalIndex, endGame, inputRef }) => {
     if (currentIndex < sentences[proposalIndex].text.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setPrevTotalCorrectKeys(totalCorrectKeyStrokes);
-      EnterSound.pause();
-      EnterSound.currentTime = 0;
-      EnterSound.play();
+      if (EnterSound) {
+        EnterSound.pause();
+        EnterSound.currentTime = 0;
+        EnterSound.play().catch(() => {});
+      }
     } //다음 문장으로 넘어간다.
 
     if (currentIndex === sentences[proposalIndex].text.length - 1) {
       //마지막 문장에서 엔터를 쳤을 때
-      EndSound.play();
+      if (EndSound) {
+        EndSound.play().catch(() => {});
+      }
       endGame();
     } else if (!state.language) {
       inputRef.current.disabled = true;

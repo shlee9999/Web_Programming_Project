@@ -31,6 +31,9 @@
     <!-- LCP 이미지 preload (메인 페이지의 가장 큰 콘텐츠) -->
     <link rel="preload" as="image" href="%PUBLIC_URL%/logo.webp" fetchpriority="high" />
     <link rel="preload" as="image" href="%PUBLIC_URL%/header_logo.webp" fetchpriority="high" />
+    
+    <!-- Typing 페이지 전용 폰트 preload -->
+    <link rel="preload" as="font" href="https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2" type="font/woff2" crossorigin />
 
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -116,6 +119,33 @@
       .start_button:hover {
         cursor: pointer;
         filter: brightness(0.9);
+      }
+      /* Typing page styles */
+      .typing_page_main {
+        width: 85vw;
+        height: 99vh;
+        border-top: none;
+        margin: 0 auto;
+        border: 2px solid #b1b2ff;
+        display: flex;
+        min-width: 830px;
+        min-height: 630px;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      .typing_page_logo {
+        margin: 12vh 0 5vh;
+        width: 25vw;
+        min-width: 300px;
+      }
+      .left_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        border-right: 2px solid #b1b2ff;
+        text-align: center;
+        min-width: 650px;
       }
     </style>
   </head>

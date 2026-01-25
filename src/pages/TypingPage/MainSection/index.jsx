@@ -1,15 +1,17 @@
-import React, { createContext } from 'react';
+import React, { createContext, lazy, Suspense } from 'react';
 import VirtualKeyboard from 'components/WithContext/VirtualKeyboard';
 import Logo from 'assets/logo.webp';
 import { useState, useRef } from 'react';
 import { UserInfo } from 'components/WithoutContext/UserInfo';
-import { UserInfoInputModal } from 'components/WithoutContext/UserInfoInputModal';
 import { TypingResultsContainer } from 'components/WithContext/TypingResultsContainer';
-import { TypingResultsModal } from 'components/WithContext/TypingResultsModal';
-import { TypingStatisticsModal } from 'components/WithoutContext/TypingStatisticsModal';
 import PauseModal from 'components/WithoutContext/PauseModal';
 import './index.css';
 import { useMainSection } from 'hooks/useMainSection';
+
+// 모달 컴포넌트들을 lazy loading (초기 렌더링 성능 향상)
+const UserInfoInputModal = lazy(() => import('components/WithoutContext/UserInfoInputModal').then(module => ({ default: module.UserInfoInputModal })));
+const TypingResultsModal = lazy(() => import('components/WithContext/TypingResultsModal').then(module => ({ default: module.TypingResultsModal })));
+const TypingStatisticsModal = lazy(() => import('components/WithoutContext/TypingStatisticsModal').then(module => ({ default: module.TypingStatisticsModal })));
 
 export const MyContext = createContext();
 
@@ -46,7 +48,13 @@ export const MainSection = () => {
     >
       <div className='typing_page_main'>
         <div className='left_container'>
-          <img src={Logo} className='typing_page_logo' alt='logo' />
+          <img 
+            src={Logo} 
+            className='typing_page_logo' 
+            alt='logo'
+            width='400'
+            height='207'
+          />
           <VirtualKeyboard
             userName={userName}
             time={time}
@@ -77,25 +85,31 @@ export const MainSection = () => {
           )}
         </div>
         {viewUserInfoInputPopup && (
-          <UserInfoInputModal
-            viewUserInfoInputPopup={viewUserInfoInputPopup}
-            closeUserInfoInputPopup={closeUserInfoInputPopup}
-            handleUserName={handleUserName}
-            handleUserImageIndex={handleUserImageIndex}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserInfoInputModal
+              viewUserInfoInputPopup={viewUserInfoInputPopup}
+              closeUserInfoInputPopup={closeUserInfoInputPopup}
+              handleUserName={handleUserName}
+              handleUserImageIndex={handleUserImageIndex}
+            />
+          </Suspense>
         )}
         {viewTypingResultPopup && (
-          <TypingResultsModal
-            closeTypingResultPopup={closeTypingResultPopup}
-            startTyping={startTyping}
-            stopTyping={stopTyping}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TypingResultsModal
+              closeTypingResultPopup={closeTypingResultPopup}
+              startTyping={startTyping}
+              stopTyping={stopTyping}
+            />
+          </Suspense>
         )}
 
         {viewTypingStatisticsPopup && (
-          <TypingStatisticsModal
-            closeTypingStatisticsPopup={closeTypingStatisticsPopup}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <TypingStatisticsModal
+              closeTypingStatisticsPopup={closeTypingStatisticsPopup}
+            />
+          </Suspense>
         )}
 
         {isPauseModalOpen && <PauseModal closeModal={closePauseModal} />}
